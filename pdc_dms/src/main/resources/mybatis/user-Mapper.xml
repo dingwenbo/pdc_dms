@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.newtouch.dms.repository.mybatis.UserMybatisDao">
+	<insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+		insert into ss_user (
+		login_name, name, password, salt, roles, register_Date)
+		values (
+		#{loginName}, #{name}, #{password}, #{salt}, #{roles},
+		#{registerDate})
+	</insert>
+</mapper>

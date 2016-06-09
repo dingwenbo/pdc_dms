@@ -21,7 +21,7 @@ import org.springside.modules.utils.Clock.MockClock;
 
 import cn.newtouch.dms.data.UserData;
 import cn.newtouch.dms.entity.User;
-import cn.newtouch.dms.repository.UserDao;
+import cn.newtouch.dms.repository.jpa.UserDao;
 import cn.newtouch.dms.service.ServiceException;
 import cn.newtouch.dms.service.account.ShiroDbRealm.ShiroUser;
 

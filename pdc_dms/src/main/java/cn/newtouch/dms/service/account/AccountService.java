@@ -19,7 +19,8 @@ import org.springside.modules.utils.Clock;
 import org.springside.modules.utils.Encodes;
 
 import cn.newtouch.dms.entity.User;
-import cn.newtouch.dms.repository.UserDao;
+import cn.newtouch.dms.repository.jpa.UserDao;
+import cn.newtouch.dms.repository.mybatis.UserMybatisDao;
 import cn.newtouch.dms.service.ServiceException;
 import cn.newtouch.dms.service.account.ShiroDbRealm.ShiroUser;
 
@@ -40,8 +41,12 @@ public class AccountService {
 	private static Logger logger = LoggerFactory.getLogger(AccountService.class);
 
 	private UserDao userDao;
+	
+	@Autowired
+	private UserMybatisDao userMybatisDao;
 	private Clock clock = Clock.DEFAULT;
 
+	
 	public List<User> getAllUser() {
 		return (List<User>) userDao.findAll();
 	}
@@ -59,7 +64,7 @@ public class AccountService {
 		user.setRoles("user");
 		user.setRegisterDate(clock.getCurrentDate());
 
-		userDao.save(user);
+		userMybatisDao.save(user);
 	}
 
 	public void updateUser(User user) {
