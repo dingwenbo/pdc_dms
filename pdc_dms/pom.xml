@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.newtouch.dms</groupId>
-	<artifactId>PDC_DMS</artifactId>
+	<artifactId>pdc-dms</artifactId>
 	<version>4.3.0-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>PDC_DMS</name>
+	<name>PDC_Daily Management System</name>
 
 	<properties>
 		<!-- 主要依赖库的版本定义 -->
