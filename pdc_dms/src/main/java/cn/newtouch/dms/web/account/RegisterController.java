@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import cn.newtouch.dms.entity.User;
-import cn.newtouch.dms.service.account.AccountService;
+import cn.newtouch.dms.service.impl.AccountService;
 
 /**
  * 用户注册的Controller.
@@ -36,7 +36,7 @@ public class RegisterController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String register(@Valid User user, RedirectAttributes redirectAttributes) {
-		accountService.registerUser(user);
+		accountService.insertUser(user);
 		redirectAttributes.addFlashAttribute("username", user.getLoginName());
 		return "redirect:/login";
 	}

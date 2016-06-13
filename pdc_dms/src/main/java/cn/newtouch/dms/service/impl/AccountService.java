@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *******************************************************************************/
-package cn.newtouch.dms.service.account;
+package cn.newtouch.dms.service.impl;
 
 import java.util.List;
 
@@ -13,16 +13,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.security.utils.Digests;
 import org.springside.modules.utils.Clock;
 import org.springside.modules.utils.Encodes;
 
 import cn.newtouch.dms.entity.User;
-import cn.newtouch.dms.repository.jpa.UserDao;
-import cn.newtouch.dms.repository.mybatis.UserMybatisDao;
+import cn.newtouch.dms.repository.UserDao;
 import cn.newtouch.dms.service.ServiceException;
-import cn.newtouch.dms.service.account.ShiroDbRealm.ShiroUser;
+import cn.newtouch.dms.service.impl.ShiroDbRealm.ShiroUser;
 
 /**
  * 用户管理类.
@@ -31,7 +29,6 @@ import cn.newtouch.dms.service.account.ShiroDbRealm.ShiroUser;
  */
 // Spring Service Bean的标识.
 @Component
-@Transactional
 public class AccountService {
 
 	public static final String HASH_ALGORITHM = "SHA-1";
@@ -42,8 +39,6 @@ public class AccountService {
 
 	private UserDao userDao;
 	
-	@Autowired
-	private UserMybatisDao userMybatisDao;
 	private Clock clock = Clock.DEFAULT;
 
 	
@@ -59,12 +54,12 @@ public class AccountService {
 		return userDao.findByLoginName(loginName);
 	}
 
-	public void registerUser(User user) {
+	public void insertUser(User user) {
 		entryptPassword(user);
 		user.setRoles("user");
 		user.setRegisterDate(clock.getCurrentDate());
 
-		userMybatisDao.save(user);
+		userDao.save(user);
 	}
 
 	public void updateUser(User user) {

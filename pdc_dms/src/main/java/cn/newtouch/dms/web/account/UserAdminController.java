@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import cn.newtouch.dms.entity.User;
-import cn.newtouch.dms.service.account.AccountService;
+import cn.newtouch.dms.service.impl.AccountService;
 
 /**
  * 管理员管理用户的Controller.

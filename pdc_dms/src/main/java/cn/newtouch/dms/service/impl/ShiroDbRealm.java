@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *******************************************************************************/
-package cn.newtouch.dms.service.account;
+package cn.newtouch.dms.service.impl;
 
 import java.io.Serializable;
 

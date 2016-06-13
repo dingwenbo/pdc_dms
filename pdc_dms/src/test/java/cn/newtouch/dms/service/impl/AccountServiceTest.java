@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *******************************************************************************/
-package cn.newtouch.dms.service.account;
+package cn.newtouch.dms.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -21,9 +21,10 @@ import org.springside.modules.utils.Clock.MockClock;
 
 import cn.newtouch.dms.data.UserData;
 import cn.newtouch.dms.entity.User;
-import cn.newtouch.dms.repository.jpa.UserDao;
+import cn.newtouch.dms.repository.UserDao;
 import cn.newtouch.dms.service.ServiceException;
-import cn.newtouch.dms.service.account.ShiroDbRealm.ShiroUser;
+import cn.newtouch.dms.service.impl.AccountService;
+import cn.newtouch.dms.service.impl.ShiroDbRealm.ShiroUser;
 
 /**
  * AccountService的测试用例, 测试Service层的业务逻辑.
@@ -50,7 +51,7 @@ public class AccountServiceTest {
 		Date currentTime = new Date();
 		accountService.setClock(new MockClock(currentTime));
 
-		accountService.registerUser(user);
+		accountService.insertUser(user);
 
 		// 验证user的角色，注册日期和加密后的密码都被自动更新了。
 		assertThat(user.getRoles()).isEqualTo("user");
@@ -76,8 +77,8 @@ public class AccountServiceTest {
 	@Test
 	public void deleteUser() {
 		// 正常删除用户.
-		accountService.deleteUser(2L);
-		Mockito.verify(mockUserDao).delete(2L);
+		accountService.deleteUser(3L);
+		Mockito.verify(mockUserDao).delete(3L);
 
 		// 删除超级管理用户抛出异常, userDao没有被执行
 		try {

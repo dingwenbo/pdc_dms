@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import cn.newtouch.dms.entity.User;
-import cn.newtouch.dms.service.account.AccountService;
-import cn.newtouch.dms.service.account.ShiroDbRealm.ShiroUser;
+import cn.newtouch.dms.service.impl.AccountService;
+import cn.newtouch.dms.service.impl.ShiroDbRealm.ShiroUser;
 
 /**
  * 用户修改自己资料的Controller.
