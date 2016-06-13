@@ -8,11 +8,6 @@ package cn.newtouch.dms.entity;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
@@ -21,8 +16,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
 
-@Entity
-@Table(name = "ss_user")
 public class User extends IdEntity {
 	private String loginName;
 	private String name;
@@ -57,8 +50,6 @@ public class User extends IdEntity {
 		this.name = name;
 	}
 
-	// 不持久化到数据库，也不显示在Restful接口的属性.
-	@Transient
 	@JsonIgnore
 	public String getPlainPassword() {
 		return plainPassword;
@@ -92,7 +83,6 @@ public class User extends IdEntity {
 		this.roles = roles;
 	}
 
-	@Transient
 	@JsonIgnore
 	public List<String> getRoleList() {
 		// 角色列表在数据库中实际以逗号分隔字符串存储，因此返回不能修改的List.

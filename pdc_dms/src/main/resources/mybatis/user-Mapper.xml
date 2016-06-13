@@ -8,6 +8,10 @@
 		#{loginName}, #{name}, #{password}, #{salt}, #{roles},
 		#{registerDate})
 	</insert>
+	<insert id="update" parameterType="User">
+		update ss_user set name = #{name}, password = #{password}, salt = #{salt}
+		where id = #{id}
+	</insert>
 	
 	<select id="findAll" resultMap="UserMap">
 		select * from ss_user

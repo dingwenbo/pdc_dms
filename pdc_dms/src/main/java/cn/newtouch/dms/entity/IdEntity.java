@@ -5,11 +5,6 @@
  *******************************************************************************/
 package cn.newtouch.dms.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-
 /**
  * 统一定义id的entity基类.
  * 
@@ -18,14 +13,10 @@ import javax.persistence.MappedSuperclass;
  * 
  * @author calvin
  */
-// JPA 基类的标识
-@MappedSuperclass
 public abstract class IdEntity {
 
 	protected Long id;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}

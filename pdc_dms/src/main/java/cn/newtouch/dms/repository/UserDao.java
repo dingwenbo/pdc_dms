@@ -18,6 +18,8 @@ public interface UserDao {
 
 	int save(User user);
 
+	int update(User user);
+	
 	int delete(Long id);
 
 }
