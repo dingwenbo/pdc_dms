@@ -10,13 +10,18 @@ import java.util.List;
 import cn.newtouch.dms.entity.User;
 
 public interface UserDao {
+	
 	User findByLoginName(String loginName);
 
 	List<User> findAll();
 
 	User findOne(Long id);
 
-	int save(User user);
+	/**
+	 * 保存一个用户对象，
+	 * @param user User
+	 */
+	void save(User user);
 
 	int update(User user);
 	

@@ -60,20 +60,6 @@
 			<version>${springside.version}</version>
 		</dependency>
 
-		<!-- PERSISTENCE begin -->
-		<!-- hibernate -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hibernate</groupId> -->
-<!-- 			<artifactId>hibernate-entitymanager</artifactId> -->
-<!-- 			<version>${hibernate.version}</version> -->
-<!-- 		</dependency> -->
-
-		<!-- spring data access -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.data</groupId> -->
-<!-- 			<artifactId>spring-data-jpa</artifactId> -->
-<!-- 			<version>${spring-data-jpa.version}</version> -->
-<!-- 		</dependency> -->
 
 		<!-- spring aop -->
 		<dependency>
