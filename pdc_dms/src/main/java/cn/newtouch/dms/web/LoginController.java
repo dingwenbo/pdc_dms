@@ -3,11 +3,11 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *******************************************************************************/
-package cn.newtouch.dms.web.account;
+package cn.newtouch.dms.web;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,17 +25,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = "/login")
 public class LoginController {
 
-    Logger log = LoggerFactory.getLogger(LoginController.class);
+    Log log = LogFactory.getLog(LoginController.class);
 	@RequestMapping(method = RequestMethod.GET)
 	public String login() {
-	    log.info("ACCOUNT LOGIN");
-		return "account/login";
+	    log.info("member LOGIN");
+		return "member/login";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String fail(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String userName, Model model) {
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, userName);
-		return "account/login";
+		return "member/login";
 	}
 	
 	@RequestMapping("/success")

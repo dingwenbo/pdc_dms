@@ -20,26 +20,31 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import cn.newtouch.dms.entity.User;
 import org.springside.modules.utils.Encodes;
 
 import com.google.common.base.Objects;
 
+import cn.newtouch.dms.entity.Member;
+import cn.newtouch.dms.entity.Role;
+import cn.newtouch.dms.service.MemberService;
+import cn.newtouch.dms.service.RoleService;
+
 public class ShiroDbRealm extends AuthorizingRealm {
 
-	protected AccountService accountService;
+	protected MemberService memberService;
 
+	protected RoleService roleService;
 	/**
 	 * 认证回调函数,登录时调用.
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-		User user = accountService.findUserByLoginName(token.getUsername());
-		if (user != null) {
-			byte[] salt = Encodes.decodeHex(user.getSalt());
-			return new SimpleAuthenticationInfo(new ShiroUser(user.getId(), user.getLoginName(), user.getName()),
-					user.getPassword(), ByteSource.Util.bytes(salt), getName());
+		Member member = memberService.findMemberByPdcId(token.getUsername());
+		if (member != null) {
+			byte[] salt = Encodes.decodeHex(member.getSalt());
+			return new SimpleAuthenticationInfo(new ShiroUser(member.getId(), member.getPdcId(), member.getName()),
+					member.getPassword(), ByteSource.Util.bytes(salt), getName());
 		} else {
 			return null;
 		}
@@ -51,9 +56,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
-		User user = accountService.findUserByLoginName(shiroUser.loginName);
+		Member member = memberService.findMemberByPdcId(shiroUser.pdcId);
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.addRoles(user.getRoleList());
+		Role role = roleService.selectById(member.getRoleId());
+		if (role != null) {
+			info.addRole(role.getCode());
+		}
 		return info;
 	}
 
@@ -62,28 +70,31 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	 */
 	@PostConstruct
 	public void initCredentialsMatcher() {
-		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(AccountService.HASH_ALGORITHM);
-		matcher.setHashIterations(AccountService.HASH_INTERATIONS);
+		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(MemberServiceImpl.HASH_ALGORITHM);
+		matcher.setHashIterations(MemberServiceImpl.HASH_INTERATIONS);
 
 		setCredentialsMatcher(matcher);
 	}
 
-	public void setAccountService(AccountService accountService) {
-		this.accountService = accountService;
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
 	}
-
+	
+	public void setMemberService(MemberService memberService) {
+		this.memberService = memberService;
+	}
 	/**
 	 * 自定义Authentication对象，使得Subject除了携带用户的登录名外还可以携带更多信息.
 	 */
 	public static class ShiroUser implements Serializable {
 		private static final long serialVersionUID = -1373760761780840081L;
-		public Long id;
-		public String loginName;
+		public Integer id;
+		public String pdcId;
 		public String name;
 
-		public ShiroUser(Long id, String loginName, String name) {
+		public ShiroUser(Integer id, String pdcId, String name) {
 			this.id = id;
-			this.loginName = loginName;
+			this.pdcId = pdcId;
 			this.name = name;
 		}
 
@@ -96,7 +107,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		 */
 		@Override
 		public String toString() {
-			return loginName;
+			return pdcId;
 		}
 
 		/**
@@ -104,7 +115,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		 */
 		@Override
 		public int hashCode() {
-			return Objects.hashCode(loginName);
+			return Objects.hashCode(pdcId);
 		}
 
 		/**
@@ -122,11 +133,11 @@ public class ShiroDbRealm extends AuthorizingRealm {
 				return false;
 			}
 			ShiroUser other = (ShiroUser) obj;
-			if (loginName == null) {
-				if (other.loginName != null) {
+			if (pdcId == null) {
+				if (other.pdcId != null) {
 					return false;
 				}
-			} else if (!loginName.equals(other.loginName)) {
+			} else if (!pdcId.equals(other.pdcId)) {
 				return false;
 			}
 			return true;

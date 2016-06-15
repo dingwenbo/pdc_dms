@@ -13,7 +13,8 @@
 
 	<!-- 項目自定义的Realm, 所有accountService依赖的dao都需要用depends-on声明 -->
 	<bean id="shiroDbRealm" class="cn.newtouch.dms.service.impl.ShiroDbRealm">
-		<property name="accountService" ref="accountService"/>
+		<property name="memberService" ref="memberService"/>
+		<property name="roleService" ref="roleService"/>
 	</bean>
 	
 	<!-- Shiro Filter -->
@@ -28,7 +29,7 @@
 				/static/** = anon
 				/api/** = anon
 				/register/** = anon
-				/admin/** = roles[admin]
+				/admin/** = roles[Admin]
 				/** = user
 			</value>
 		</property>

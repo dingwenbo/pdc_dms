@@ -5,14 +5,15 @@
  *******************************************************************************/
 package cn.newtouch.dms.data;
 
-import cn.newtouch.dms.entity.User;
 import org.springside.modules.test.data.RandomData;
+
+import cn.newtouch.dms.entity.Member;
 
 public class UserData {
 
-	public static User randomNewUser() {
-		User user = new User();
-		user.setLoginName(RandomData.randomName("user"));
+	public static Member randomNewUser() {
+		Member user = new Member();
+		user.setPdcId(RandomData.randomName("user"));
 		user.setName(RandomData.randomName("User"));
 		user.setPlainPassword(RandomData.randomName("password"));
 

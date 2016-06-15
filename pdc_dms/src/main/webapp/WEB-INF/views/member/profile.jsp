@@ -9,13 +9,13 @@
 
 <body>
 	<form id="inputForm" action="${ctx}/profile" method="post" class="form-horizontal">
-		<input type="hidden" name="id" value="${user.id}"/>
+		<input type="hidden" name="id" value="${member.id}"/>
 		<fieldset>
 			<legend><small>资料修改</small></legend>
 			<div class="control-group">
 				<label for="name" class="control-label">用户名:</label>
 				<div class="controls">
-					<input type="text" id="name" name="name" value="${user.name}" class="input-large required"/>
+					<input type="text" id="name" name="name" value="${member.name}" class="input-large required"/>
 				</div>
 			</div>
 			<div class="control-group">

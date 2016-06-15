@@ -9,16 +9,16 @@
 	<script>
 		$(document).ready(function() {
 			//聚焦第一个输入框
-			$("#loginName").focus();
+			$("#pdcId").focus();
 			//为inputForm注册validate函数
 			$("#inputForm").validate({
 				rules: {
-					loginName: {
-						remote: "${ctx}/register/checkLoginName"
+					pdcId: {
+						remote: "${ctx}/register/checkPdcId"
 					}
 				},
 				messages: {
-					loginName: {
+					pdcId: {
 						remote: "用户登录名已存在"
 					}
 				}
@@ -32,9 +32,9 @@
 		<fieldset>
 			<legend><small>用户注册</small></legend>
 			<div class="control-group">
-				<label for="loginName" class="control-label">登录名:</label>
+				<label for="pdcId" class="control-label">登录名:</label>
 				<div class="controls">
-					<input type="text" id="loginName" name="loginName" class="input-large required" minlength="3"/>
+					<input type="text" id="pdcId" name="pdcId" class="input-large required" minlength="3"/>
 				</div>
 			</div>
 			<div class="control-group">
