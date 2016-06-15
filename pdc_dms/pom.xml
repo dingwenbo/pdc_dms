@@ -35,7 +35,7 @@
 		<!-- Plugin的属性定义 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.6</java.version>
-	
+	    <mybatis.generator.version>1.3.2</mybatis.generator.version>
 		<!-- 项目属性 -->
 <!-- 		<jdbc.driver.groupId>com.h2database</jdbc.driver.groupId> -->
 <!-- 		<jdbc.driver.artifactId>h2</jdbc.driver.artifactId> -->
@@ -362,6 +362,32 @@
 
 	<build>
 		<plugins>
+            <!-- mybatis 根据表生成对应的实体类，mapper，接口 -->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>${mybatis.generator.version}</version>
+                <configuration>
+                    <configurationFile>src/main/resources/mybatis-generator/generatorConfig.xml</configurationFile>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>Generate MyBatis Artifacts</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.mybatis.generator</groupId>
+                        <artifactId>mybatis-generator-core</artifactId>
+                        <version>${mybatis.generator.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
 			<!-- compiler插件, 设定JDK版本 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
