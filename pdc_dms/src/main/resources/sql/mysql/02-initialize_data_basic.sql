@@ -1,5 +1,3 @@
-use pdc_dms;
-
 delete from pdc_project;
 delete from pdc_member;
 delete from pdc_role;

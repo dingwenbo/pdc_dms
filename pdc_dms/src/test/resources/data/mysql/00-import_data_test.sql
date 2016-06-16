@@ -23,7 +23,11 @@ insert into pdc_member(id, pdc_id, password, salt, name, role_id, register_date)
 insert into pdc_member(id, pdc_id, password, salt, name, role_id, supervisor_id, register_date)
 	values(9011, 'T000011', '2488aa0c31c624687bd9928e0a5d29e7d1ed520b', '6d65d24122c30500', '测试TL2', 3, 9010, now());
 
-insert into pdc_project(id, code, label) values(NULL, 'TEST1', 'First Test project'); 
-insert into pdc_project(id, code, label) values(NULL, 'TEST2', 'Second Test project');
-insert into pdc_project(id, code, label) values(NULL, 'TEST3', 'Third Test project');
+insert into pdc_project(id, code, label) values(1, 'TEST1', 'First Test project'); 
+insert into pdc_project(id, code, label) values(2, 'TEST2', 'Second Test project');
+insert into pdc_project(id, code, label) values(3, 'TEST3', 'Third Test project');
+
+insert into pdc_project_member(project_id, member_id) values(1, 9002);
+insert into pdc_project_member(project_id, member_id) values(1, 9003);
+insert into pdc_project_member(project_id, member_id) values(2, 9010);
 

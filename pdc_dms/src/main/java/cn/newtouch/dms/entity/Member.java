@@ -8,12 +8,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Member {
+	
     private Integer id;
 
     private String pdcId;
 
     private String password;
-
+    
     private String salt;
 
     private String name;
@@ -114,11 +115,19 @@ public class Member {
         this.registerDate = registerDate;
     }
     
+    /**
+     * 系统传进的密码，不记录到数据库中。
+     * @return String 未加密的密码
+     */
     @JsonIgnore
 	public String getPlainPassword() {
 		return plainPassword;
 	}
 
+    /**
+     * Setter方法。
+     * @param plainPassword String
+     */
 	public void setPlainPassword(String plainPassword) {
 		this.plainPassword = plainPassword;
 	}

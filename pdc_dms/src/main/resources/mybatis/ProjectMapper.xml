@@ -5,17 +5,18 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="label" property="label" jdbcType="VARCHAR" />
+    <collection property="members" ofType="Member" javaType="ArrayList" column="id" select="selectMembers"></collection>
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     id, code, label
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from pdc_project
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteById" parameterType="java.lang.Integer" >
     delete from pdc_project
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -50,7 +51,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="Project" >
+  <update id="updateSelective" parameterType="Project" >
     update pdc_project
     <set >
       <if test="code != null" >
@@ -62,10 +63,15 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="Project" >
+  <update id="update" parameterType="Project" >
     update pdc_project
     set code = #{code,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectMembers" resultType="cn.newtouch.dms.entity.Member" parameterType="int">
+  	select pdc_member.* from pdc_project_member, pdc_member where pdc_project_member.project_id = #{id}
+  </select>
+
 </mapper>

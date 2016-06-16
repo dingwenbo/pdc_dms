@@ -1,5 +1,3 @@
-use pdc_dms;
-
 drop table if exists pdc_profile_rights;
 drop table if exists pdc_rights;
 drop table if exists pdc_role_profile;

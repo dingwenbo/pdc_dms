@@ -1,11 +1,25 @@
 package cn.newtouch.dms.entity;
 
+import java.util.List;
+
+/**
+ * Class project.
+ * @author WenBo.Ding
+ *
+ */
 public class Project {
+	
+	/** id. */
     private Integer id;
 
+    /** code. */
     private String code;
 
+    /** label. */
     private String label;
+    
+    /** members. */
+    private List<Member> members;
 
     public Integer getId() {
         return id;
@@ -30,4 +44,12 @@ public class Project {
     public void setLabel(String label) {
         this.label = label == null ? null : label.trim();
     }
+
+	public List<Member> getMembers() {
+		return members;
+	}
+
+	public void setMembers(List<Member> members) {
+		this.members = members;
+	}
 }
