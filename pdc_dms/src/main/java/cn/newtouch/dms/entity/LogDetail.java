@@ -1,25 +1,64 @@
 package cn.newtouch.dms.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
-public class LogDetail extends LogDetailKey {
-    private BigDecimal workTime;
+public class LogDetail {
 
-    private String absent;
+	private Task task;
 
-    public BigDecimal getWorkTime() {
-        return workTime;
-    }
+	private Member member;
 
-    public void setWorkTime(BigDecimal workTime) {
-        this.workTime = workTime;
-    }
+	private Date day;
 
-    public String getAbsent() {
-        return absent;
-    }
+	private BigDecimal workTime;
 
-    public void setAbsent(String absent) {
-        this.absent = absent == null ? null : absent.trim();
-    }
+	private String absent;
+
+	public BigDecimal getWorkTime() {
+		return workTime;
+	}
+
+	public void setWorkTime(BigDecimal workTime) {
+		this.workTime = workTime;
+	}
+
+	public String getAbsent() {
+		return absent;
+	}
+
+	public void setAbsent(String absent) {
+		this.absent = absent == null ? null : absent.trim();
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public Date getDay() {
+		return day;
+	}
+
+	public void setDay(Date day) {
+		this.day = day;
+	}
+
+	@Override
+	public String toString() {
+		return "LogDetail [task=" + task + ", member=" + member + ", day=" + day + ", workTime=" + workTime
+				+ ", absent=" + absent + "]";
+	}
+
 }

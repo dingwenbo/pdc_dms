@@ -2,42 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.newtouch.dms.repository.LogDetailDao" >
   <resultMap id="BaseResultMap" type="LogDetail" >
-    <id column="task_id" property="taskId" jdbcType="INTEGER" />
-    <id column="member_id" property="memberId" jdbcType="INTEGER" />
-    <id column="day" property="day" jdbcType="DATE" />
+    <result column="day" property="day" jdbcType="DATE" />
     <result column="work_time" property="workTime" jdbcType="DECIMAL" />
     <result column="absent" property="absent" jdbcType="CHAR" />
+    <association property="member" select="cn.newtouch.dms.repository.MemberDao.selectByPrimaryKey" column="member_id">
+    </association>
+    <association property="task" select="cn.newtouch.dms.repository.TaskDao.selectByPrimaryKey" column="task_id">
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
     task_id, member_id, day, work_time, absent
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="LogDetailKey" >
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="LogDetail" >
     select 
     <include refid="Base_Column_List" />
     from pdc_log_detail
-    where task_id = #{taskId,jdbcType=INTEGER}
-      and member_id = #{memberId,jdbcType=INTEGER}
-      and day = #{day,jdbcType=DATE}
+    where 1=1
+     <if test="task !=null and task.id != null" >
+       and task_id = #{task.id,jdbcType=INTEGER}
+     </if>
+     <if test="member != null and member.id != null" >
+       and member_id = #{member.id,jdbcType=INTEGER}
+     </if>
+     <if test="day != null" >
+       and day = #{day,jdbcType=DATE}
+     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="LogDetailKey" >
+  <delete id="deleteByCondition" parameterType="LogDetail" >
     delete from pdc_log_detail
-    where task_id = #{taskId,jdbcType=INTEGER}
-      and member_id = #{memberId,jdbcType=INTEGER}
-      and day = #{day,jdbcType=DATE}
+    where 1=1
+     <if test="task != null and task.id != null" >
+       and task_id = #{task.id,jdbcType=INTEGER}
+     </if>
+     <if test="member != null and member.id != null" >
+       and member_id = #{member.id,jdbcType=INTEGER}
+     </if>
+     <if test="day != null" >
+       and day = #{day,jdbcType=DATE}
+     </if>
   </delete>
   <insert id="insert" parameterType="LogDetail" >
     insert into pdc_log_detail (task_id, member_id, day, 
       work_time, absent)
-    values (#{taskId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{day,jdbcType=DATE}, 
+    values (#{task.id,jdbcType=INTEGER}, #{member.id,jdbcType=INTEGER}, #{day,jdbcType=DATE}, 
       #{workTime,jdbcType=DECIMAL}, #{absent,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="LogDetail" >
     insert into pdc_log_detail
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="taskId != null" >
+      <if test="task != null and task.id != null" >
         task_id,
       </if>
-      <if test="memberId != null" >
+      <if test="member != null and member.id != null" >
         member_id,
       </if>
       <if test="day != null" >
@@ -51,11 +67,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="taskId != null" >
-        #{taskId,jdbcType=INTEGER},
+      <if test="task != null and task.id != null" >
+        #{task.id,jdbcType=INTEGER},
       </if>
-      <if test="memberId != null" >
-        #{memberId,jdbcType=INTEGER},
+      <if test="member != null and member.id != null" >
+        #{member.id,jdbcType=INTEGER},
       </if>
       <if test="day != null" >
         #{day,jdbcType=DATE},
@@ -78,16 +94,30 @@
         absent = #{absent,jdbcType=CHAR},
       </if>
     </set>
-    where task_id = #{taskId,jdbcType=INTEGER}
-      and member_id = #{memberId,jdbcType=INTEGER}
-      and day = #{day,jdbcType=DATE}
+   	where 1=1
+     <if test="task != null and task.id != null" >
+       and task_id = #{task.id,jdbcType=INTEGER}
+     </if>
+     <if test="member != null and member.id != null" >
+       and member_id = #{member.id,jdbcType=INTEGER}
+     </if>
+     <if test="day != null" >
+       and day = #{day,jdbcType=DATE}
+     </if>
   </update>
   <update id="updateByPrimaryKey" parameterType="LogDetail" >
     update pdc_log_detail
     set work_time = #{workTime,jdbcType=DECIMAL},
       absent = #{absent,jdbcType=CHAR}
-    where task_id = #{taskId,jdbcType=INTEGER}
-      and member_id = #{memberId,jdbcType=INTEGER}
-      and day = #{day,jdbcType=DATE}
+  	 where 1=1
+     <if test="task != null and task.id != null" >
+       and task_id = #{task.id,jdbcType=INTEGER}
+     </if>
+     <if test="member != null and member.id != null" >
+       and member_id = #{member.id,jdbcType=INTEGER}
+     </if>
+     <if test="day != null" >
+       and day = #{day,jdbcType=DATE}
+     </if>
   </update>
 </mapper>

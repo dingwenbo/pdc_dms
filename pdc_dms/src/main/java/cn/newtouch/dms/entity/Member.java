@@ -25,8 +25,7 @@ public class Member {
 
     private Integer supervisorId;
 
-    // TODO: backup为布尔值对象
-    private String backup;
+    private boolean backup;
 
     private Date registerDate;
 
@@ -98,13 +97,13 @@ public class Member {
         this.supervisorId = supervisorId;
     }
 
-    public String getBackup() {
-        return backup;
-    }
-
-    public void setBackup(String backup) {
-        this.backup = backup == null ? null : backup.trim();
-    }
+    public boolean isBackup() {
+		return backup;
+	}
+    
+    public void setBackup(boolean backup) {
+		this.backup = backup;
+	}
 
     // 设定JSON序列化时的日期格式
  	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
