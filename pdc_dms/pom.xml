@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.newtouch.dms</groupId>
 	<artifactId>pdc-dms</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>PDC_Daily Management System</name>
 
@@ -34,7 +34,7 @@
 	
 		<!-- Plugin的属性定义 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 	    <mybatis.generator.version>1.3.2</mybatis.generator.version>
 		<!-- 项目属性 -->
 <!-- 		<jdbc.driver.groupId>com.h2database</jdbc.driver.groupId> -->
@@ -398,6 +398,7 @@
 						<source>${java.version}</source>
 						<target>${java.version}</target>
 						<showWarnings>true</showWarnings>
+						<compilerVersion>${java.version}</compilerVersion>
 					</configuration>
 				</plugin>
 	
