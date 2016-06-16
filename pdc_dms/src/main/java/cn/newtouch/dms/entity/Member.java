@@ -25,6 +25,7 @@ public class Member {
 
     private Integer supervisorId;
 
+    // TODO: backup为布尔值对象
     private String backup;
 
     private Date registerDate;

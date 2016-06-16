@@ -8,7 +8,6 @@ import java.util.List;
  *
  */
 public class Project {
-	
 	/** id. */
     private Integer id;
 
@@ -20,6 +19,11 @@ public class Project {
     
     /** members. */
     private List<Member> members;
+    
+    public Project(String code, String label) {
+    	this.code = code;
+    	this.label = label;
+    }
 
     public Integer getId() {
         return id;
@@ -51,5 +55,11 @@ public class Project {
 
 	public void setMembers(List<Member> members) {
 		this.members = members;
+	}
+
+	@Override
+	public String toString() {
+		return "Project [id=" + id + ", code=" + code + ", "
+				+ "label=" + label + ", members=" + members + "]";
 	}
 }

@@ -1,5 +1,7 @@
 package cn.newtouch.dms.repository;
 
+import java.util.List;
+
 import cn.newtouch.dms.entity.Project;
 
 /**
@@ -9,6 +11,8 @@ import cn.newtouch.dms.entity.Project;
  *
  */
 public interface ProjectDao {
+	List<Project> selectBy(Project project);
+	
 	Project selectById(Integer id);
 	
     int deleteById(Integer id);
@@ -16,8 +20,9 @@ public interface ProjectDao {
     int insert(Project record);
 
     int insertSelective(Project record);
-
+    
     int updateSelective(Project record);
 
     int update(Project record);
+    
 }
