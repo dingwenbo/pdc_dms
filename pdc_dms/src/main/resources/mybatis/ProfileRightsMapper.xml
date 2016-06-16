@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.newtouch.dms.repository.ProfileRightsDao" >
+  <resultMap id="BaseResultMap" type="ProfileRightsKey" >
+    <id column="profile_id" property="profileId" jdbcType="INTEGER" />
+    <id column="rights_id" property="rightsId" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="ProfileRightsKey" >
+    delete from pdc_profile_rights
+    where profile_id = #{profileId,jdbcType=INTEGER}
+      and rights_id = #{rightsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="ProfileRightsKey" >
+    insert into pdc_profile_rights (profile_id, rights_id)
+    values (#{profileId,jdbcType=INTEGER}, #{rightsId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="ProfileRightsKey" >
+    insert into pdc_profile_rights
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="profileId != null" >
+        profile_id,
+      </if>
+      <if test="rightsId != null" >
+        rights_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="profileId != null" >
+        #{profileId,jdbcType=INTEGER},
+      </if>
+      <if test="rightsId != null" >
+        #{rightsId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

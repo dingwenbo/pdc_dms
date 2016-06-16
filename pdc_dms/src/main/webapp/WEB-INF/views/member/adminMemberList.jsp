@@ -16,14 +16,14 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead><tr><th>登录名</th><th>用户名</th><th>注册时间<th>管理</th></tr></thead>
 		<tbody>
-		<c:forEach items="${users}" var="user">
+		<c:forEach items="${members}" var="member">
 			<tr>
-				<td><a href="${ctx}/admin/user/update/${user.id}">${user.loginName}</a></td>
-				<td>${user.name}</td>
+				<td><a href="${ctx}/admin/member/update/${member.id}">${member.pdcId}</a></td>
+				<td>${member.name}</td>
 				<td>
-					<fmt:formatDate value="${user.registerDate}" pattern="yyyy年MM月dd日  HH时mm分ss秒" />
+					<fmt:formatDate value="${member.registerDate}" pattern="yyyy年MM月dd日  HH时mm分ss秒" />
 				</td>
-				<td><a href="${ctx}/admin/user/delete/${user.id}">删除</a></td>
+				<td><a href="${ctx}/admin/member/delete/${member.id}">删除</a></td>
 			</tr>
 		</c:forEach>
 		</tbody>

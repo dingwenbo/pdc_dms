@@ -9,20 +9,20 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx}/admin/user/update" method="post" class="form-horizontal">
-		<input type="hidden" name="id" value="${user.id}"/>
+	<form id="inputForm" action="${ctx}/admin/member/update" method="post" class="form-horizontal">
+		<input type="hidden" name="id" value="${member.id}"/>
 		<fieldset>
 			<legend><small>用户管理</small></legend>
 			<div class="control-group">
 				<label class="control-label">登录名:</label>
 				<div class="controls">
-					<input type="text" value="${user.loginName}" class="input-large" disabled="" />
+					<input type="text" value="${member.pdcId}" class="input-large" disabled="" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">用户名:</label>
 				<div class="controls">
-					<input type="text" id="name" name="name" value="${user.name}" class="input-large required"/>
+					<input type="text" id="name" name="name" value="${member.name}" class="input-large required"/>
 				</div>
 			</div>
 			<div class="control-group">
@@ -40,7 +40,7 @@
 			<div class="control-group">
 				<label class="control-label">注册日期:</label>
 				<div class="controls">
-					<span class="help-inline" style="padding:5px 0px"><fmt:formatDate value="${user.registerDate}" pattern="yyyy年MM月dd日  HH时mm分ss秒" /></span>
+					<span class="help-inline" style="padding:5px 0px"><fmt:formatDate value="${member.registerDate}" pattern="yyyy年MM月dd日  HH时mm分ss秒" /></span>
 				</div>
 			</div>
 			<div class="form-actions">

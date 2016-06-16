@@ -5,45 +5,84 @@
 
 <generatorConfiguration>
     <classPathEntry
-            location="C:/Users/E457995/Desktop/h2-1.4.183.jar"/>
+            location="D:/Repositories/maven/mysql/mysql-connector-java/5.1.22/mysql-connector-java-5.1.22.jar"/>
     <context id="my" targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="false"/>
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
 
-        <jdbcConnection driverClass="org.h2.Driver"
-                        connectionURL="jdbc:h2:file:~/.h2/pdc_dms" userId="sa"
-                        password=""/>
+ 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost/pdc_dms"
+                        userId="root"
+                        password="123456"/>
 
         <javaModelGenerator targetPackage="cn.newtouch.dms.entity"
-                            targetProject="C:/git/pdc_dms/pdc_dms/src/main/java/">
+                            targetProject="../pdc_dms/src/main/java">
             <property name="enableSubPackages" value="no"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="mybatis"
-                         targetProject="C:/git/pdc_dms/pdc_dms/src/main/resources">
+                         targetProject="../pdc_dms/src/main/resources">
             <property name="enableSubPackages" value="no"/>
         </sqlMapGenerator>
 
         <javaClientGenerator targetPackage="cn.newtouch.dms.repository"
-                             targetProject="C:/git/pdc_dms/pdc_dms/src/main/java" type="XMLMAPPER">
+                             targetProject="../pdc_dms/src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="no"/>
         </javaClientGenerator>
-
-        <!--<table tableName="T_FEE_AGTBILL" domainObjectName="FeeAgentBill"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false"/>-->
-
-        <table tableName="ss_user" domainObjectName="User2"
+        
+        <table tableName="pdc_profile_rights" domainObjectName="ProfileRights" 
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <!--<columnRenamingRule searchString="^D_"
-                                replaceString=""/>-->
         </table>
-
+        <table tableName="pdc_rights" domainObjectName="Rights" 
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="pdc_role_profile" domainObjectName="RoleProfile" 
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="pdc_profile" domainObjectName="Profile" 
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="pdc_log_detail" domainObjectName="LogDetail" 
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="pdc_member" domainObjectName="Member" 
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        
+        <table tableName="pdc_role" domainObjectName="Role" 
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="pdc_task_status" domainObjectName="TaskStatus" 
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="pdc_task" domainObjectName="Task" 
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="pdc_project" domainObjectName="Project" 
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
     </context>
 </generatorConfiguration>

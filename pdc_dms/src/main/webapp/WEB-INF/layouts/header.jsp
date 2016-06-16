@@ -13,8 +13,8 @@
 				</a>
 			
 				<ul class="dropdown-menu">
-					<shiro:hasRole name="admin">
-						<li><a href="${ctx}/admin/user">Admin Users</a></li>
+					<shiro:hasRole name="Admin">
+						<li><a href="${ctx}/admin/member">Admin Members</a></li>
 						<li class="divider"></li>
 					</shiro:hasRole>
 					<li><a href="${ctx}/profile">Edit Profile</a></li>
