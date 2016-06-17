@@ -58,13 +58,13 @@ public class MemberServiceImpl implements MemberService {
 	public List<Member> selectAll() {
 		return memberDao.selectAll();
 	}
+	
 	public void deleteMember(Integer id) {
 		if (isSupervisor(id)) {
 			logger.warn("操作员{}尝试删除超级管理员用户", getCurrentUserName());
 			throw new ServiceException("不能删除超级管理员用户");
 		}
 		memberDao.deleteByPrimaryKey(id);
-
 	}
 
 	/**
