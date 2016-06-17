@@ -1,6 +1,7 @@
 package cn.newtouch.dms.entity;
 
-public class Rights {
+public class Right {
+	
     private Integer id;
 
     private String code;

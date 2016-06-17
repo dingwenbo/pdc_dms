@@ -1,5 +1,5 @@
 package cn.newtouch.dms.service;
 
-public interface LogDeatilService {
+public interface LogDetailService {
 
 }

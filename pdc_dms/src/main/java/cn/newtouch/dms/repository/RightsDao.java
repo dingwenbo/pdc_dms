@@ -1,17 +1,17 @@
 package cn.newtouch.dms.repository;
 
-import cn.newtouch.dms.entity.Rights;
+import cn.newtouch.dms.entity.Right;
 
 public interface RightsDao {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Rights record);
+    int insert(Right record);
 
-    int insertSelective(Rights record);
+    int insertSelective(Right record);
 
-    Rights selectByPrimaryKey(Integer id);
+    Right selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Rights record);
+    int updateByPrimaryKeySelective(Right record);
 
-    int updateByPrimaryKey(Rights record);
+    int updateByPrimaryKey(Right record);
 }

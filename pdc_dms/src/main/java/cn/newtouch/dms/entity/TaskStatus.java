@@ -1,6 +1,7 @@
 package cn.newtouch.dms.entity;
 
 public class TaskStatus {
+	
     private Integer id;
 
     private String code;

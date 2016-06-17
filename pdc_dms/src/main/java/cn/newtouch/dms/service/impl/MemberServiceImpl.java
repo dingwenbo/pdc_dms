@@ -32,6 +32,10 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDao memberDao;
 	
+	public MemberServiceImpl() {
+		logger.info("初始化MemberService实例...");
+	}
+	
 	@Override
 	public Member findMemberByPdcId(String pdcId) {
 		return memberDao.findMemberByPdcId(pdcId);

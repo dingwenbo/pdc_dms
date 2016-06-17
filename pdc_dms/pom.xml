@@ -235,6 +235,12 @@
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
+		<!-- 日期时间通用库 -->
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		    <version>2.9.4</version>
+		</dependency>
 		<!-- GENERAL UTILS end -->
 
 		<!-- TEST begin -->
