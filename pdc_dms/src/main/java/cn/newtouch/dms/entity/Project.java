@@ -20,6 +20,9 @@ public class Project {
     /** members. */
     private List<Member> members;
     
+    public Project() {
+    }
+    
     public Project(String code, String label) {
     	this.code = code;
     	this.label = label;

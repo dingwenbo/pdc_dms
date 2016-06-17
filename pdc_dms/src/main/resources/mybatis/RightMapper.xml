@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.newtouch.dms.repository.RightsDao" >
-  <resultMap id="BaseResultMap" type="Rights" >
+<mapper namespace="cn.newtouch.dms.repository.RightDao" >
+  <resultMap id="BaseResultMap" type="Right" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="label" property="label" jdbcType="VARCHAR" />
@@ -19,13 +19,13 @@
     delete from pdc_rights
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="Rights" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="Right" useGeneratedKeys="true" keyProperty="id">
     insert into pdc_rights (code, label
       )
     values (#{code,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="Rights" >
+  <insert id="insertSelective" parameterType="Right" >
     insert into pdc_rights
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -50,7 +50,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="Rights" >
+  <update id="updateByPrimaryKeySelective" parameterType="Right" >
     update pdc_rights
     <set >
       <if test="code != null" >
@@ -62,7 +62,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="Rights" >
+  <update id="updateByPrimaryKey" parameterType="Right" >
     update pdc_rights
     set code = #{code,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR}

@@ -2,7 +2,7 @@ package cn.newtouch.dms.repository;
 
 import cn.newtouch.dms.entity.Right;
 
-public interface RightsDao {
+public interface RightDao {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Right record);
