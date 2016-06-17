@@ -14,13 +14,12 @@ public enum EnumTaskStatus {
 	FINISHED("Finished");
 	
 	private String code;
-	private String label;
 	
-	private EnumTaskStatus(String label) {
-		this.label = label;
+	private EnumTaskStatus(String code) {
+		this.code = code;
 	}
 	
-	public String getLabel() {
-		return this.label;
+	public String getCode() {
+		return this.code;
 	}
 }
