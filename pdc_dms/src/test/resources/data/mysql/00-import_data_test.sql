@@ -35,7 +35,7 @@ insert into pdc_task_status(id, code) values(1, 'In progress');
 insert into pdc_task_status(id, code) values(2, 'Finished');
 
 insert into pdc_task(id, project_id, code, title, status_id, percent, comment) values(1, 1, 'TASK-01', 'TEST-TASK-01', 1, '20%', 'no comment');
-insert into pdc_task(id, project_id, code, title, status_id, percent, comment) values(2, 1, 'TASK-02', 'TEST-TASK-02', 1, '50%', 'comment');
+insert into pdc_task(id, project_id, code, title, status_id, percent, comment) values(2, 1, 'TASK-02', 'TEST-TASK-02', 2, '50%', 'comment');
 
 insert into pdc_log_detail(task_id, member_id, day, work_time, absent) values(1, 9002, now(), 0.5, null);
 insert into pdc_log_detail(task_id, member_id, day, work_time, absent) values(1, 9003, now(), 1, null);

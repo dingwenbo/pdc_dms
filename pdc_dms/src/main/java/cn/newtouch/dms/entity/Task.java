@@ -1,5 +1,7 @@
 package cn.newtouch.dms.entity;
 
+import cn.newtouch.dms.constants.EnumTaskStatus;
+
 public class Task {
     private Integer id;
 
@@ -9,7 +11,7 @@ public class Task {
 
     private String title;
 
-    private Integer statusId;
+    private EnumTaskStatus status;
 
     private String percent;
 
@@ -47,14 +49,33 @@ public class Task {
         this.title = title == null ? null : title.trim();
     }
 
-    public Integer getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(Integer statusId) {
-        this.statusId = statusId;
-    }
-
+	public void setStatus(EnumTaskStatus status) {
+		this.status = status;
+	}
+	
+	public EnumTaskStatus getStatus() {
+		return status;
+	}
+	
+	public void setStatusId(Integer statusId) {
+		if (statusId == null) {
+			return;
+		}
+		for (EnumTaskStatus taskStatus : EnumTaskStatus.values()) {
+			if (taskStatus.getId().intValue() == statusId.intValue()) {
+				this.status = taskStatus;
+				return;
+			}
+		}
+	}
+	
+	public Integer getStatusId() {
+		if (status == null) {
+			return null;
+		}
+		return status.getId();
+	}
+	
     public String getPercent() {
         return percent;
     }

@@ -1,5 +1,6 @@
 package cn.newtouch.dms.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -11,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springside.modules.test.spring.SpringTransactionalTestCase;
 import org.springside.modules.utils.Clock;
 
+import cn.newtouch.dms.constants.EnumTaskStatus;
 import cn.newtouch.dms.entity.LogDetail;
 import cn.newtouch.dms.entity.Member;
 import cn.newtouch.dms.entity.Task;
@@ -71,6 +73,23 @@ public class LogDetailDAOTest extends SpringTransactionalTestCase {
 		}
 		
 	}
-	
-	
+	@Test
+	public void testInsert() {
+		LogDetail logDetail = new LogDetail();
+		logDetail.setDay(Clock.DEFAULT.getCurrentDate());
+		Member member = new Member();
+		member.setId(9003);
+		logDetail.setMember(member);
+		Task task = new Task();
+		task.setId(2);
+		logDetail.setTask(task);
+		logDetail.setWorkTime(BigDecimal.ONE);
+		logDetailDao.insert(logDetail);
+		
+		List<LogDetail> logDetails = logDetailDao.selectByCondition(logDetail);
+		for (LogDetail logDetail2 : logDetails) {
+			System.out.println(logDetail2);
+		}
+		
+	}
 }

@@ -6,7 +6,7 @@
     <result column="project_id" property="projectId" jdbcType="INTEGER" />
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="status_id" property="statusId" jdbcType="INTEGER" />
+    <result column="status_id" property="statusId"/>
     <result column="percent" property="percent" jdbcType="CHAR" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
   </resultMap>
