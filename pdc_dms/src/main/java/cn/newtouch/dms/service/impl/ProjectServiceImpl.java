@@ -20,11 +20,10 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	public ProjectServiceImpl() {
 		logger.info("构造Project Service...");
-		// 不能直接调用projectDao.
 	}
 	
 	@PostConstruct
 	public void init() {
-		logger.info("执行Project Service的初始化方法init");
+		logger.info("正在执行Project Service的初始化方法init()");
 	}
 }
