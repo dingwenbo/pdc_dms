@@ -8,13 +8,13 @@
   <sql id="Base_Column_List" >
     id, code
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from pdc_task_status
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteId" parameterType="java.lang.Integer" >
     delete from pdc_task_status
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -41,7 +41,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="TaskStatus" >
+  <update id="updateSelective" parameterType="TaskStatus" >
     update pdc_task_status
     <set >
       <if test="code != null" >
@@ -50,7 +50,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="TaskStatus" >
+  <update id="update" parameterType="TaskStatus" >
     update pdc_task_status
     set code = #{code,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

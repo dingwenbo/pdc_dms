@@ -84,7 +84,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="LogDetail" >
+  <update id="updateSelective" parameterType="LogDetail" >
     update pdc_log_detail
     <set >
       <if test="workTime != null" >
@@ -105,7 +105,7 @@
        and day = #{day,jdbcType=DATE}
      </if>
   </update>
-  <update id="updateByPrimaryKey" parameterType="LogDetail" >
+  <update id="update" parameterType="LogDetail" >
     update pdc_log_detail
     set work_time = #{workTime,jdbcType=DECIMAL},
       absent = #{absent,jdbcType=CHAR}

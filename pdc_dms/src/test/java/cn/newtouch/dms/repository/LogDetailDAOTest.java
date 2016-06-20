@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springside.modules.test.spring.SpringTransactionalTestCase;
 import org.springside.modules.utils.Clock;
 
-import cn.newtouch.dms.constants.EnumTaskStatus;
 import cn.newtouch.dms.entity.LogDetail;
 import cn.newtouch.dms.entity.Member;
 import cn.newtouch.dms.entity.Task;

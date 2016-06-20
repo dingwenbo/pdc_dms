@@ -14,7 +14,7 @@ public interface LogDetailDao {
 
     List<LogDetail> selectByCondition(LogDetail logDetail);
 
-    int updateByPrimaryKeySelective(LogDetail record);
+    int updateSelective(LogDetail record);
 
-    int updateByPrimaryKey(LogDetail record);
+    int update(LogDetail record);
 }

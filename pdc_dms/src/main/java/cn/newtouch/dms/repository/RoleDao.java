@@ -3,15 +3,15 @@ package cn.newtouch.dms.repository;
 import cn.newtouch.dms.entity.Role;
 
 public interface RoleDao {
-    int deleteByPrimaryKey(Integer id);
+    int deleteById(Integer id);
 
     int insert(Role record);
 
     int insertSelective(Role record);
 
-    Role selectByPrimaryKey(Integer id);
+    Role selectById(Integer id);
 
-    int updateByPrimaryKeySelective(Role record);
+    int updateSelective(Role record);
 
-    int updateByPrimaryKey(Role record);
+    int update(Role record);
 }

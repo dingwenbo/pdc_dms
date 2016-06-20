@@ -9,13 +9,13 @@
   <sql id="Base_Column_List" >
     id, code, label
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from pdc_rights
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteById" parameterType="java.lang.Integer" >
     delete from pdc_rights
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -50,7 +50,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="Right" >
+  <update id="updateSelective" parameterType="Right" >
     update pdc_rights
     <set >
       <if test="code != null" >
@@ -62,7 +62,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="Right" >
+  <update id="update" parameterType="Right" >
     update pdc_rights
     set code = #{code,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR}

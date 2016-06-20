@@ -38,11 +38,11 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public Member findMemberByPdcId(String pdcId) {
-		return memberDao.findMemberByPdcId(pdcId);
+		return memberDao.selectByPdcId(pdcId);
 	}
 	@Override
 	public Member selectMemberById(Integer id) {
-		return memberDao.selectByPrimaryKey(id);
+		return memberDao.selectById(id);
 	}
 
 	public void insertMember(Member member) {
@@ -56,7 +56,7 @@ public class MemberServiceImpl implements MemberService {
 		if (StringUtils.isNotBlank(member.getPlainPassword())) {
 			entryptPassword(member);
 		}
-		memberDao.updateByPrimaryKey(member);
+		memberDao.update(member);
 	}
 	
 	public List<Member> selectAll() {
@@ -68,14 +68,14 @@ public class MemberServiceImpl implements MemberService {
 			logger.warn("操作员{}尝试删除超级管理员用户", getCurrentUserName());
 			throw new ServiceException("不能删除超级管理员用户");
 		}
-		memberDao.deleteByPrimaryKey(id);
+		memberDao.deleteById(id);
 	}
 
 	/**
 	 * 判断是否超级管理员.
 	 */
 	private boolean isSupervisor(Integer id) {
-		Member member = memberDao.selectByPrimaryKey(id);
+		Member member = memberDao.selectById(id);
 		
 		return member != null && member.getRoleId() == 1;
 	}

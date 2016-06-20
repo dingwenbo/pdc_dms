@@ -8,8 +8,6 @@ package cn.newtouch.dms.service.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
-import java.util.Date;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -74,7 +72,7 @@ public class MemberServiceTest {
 	public void deleteUser() {
 		// 正常删除用户.
 		memberService.deleteMember(3);
-		Mockito.verify(mockMemberDao).deleteByPrimaryKey(3);
+		Mockito.verify(mockMemberDao).deleteById(3);
 
 		// 删除超级管理用户抛出异常, userDao没有被执行
 		try {
@@ -83,7 +81,7 @@ public class MemberServiceTest {
 		} catch (ServiceException e) {
 			// expected exception
 		}
-		Mockito.verify(mockMemberDao, Mockito.never()).deleteByPrimaryKey(1);
+		Mockito.verify(mockMemberDao, Mockito.never()).deleteById(1);
 	}
 
 }

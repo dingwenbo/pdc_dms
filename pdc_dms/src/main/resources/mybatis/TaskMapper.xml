@@ -13,13 +13,13 @@
   <sql id="Base_Column_List" >
     id, project_id, code, title, status_id, percent, comment
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from pdc_task
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteById" parameterType="java.lang.Integer" >
     delete from pdc_task
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="Task" >
+  <update id="updateSelective" parameterType="Task" >
     update pdc_task
     <set >
       <if test="projectId != null" >
@@ -104,7 +104,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="Task" >
+  <update id="update" parameterType="Task" >
     update pdc_task
     set project_id = #{projectId,jdbcType=INTEGER},
       code = #{code,jdbcType=VARCHAR},

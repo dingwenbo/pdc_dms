@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springside.modules.test.spring.SpringTransactionalTestCase;
 
@@ -45,7 +44,7 @@ public class UserTest extends SpringTransactionalTestCase {
 	@Test
 	public void registerMember() {
 		Member member = UserData.randomNewUser();
-		Date currentTime = new Date();
+//		Date currentTime = new Date();
 
 		memberService.insertMember(member);
 
