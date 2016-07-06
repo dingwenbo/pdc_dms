@@ -13,9 +13,9 @@ import org.springside.modules.utils.Clock;
 import org.springside.modules.utils.Encodes;
 
 import cn.newtouch.dms.entity.Member;
+import cn.newtouch.dms.exception.service.DmsServiceException;
 import cn.newtouch.dms.repository.MemberDao;
 import cn.newtouch.dms.service.MemberService;
-import cn.newtouch.dms.service.ServiceException;
 import cn.newtouch.dms.service.impl.ShiroDbRealm.ShiroUser;
 
 @Service("memberService")
@@ -66,7 +66,7 @@ public class MemberServiceImpl implements MemberService {
 	public void deleteMember(Integer id) {
 		if (isSupervisor(id)) {
 			logger.warn("操作员{}尝试删除超级管理员用户", getCurrentUserName());
-			throw new ServiceException("不能删除超级管理员用户");
+			throw new DmsServiceException("不能删除超级管理员用户");
 		}
 		memberDao.deleteById(id);
 	}

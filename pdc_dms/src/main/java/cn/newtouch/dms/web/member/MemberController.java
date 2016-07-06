@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *******************************************************************************/
-package cn.newtouch.dms.web;
+package cn.newtouch.dms.web.member;
 
 import java.util.List;
 
@@ -28,8 +28,8 @@ import cn.newtouch.dms.service.MemberService;
  * @author calvin
  */
 @Controller
-@RequestMapping(value = "/admin/member")
-public class MemberAdminController {
+@RequestMapping(value = "/member")
+public class MemberController {
 
 	@Autowired
 	private MemberService memberService;

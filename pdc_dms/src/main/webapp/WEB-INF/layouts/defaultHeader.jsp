@@ -1,10 +1,12 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+
 <div id="header">
 	<div id="title">
-	    <h1><a href="${ctx}">Digit Manage System</a><small>--TEST 应用演示</small>
+	    <h1><a href="${ctx}">PDC日常管理系统</a><small></small>
 	    <shiro:user>
 			<div class="btn-group pull-right">
 				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -12,7 +14,7 @@
 					<span class="caret"></span>
 				</a>
 			
-				<ul class="dropdown-menu">
+				<ul class="dropdown-menu" style="z-index:1001;">
 					<shiro:hasRole name="Admin">
 						<li><a href="${ctx}/admin/member">Admin Members</a></li>
 						<li class="divider"></li>

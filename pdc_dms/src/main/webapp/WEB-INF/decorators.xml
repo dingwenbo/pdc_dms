@@ -6,6 +6,13 @@
 	</excludes>
 	
 	<decorator name="default" page="default.jsp">
-		<pattern>/*</pattern>
+		<!-- URL的pattern -->
+		<pattern>/login</pattern>
+		<pattern>/login/success</pattern>
+	</decorator>
+	
+	<decorator name="main" page="main.jsp">
+		<pattern>/member/*</pattern>
+		<pattern>/main/*</pattern>
 	</decorator>
 </decorators>

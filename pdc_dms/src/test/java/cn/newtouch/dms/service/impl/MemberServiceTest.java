@@ -18,9 +18,9 @@ import org.springside.modules.test.security.shiro.ShiroTestUtils;
 
 import cn.newtouch.dms.data.UserData;
 import cn.newtouch.dms.entity.Member;
+import cn.newtouch.dms.exception.service.DmsServiceException;
 import cn.newtouch.dms.repository.MemberDao;
 import cn.newtouch.dms.service.MemberService;
-import cn.newtouch.dms.service.ServiceException;
 import cn.newtouch.dms.service.impl.ShiroDbRealm.ShiroUser;
 
 /**
@@ -77,8 +77,8 @@ public class MemberServiceTest {
 		// 删除超级管理用户抛出异常, userDao没有被执行
 		try {
 			memberService.deleteMember(1);
-			failBecauseExceptionWasNotThrown(ServiceException.class);
-		} catch (ServiceException e) {
+			failBecauseExceptionWasNotThrown(DmsServiceException.class);
+		} catch (DmsServiceException e) {
 			// expected exception
 		}
 		Mockito.verify(mockMemberDao, Mockito.never()).deleteById(1);

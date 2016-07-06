@@ -1,0 +1,11 @@
+.blank1 { height: 1px; clear: both; font-size: 1px; overflow: hidden;}
+.blank2 { height: 2px; clear: both; font-size: 1px; overflow: hidden;}
+.blank5 { height: 5px; clear: both; font-size: 1px; overflow: hidden;}
+.blank10 { height: 10px; clear: both; font-size: 1px; overflow: hidden;}
+.blank20 { height: 20px; clear: both; font-size: 1px; overflow: hidden;}
+.blank50 { height: 50px; clear: both; font-size: 1px; overflow: hidden;}
+.blank100 { height: 100px; clear: both; font-size: 1px; overflow: hidden;}
+
+
+.text-center { align:center !important;}
+.text-white {color:#FFFFFF !important;}

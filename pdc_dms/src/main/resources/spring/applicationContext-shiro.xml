@@ -25,6 +25,7 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/login = authc
+				/login/** = authc	
 				/logout = logout
 				/static/** = anon
 				/api/** = anon

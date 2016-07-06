@@ -3,7 +3,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *******************************************************************************/
-package cn.newtouch.dms.service;
+package cn.newtouch.dms.exception.service;
+
+import cn.newtouch.dms.exception.DmsRuntimeException;
 
 /**
  * Service层公用的Exception.
@@ -12,23 +14,23 @@ package cn.newtouch.dms.service;
  * 
  * @author calvin
  */
-public class ServiceException extends RuntimeException {
+public class DmsServiceException extends DmsRuntimeException {
 
 	private static final long serialVersionUID = 3583566093089790852L;
 
-	public ServiceException() {
+	public DmsServiceException() {
 		super();
 	}
 
-	public ServiceException(String message) {
+	public DmsServiceException(String message) {
 		super(message);
 	}
 
-	public ServiceException(Throwable cause) {
+	public DmsServiceException(Throwable cause) {
 		super(cause);
 	}
 
-	public ServiceException(String message, Throwable cause) {
+	public DmsServiceException(String message, Throwable cause) {
 		super(message, cause);
 	}
 }

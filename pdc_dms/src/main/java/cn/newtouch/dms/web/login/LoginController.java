@@ -1,9 +1,4 @@
-/*******************************************************************************
- * Copyright (c) 2005, 2014 springside.github.io
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- *******************************************************************************/
-package cn.newtouch.dms.web;
+package cn.newtouch.dms.web.login;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,29 +14,30 @@ import org.springframework.web.bind.annotation.RequestParam;
  * 
  * 真正登录的POST请求由Filter完成,
  * 
- * @author calvin
+ * @author JiaLong.Wang
  */
 @Controller
 @RequestMapping(value = "/login")
 public class LoginController {
 
-    Log log = LogFactory.getLog(LoginController.class);
-	@RequestMapping(method = RequestMethod.GET)
+	/** logger. */
+    private static final Log LOGGER = LogFactory.getLog(LoginController.class);
+    
+	@RequestMapping(method =  RequestMethod.GET)
 	public String login() {
-	    log.info("member LOGIN");
-		return "member/login";
+		return "login";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String fail(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String userName, Model model) {
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, userName);
-		return "member/login";
+		LOGGER.info("用户[" + userName + "] 尝试登陆系统失败!");
+		return "login";
 	}
 	
 	@RequestMapping("/success")
 	public String success() {
-	    
-	    return "loginOK";
+	    return "menu";
 	}
 
 }

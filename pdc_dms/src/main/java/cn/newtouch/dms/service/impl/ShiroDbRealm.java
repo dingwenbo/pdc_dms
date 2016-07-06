@@ -20,6 +20,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.utils.Encodes;
 
 import com.google.common.base.Objects;
@@ -31,8 +32,10 @@ import cn.newtouch.dms.service.RoleService;
 
 public class ShiroDbRealm extends AuthorizingRealm {
 
+	@Autowired
 	protected MemberService memberService;
 
+	@Autowired
 	protected RoleService roleService;
 	/**
 	 * 认证回调函数,登录时调用.
