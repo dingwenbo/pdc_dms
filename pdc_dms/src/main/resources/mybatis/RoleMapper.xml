@@ -7,16 +7,10 @@
     <result column="label" property="label" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, code, label
+    id, code, label, prior
   </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from pdc_role
-    where id = #{id,jdbcType=INTEGER}
-  </select>
   <delete id="deleteById" parameterType="java.lang.Integer" >
-    delete from pdc_role
+    delete from pdc_role 
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="Role" useGeneratedKeys="true" keyProperty="id">
@@ -68,4 +62,15 @@
       label = #{label,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pdc_role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pdc_role
+  </select>
 </mapper>

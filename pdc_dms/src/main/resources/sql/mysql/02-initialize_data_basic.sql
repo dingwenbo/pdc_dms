@@ -2,11 +2,11 @@ delete from pdc_project;
 delete from pdc_member;
 delete from pdc_role;
 
-insert into pdc_role(id, code, label) values(1, 'Admin', 'Administrator of PDC-DMS');
-insert into pdc_role(id, code, label) values(2, 'PM', 'Project manager');
-insert into pdc_role(id, code, label) values(3, 'TL', 'Team Leader');
-insert into pdc_role(id, code, label) values(4, 'SE', 'Senior engineer');
-insert into pdc_role(id, code, label) values(5, 'DEV', 'Developer');
+insert into pdc_role(id, code, label, prior) values(1, 'Admin', 'Administrator of PDC-DMS', 0);
+insert into pdc_role(id, code, label, prior) values(2, 'PM', 'Project manager', 1);
+insert into pdc_role(id, code, label, prior) values(3, 'TL', 'Team Leader', 2);
+insert into pdc_role(id, code, label, prior) values(4, 'SE', 'Senior engineer', 3);
+insert into pdc_role(id, code, label, prior) values(5, 'DEV', 'Developer', 4);
 
 /* 插入超管, 密码为admin */
 insert into pdc_member(id, pdc_id, password, salt, name, role_id, register_date) 

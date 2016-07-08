@@ -16,7 +16,7 @@ import cn.newtouch.dms.entity.Member;
 import cn.newtouch.dms.exception.service.DmsServiceException;
 import cn.newtouch.dms.repository.MemberDao;
 import cn.newtouch.dms.service.MemberService;
-import cn.newtouch.dms.service.impl.ShiroDbRealm.ShiroUser;
+import cn.newtouch.dms.shiro.ShiroUser;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {

@@ -5,6 +5,7 @@
 */
 insert into pdc_member(id, pdc_id, password, salt, name, role_id, register_date)
 	values(9002, 'T000002', '2488aa0c31c624687bd9928e0a5d29e7d1ed520b', '6d65d24122c30500', '测试PM1', 2, now());
+	
 insert into pdc_member(id, pdc_id, password, salt, name, role_id, supervisor_id, register_date)
 	values(9003, 'T000003', '2488aa0c31c624687bd9928e0a5d29e7d1ed520b', '6d65d24122c30500', '测试TL1', 3, 9002, now());
 insert into pdc_member(id, pdc_id, password, salt, name, role_id, supervisor_id, register_date)
@@ -35,6 +36,8 @@ insert into pdc_project_member(project_id, member_id) values(2, 9010);
 
 insert into pdc_task_status(id, code) values(1, 'In progress');
 insert into pdc_task_status(id, code) values(2, 'Finished');
+insert into pdc_task_status(id, code) values(3, 'TODO');
+insert into pdc_task_status(id, code) values(4, 'Pending');
 
 insert into pdc_task(id, project_id, code, title, status_id, percent, comment) values(1, 1, 'TASK-01', 'TEST-TASK-01', 1, '20%', 'no comment');
 insert into pdc_task(id, project_id, code, title, status_id, percent, comment) values(2, 1, 'TASK-02', 'TEST-TASK-02', 2, '50%', 'comment');

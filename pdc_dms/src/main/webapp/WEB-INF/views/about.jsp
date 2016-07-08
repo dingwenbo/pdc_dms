@@ -20,6 +20,8 @@
 	项目网站负责人：JiaLong.Wang
 	<div class="blank5"></div>
 	网站制作人：PDC FJV2 Team.
+	<div class="blank5"></div>
+	项目Git网址：https://github.com/dingwenbo/pdc_dms
 	<div class="blank10"></div>
 	(c) Copyright ©2016-2017 Newtouch Co.Ltd Powered By [JiaLong.Wang] Version 0.0.2. All rights reserved.
 </body>

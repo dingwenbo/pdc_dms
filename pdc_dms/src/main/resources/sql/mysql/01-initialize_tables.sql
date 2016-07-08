@@ -1,3 +1,10 @@
+/*
+ * 主键的列名统一为id。
+ * 为方便数据操作及维护，不建立任何外键，用程序去保证关联关系。
+ * --为表名添加前缀以便日后管理。比如有几十个表，将联系比较紧密的表，使用相同的前缀。
+ * 表名全小写，因为MySQL在Linux下默认区分表名大小写。
+ */
+
 drop table if exists pdc_profile_rights;
 drop table if exists pdc_rights;
 drop table if exists pdc_role_profile;
@@ -35,8 +42,6 @@ create table pdc_member (
 	backup char(1) default '0',
 	register_date date,
 	primary key(id),
-	foreign key(role_id) references pdc_role(id),
-	foreign key(supervisor_id) references pdc_member(id)
 );
 
 /*
@@ -46,6 +51,7 @@ create table pdc_project (
 	id int auto_increment,
 	code varchar(12) not null,
 	label varchar(50),
+	prior int,
 	primary key(id)
 );
 
@@ -110,8 +116,6 @@ create table pdc_role_profile (
 	role_id int,
 	profile_id int,
 	primary key(role_id, profile_id),
-	foreign key(role_id) references pdc_role(id),
-	foreign key(profile_id) references pdc_profile(id)
 );
 
 /*
@@ -131,6 +135,4 @@ create table pdc_profile_rights (
 	profile_id int, 
 	rights_id int,
 	primary key(profile_id, rights_id),
-	foreign key(profile_id) references pdc_profile(id),
-	foreign key(rights_id) references pdc_rights(id)
 );

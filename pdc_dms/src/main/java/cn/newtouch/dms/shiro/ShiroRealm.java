@@ -3,9 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *******************************************************************************/
-package cn.newtouch.dms.service.impl;
-
-import java.io.Serializable;
+package cn.newtouch.dms.shiro;
 
 import javax.annotation.PostConstruct;
 
@@ -23,20 +21,25 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.utils.Encodes;
 
-import com.google.common.base.Objects;
-
 import cn.newtouch.dms.entity.Member;
 import cn.newtouch.dms.entity.Role;
 import cn.newtouch.dms.service.MemberService;
 import cn.newtouch.dms.service.RoleService;
+import cn.newtouch.dms.service.impl.MemberServiceImpl;
 
-public class ShiroDbRealm extends AuthorizingRealm {
+/**
+ * Shiro 权限验证。
+ * @author JiaLong.Wang
+ *
+ */
+public class ShiroRealm extends AuthorizingRealm {
 
 	@Autowired
 	protected MemberService memberService;
 
 	@Autowired
 	protected RoleService roleService;
+	
 	/**
 	 * 认证回调函数,登录时调用.
 	 */
@@ -61,7 +64,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
 		Member member = memberService.findMemberByPdcId(shiroUser.pdcId);
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		Role role = roleService.selectById(member.getRoleId());
+		Role role = roleService.getRoleById(member.getRoleId());
 		if (role != null) {
 			info.addRole(role.getCode());
 		}
@@ -85,65 +88,5 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	
 	public void setMemberService(MemberService memberService) {
 		this.memberService = memberService;
-	}
-	/**
-	 * 自定义Authentication对象，使得Subject除了携带用户的登录名外还可以携带更多信息.
-	 */
-	public static class ShiroUser implements Serializable {
-		private static final long serialVersionUID = -1373760761780840081L;
-		public Integer id;
-		public String pdcId;
-		public String name;
-
-		public ShiroUser(Integer id, String pdcId, String name) {
-			this.id = id;
-			this.pdcId = pdcId;
-			this.name = name;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		/**
-		 * 本函数输出将作为默认的<shiro:principal/>输出.
-		 */
-		@Override
-		public String toString() {
-			return pdcId;
-		}
-
-		/**
-		 * 重载hashCode,只计算loginName;
-		 */
-		@Override
-		public int hashCode() {
-			return Objects.hashCode(pdcId);
-		}
-
-		/**
-		 * 重载equals,只计算loginName;
-		 */
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-			if (obj == null) {
-				return false;
-			}
-			if (getClass() != obj.getClass()) {
-				return false;
-			}
-			ShiroUser other = (ShiroUser) obj;
-			if (pdcId == null) {
-				if (other.pdcId != null) {
-					return false;
-				}
-			} else if (!pdcId.equals(other.pdcId)) {
-				return false;
-			}
-			return true;
-		}
 	}
 }

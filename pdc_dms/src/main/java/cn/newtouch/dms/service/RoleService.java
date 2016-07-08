@@ -1,5 +1,7 @@
 package cn.newtouch.dms.service;
 
+import java.util.List;
+
 import cn.newtouch.dms.entity.Role;
 
 /**
@@ -10,5 +12,9 @@ import cn.newtouch.dms.entity.Role;
  */
 public interface RoleService {
 
-	Role selectById(Integer id);
+	Role getRoleById(Integer id);
+	
+	List<Role> getRoles();
+	
+	List<Role> getRolesPriorLowerThan(Role role);
 }

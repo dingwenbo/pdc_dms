@@ -7,12 +7,12 @@
 
 	<!-- Shiro's main business-tier object for web-enabled applications -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<property name="realm" ref="shiroDbRealm" />
+		<property name="realm" ref="shiroRealm" />
 		<property name="cacheManager" ref="shiroEhcacheManager" />
 	</bean>
 
 	<!-- 項目自定义的Realm, 所有accountService依赖的dao都需要用depends-on声明 -->
-	<bean id="shiroDbRealm" class="cn.newtouch.dms.service.impl.ShiroDbRealm">
+	<bean id="shiroRealm" class="cn.newtouch.dms.shiro.ShiroRealm">
 		<property name="memberService" ref="memberService"/>
 		<property name="roleService" ref="roleService"/>
 	</bean>
@@ -21,11 +21,12 @@
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login" />
-		<property name="successUrl" value="/" />
+		<!-- 鉴权成功后跳转的页面 -->
+		<property name="successUrl" value="/login/success" />
 		<property name="filterChainDefinitions">
 			<value>
 				/login = authc
-				/login/** = authc	
+				/login/* = authc
 				/logout = logout
 				/static/** = anon
 				/api/** = anon
