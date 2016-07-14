@@ -18,7 +18,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.utils.Encodes;
 
 import cn.newtouch.dms.entity.Member;
@@ -34,10 +33,8 @@ import cn.newtouch.dms.service.impl.MemberServiceImpl;
  */
 public class ShiroRealm extends AuthorizingRealm {
 
-	@Autowired
 	protected MemberService memberService;
 
-	@Autowired
 	protected RoleService roleService;
 	
 	/**
