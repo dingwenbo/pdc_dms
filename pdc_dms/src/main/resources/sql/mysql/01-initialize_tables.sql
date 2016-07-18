@@ -42,7 +42,7 @@ create table pdc_member (
 	supervisor_id int,
 	backup char(1) default '0',
 	register_date date,
-	primary key(id),
+	primary key(id)
 );
 
 /*
@@ -52,7 +52,6 @@ create table pdc_project (
 	id int auto_increment,
 	code varchar(12) not null,
 	label varchar(50),
-	prior int,
 	primary key(id)
 );
 
@@ -101,7 +100,7 @@ create table pdc_log_detail (
 );
 
 /*
-	文档记录信息表
+	档案记录信息表
 */
 create table pdc_profile (
 	id int auto_increment,
@@ -111,12 +110,12 @@ create table pdc_profile (
 );
 
 /*
-	角色文档信息表
+	角色档案信息表
 */
 create table pdc_role_profile (
 	role_id int,
 	profile_id int,
-	primary key(role_id, profile_id),
+	primary key(role_id, profile_id)
 );
 
 /*
@@ -130,10 +129,25 @@ create table pdc_rights (
 );
 
 /*
-	文档权限信息表
+	档案权限信息表
 */
 create table pdc_profile_rights (
 	profile_id int, 
 	rights_id int,
-	primary key(profile_id, rights_id),
+	primary key(profile_id, rights_id)
+);
+
+/*
+ * 	周报信息表
+ */
+create table pdc_weekly_report (
+	id int auto_increment,
+	project_name varchar(20),
+	project_description varchar(500),
+	client_department varchar(20),
+	pm_china varchar(30),
+	pm_client varchar(40),
+	weekly_meeting date,
+	participants varchar(100),
+	week varchar(10),
 );
