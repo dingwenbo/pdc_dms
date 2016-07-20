@@ -19,41 +19,42 @@
 		pageInit();
 	});
 	function pageInit(){
+		var lastsel;
 		$("#timesheet").jqGrid({
-			width : 900,
-			height : 250,
-			datatype : "json",
-			colNames : getColNames(),
+			width : 900,	//表格宽度
+			height : 250,	//表格高度
+			datatype : "json",	//服务器端返回的数据类型
+			colNames : getColNames(),	//表title
+			//表数据模型
 			colModel : [ 
-						{name : 'id',index : 'id',width : 75}, 
-						{name : 'task', width : 350,align : "left",editable : true}, 
-						{name : 'sun',width : 150,align : "center",formatter:'number',editable : true,editrules:{required:true,custom:true,custom_func:formatData}},
-						{name : 'mon',width : 150,align : "center",editable : true},
-						{name : 'tue',width : 150,align : "center",editable : true},
-						{name : 'wed',width : 150,align : "center",editable : true},
-						{name : 'thu',width : 150,align : "center",editable : true},
-						{name : 'fri',width : 150,align : "center",editable : true}, 
-						{name : 'sat',width : 150,align : "center",editable : true},
-						{name : 'total',width : 150,align : "center"}
+						{name : 'id',index : 'id', width : 75}, 
+						{name : 'task', width : 350, align : "left", editable : true, editrules:{required:true}}, 
+						{name : 'sun', width : 150, align : "center", editable: true, editoptions:{dataEvents:[{type:'blur',fn:validateInput}]}, editrules:{number:true,custom:true,custom_func:formatData}},
+						{name : 'mon', width : 150, align : "center", editable: true, editoptions:{dataEvents:[{type:'blur',fn:validateInput}]}, editrules:{number:true,custom:true,custom_func:formatData}},
+						{name : 'tue', width : 150, align : "center", editable: true, editoptions:{dataEvents:[{type:'blur',fn:validateInput}]}, editrules:{number:true,custom:true,custom_func:formatData}},
+						{name : 'wed', width : 150, align : "center", editable: true, editoptions:{dataEvents:[{type:'blur',fn:validateInput}]}, editrules:{number:true,custom:true,custom_func:formatData}},
+						{name : 'thu', width : 150, align : "center", editable: true, editoptions:{dataEvents:[{type:'blur',fn:validateInput}]}, editrules:{number:true,custom:true,custom_func:formatData}},
+						{name : 'fri', width : 150, align : "center", editable: true, editoptions:{dataEvents:[{type:'blur',fn:validateInput}]}, editrules:{number:true,custom:true,custom_func:formatData}}, 
+						{name : 'sat', width : 150, align : "center", editable: true, editoptions:{dataEvents:[{type:'blur',fn:validateInput}]}, editrules:{number:true,custom:true,custom_func:formatData}},
+						{name : 'total', width : 150, align : "center"}
 			],
 			rowNum : 10,
-			pager : '#ptimesheet',
+			pager : 'ptimesheet',
 			viewrecords : true,
 			caption : "Timesheet",
-			footerrow : true,
-			gridComplete : function() {
-				var sumSun = $(this).getCol('sun', false, 'sum');
-				var sumMon = $(this).getCol('mon', false, 'sum');
-				var sumTue = $(this).getCol('tue', false, 'sum');
-				var sumWed = $(this).getCol('wed', false, 'sum');
-				var sumThu = $(this).getCol('thu', false, 'sum');
-				var sumFri = $(this).getCol('fri', false, 'sum');
-				var sumSat = $(this).getCol('sat', false, 'sum');
-				var sumTotal = sumSun + sumMon + sumTue+sumWed+sumThu+sumFri+sumSat;
-				$(this).footerData("set",{"sun":sumSun,"mon":sumMon,"tue":sumTue,"wed":sumWed,"thu":sumThu,"fri":sumFri,"sat":sumSat,"total":sumTotal+'d'}); 
+			footerrow : true,	//汇总列
+			gridComplete : sumColumn,
+			onSelectRow: function(id){
+				if(id && id!==lastsel){
+					$('#timesheet').restoreRow(lastsel);
+					lastsel=id;
+					$("#save,#cancel").attr("disabled",true);
+					$("#add,#edit,#delete").attr("disabled",false);
+				}
 			}
 		});
-  
+		
+		//分组表头
 		$("#timesheet").jqGrid('setGroupHeaders', {
 			useColSpanStyle: false, 
 			groupHeaders:[
@@ -67,7 +68,7 @@
 						{startColumnName: 'sat', numberOfColumns: 1, titleText: 'Sat'}
 			]  
 		});
-		
+		//添加假数据
 		var mydata = [ 
 					{id : "1",task : "Test 01", sun : "", mon : "",tue : "1",wed : "0.5",thu : "1",fri : "",sat : ""}, 
 					{id : "2",task : "Test 02", sun : "", mon : "1",tue : "",wed : "0.5",thu : "",fri : "0.5",sat : ""}, 
@@ -77,12 +78,16 @@
 			$("#timesheet").jqGrid('addRowData', i + 1, mydata[i]);
 		}
 		
+		//添加按钮
 		$("#add").click(function(){
-			$("#timesheet").jqGrid('addRow');
+			$("#timesheet").jqGrid('addRow', {
+				position : 'last'
+			});
 			this.disabled = 'true';
 			$("#save,#cancel").attr("disabled",false);
 			$("#edit,#delete").attr("disabled",true);
 		});
+		//修改按钮
 		$("#edit").click(function(){
 			var id=$('#timesheet').jqGrid('getGridParam', 'selrow');
 			if (id != null){
@@ -94,6 +99,7 @@
 				alert('Select record');
 			}
 		});
+		//删除按钮
 		$("#delete").click(function(){
 			var id=$('#timesheet').jqGrid('getGridParam', 'selrow');
 			if (id != null){
@@ -107,21 +113,27 @@
 				alert('Select record');
 			}
 		});
-		jQuery("#save").click(function() {
+		//保存按钮
+		$("#save").click(function() {
 			var id=$('#timesheet').jqGrid('getGridParam', 'selrow');
-		    var status = jQuery("#timesheet").jqGrid('saveRow', id);
+		    var status = $("#timesheet").jqGrid('saveRow', id);
 		    if(status) {
-			    jQuery("#save,#cancel").attr("disabled", true);
-			    jQuery("#add,#edit,#delete").attr("disabled", false);
+		    	sumColumn();
+			    $("#save,#cancel").attr("disabled", true);
+			    $("#add,#edit,#delete").attr("disabled", false);
+		    } else {
+			    $("#save,#cancel").attr("disabled", false);
+			    $("#add,#edit,#delete").attr("disabled", true);
 		    }
-		  });
-		jQuery("#cancel").click(function() {
+		    
+		});
+		//取消按钮
+		$("#cancel").click(function() {
 			var id=$('#timesheet').jqGrid('getGridParam', 'selrow');
-		    jQuery("#timesheet").jqGrid('restoreRow', id);
-		    jQuery("#save,#cancel").attr("disabled", true);
-		    jQuery("#add,#edit,#delete").attr("disabled", false);
+		    $("#timesheet").jqGrid('restoreRow', id);
+		    $("#save,#cancel").attr("disabled", true);
+		    $("#add,#edit,#delete").attr("disabled", false);
 		  });
-		
 	}
 	
 	function formatData(value, colname){
@@ -130,6 +142,28 @@
 		} else {
 			return [true, ""];
 		}
+	}
+
+	function validateInput(e){
+		var sumColumn = parseFloat($('#timesheet').getCol($(this).attr('name'), false, 'sum'));
+		var cellVal = parseFloat($(this).val());
+		var totalDay = sumColumn + cellVal;
+		if (totalDay >1 || totalDay < 0) {
+			$(this).val('');
+			alert('Please confirm your work day');
+		}
+	}
+	
+	function sumColumn() {
+		var sumSun = $('#timesheet').getCol('sun', false, 'sum');
+		var sumMon = $('#timesheet').getCol('mon', false, 'sum');
+		var sumTue = $('#timesheet').getCol('tue', false, 'sum');
+		var sumWed = $('#timesheet').getCol('wed', false, 'sum');
+		var sumThu = $('#timesheet').getCol('thu', false, 'sum');
+		var sumFri = $('#timesheet').getCol('fri', false, 'sum');
+		var sumSat = $('#timesheet').getCol('sat', false, 'sum');
+		var sumTotal = sumSun + sumMon + sumTue+sumWed+sumThu+sumFri+sumSat;
+		$('#timesheet').footerData("set",{"sun":sumSun,"mon":sumMon,"tue":sumTue,"wed":sumWed,"thu":sumThu,"fri":sumFri,"sat":sumSat,"total":sumTotal+'d'});
 	}
 
 	function getCurrentWeekDate(){
