@@ -3,6 +3,6 @@
 
 <div id="header">
 	<div id="title">
-		首页 -> <a href="javascript:void(0);">关于系统</a>
+		首页 -> //TODO : 路径指示
 	</div>
 </div>

@@ -8,12 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>主页</title>
 
-<link rel="stylesheet" href="${ctx}/static/jqueryui/css/jquery-ui.min.css"/>
-<link rel="stylesheet" href="${ctx}/static/jqgrid/css/ui.jqgrid.css"/>
-<script src="${ctx}/static/jqueryui/js/jquery-ui.custom.min.js"></script>
-<script src="${ctx}/static/jqgrid/js/grid.locale-cn.js"></script>
-<script src="${ctx}/static/jqgrid/js/jquery.jqGrid.js"></script>
-
 <script>
 	$(function(){
 		pageInit();
@@ -21,6 +15,7 @@
 	function pageInit(){
 		var lastsel;
 		$("#timesheet").jqGrid({
+			url : "${ctx}/log/getData.action",
 			width : 900,	//表格宽度
 			height : 250,	//表格高度
 			datatype : "json",	//服务器端返回的数据类型
@@ -41,7 +36,7 @@
 			rowNum : 10,
 			pager : 'ptimesheet',
 			viewrecords : true,
-			caption : "Timesheet",
+			caption : "Timesheet填写",
 			footerrow : true,	//汇总列
 			gridComplete : sumColumn,
 			onSelectRow: function(id){
@@ -69,14 +64,14 @@
 			]  
 		});
 		//添加假数据
-		var mydata = [ 
-					{id : "1",task : "Test 01", sun : "", mon : "",tue : "1",wed : "0.5",thu : "1",fri : "",sat : ""}, 
-					{id : "2",task : "Test 02", sun : "", mon : "1",tue : "",wed : "0.5",thu : "",fri : "0.5",sat : ""}, 
-					{id : "3",task : "Test 03", sun : "", mon : "",tue : "",wed : "",thu : "",fri : "",sat : ""}, 
-		];
-		for ( var i = 0; i <= mydata.length; i++){
-			$("#timesheet").jqGrid('addRowData', i + 1, mydata[i]);
-		}
+// 		var mydata = [ 
+// 					{id : "1",task : "Test 01", sun : "", mon : "",tue : "1",wed : "0.5",thu : "1",fri : "",sat : ""}, 
+// 					{id : "2",task : "Test 02", sun : "", mon : "1",tue : "",wed : "0.5",thu : "",fri : "0.5",sat : ""}, 
+// 					{id : "3",task : "Test 03", sun : "", mon : "",tue : "",wed : "",thu : "",fri : "",sat : ""}, 
+// 		];
+// 		for ( var i = 0; i <= mydata.length; i++){
+// 			$("#timesheet").jqGrid('addRowData', i + 1, mydata[i]);
+// 		}
 		
 		//添加按钮
 		$("#add").click(function(){

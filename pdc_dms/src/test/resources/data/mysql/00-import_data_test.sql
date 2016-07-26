@@ -26,9 +26,13 @@ insert into pdc_member(id, pdc_id, password, salt, name, role_id, register_date)
 insert into pdc_member(id, pdc_id, password, salt, name, role_id, supervisor_id, register_date)
 	values(9011, 'T000011', '2488aa0c31c624687bd9928e0a5d29e7d1ed520b', '6d65d24122c30500', '测试TL2', 3, 9010, now());
 
-insert into pdc_project(id, code, label) values(1, 'TEST1', 'First Test project'); 
-insert into pdc_project(id, code, label) values(2, 'TEST2', 'Second Test project');
-insert into pdc_project(id, code, label) values(3, 'TEST3', 'Third Test project');
+insert into pdc_project(id, code, full_name, label, parent) values(1, 'GPRO_Pyramide', 'GPRO and Pyramide Group', 'GPRO_Pyramide Group label.', 7); 
+insert into pdc_project(id, code, full_name, label, parent) values(2, 'Pyramide', 'Pyramide Full-name', 'Second Test project', 1);
+insert into pdc_project(id, code, full_name, label, parent) values(3, 'Pissaro', 'Pissaro Full-name', 'Third Test project', 1);
+insert into pdc_project(id, code, full_name, label, parent) values(4, 'Translation', 'Translation Full-name', 'Third Test project', 1);
+insert into pdc_project(id, code, full_name, label, parent) values(5, 'Sextant', 'Sextant Full-name', 'Third Test project', 7);
+insert into pdc_project(id, code, full_name, label, parent) values(6, 'STXBRUT', 'Sextant BRUT', 'Third Test project', 5);
+insert into pdc_project(id, code, full_name, label, parent) values(7, 'FJV2', 'PDC FJV2 Team', 'FJV2 Label', null);
 
 insert into pdc_project_member(project_id, member_id) values(1, 9002);
 insert into pdc_project_member(project_id, member_id) values(1, 9003);

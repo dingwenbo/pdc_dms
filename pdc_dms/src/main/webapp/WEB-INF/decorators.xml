@@ -13,6 +13,7 @@
 	
 	<decorator name="main" page="main.jsp">
 		<pattern>/member/*</pattern>
+		<pattern>/projectManagement/*</pattern>
 		<pattern>/main/*</pattern>
 	</decorator>
 </decorators>

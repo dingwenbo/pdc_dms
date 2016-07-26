@@ -16,6 +16,7 @@ drop table if exists pdc_role;
 drop table if exists pdc_task_status;
 drop table if exists pdc_task;
 drop table if exists pdc_project;
+drop table if exists pdc_weekly_report;
 
 /*
 	角色表
@@ -50,8 +51,10 @@ create table pdc_member (
 */
 create table pdc_project (
 	id int auto_increment,
-	code varchar(12) not null,
-	label varchar(50),
+	code varchar(20) not null,
+	full_name varchar(50),
+	label varchar(200), 
+	parent int,
 	primary key(id)
 );
 
@@ -150,4 +153,5 @@ create table pdc_weekly_report (
 	weekly_meeting date,
 	participants varchar(100),
 	week varchar(10),
+	primary key(id)
 );

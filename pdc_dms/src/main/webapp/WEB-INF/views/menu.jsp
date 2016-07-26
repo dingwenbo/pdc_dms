@@ -46,16 +46,29 @@ function gotoUrl(obj, action) {
 							<span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
               			</a>
               			<ul id="logManagement" class="nav nav-list secondmenu collapse" style="height: 0px;">
-              				<li><a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/log/timesheet');">
-              				<i class="glyphicon glyphicon-pencil"></i>&nbsp;
-              				Timesheet填写
-              				</a></li>
+              				<li>
+              					<a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/log/timesheet');">
+              						<i class="glyphicon glyphicon-pencil"></i>&nbsp;Timesheet填写
+              					</a>
+              				</li>
               				<!-- SE级别以上 -->
-              				<li><a href="#"><i class="glyphicon glyphicon-pencil"></i>&nbsp;任务状态</a></li>
+              				<li>
+              					<a href="#">
+              						<i class="glyphicon glyphicon-pencil"></i>&nbsp;我的任务
+              					</a>
+              				</li>
               				<!-- TL级别以上并且拥有特定的权限 -->
-              				<li><a href="#"><i class="glyphicon glyphicon-pencil"></i>&nbsp;项目看板</a></li>
+              				<li>
+              					<a href="#">
+              						<i class="glyphicon glyphicon-pencil"></i>&nbsp;项目看板
+              					</a>
+              				</li>
               				<!-- TL级别以上并且拥有特定的权限 -->
-              				<li><a href="#"><i class="glyphicon glyphicon-pencil"></i>&nbsp;工时详细</a></li>
+              				<li>
+              					<a href="#">
+              						<i class="glyphicon glyphicon-pencil"></i>&nbsp;工时详细
+              					</a>
+              				</li>
               			</ul>
                     </li>
                     <li>
@@ -69,6 +82,27 @@ function gotoUrl(obj, action) {
               			</ul>
                     </li>
                     <li>
+              			<a href="#projectManagement" class="nav-header collapsed" data-toggle="collapse">
+              				<i class="glyphicon glyphicon-align-justify"></i>
+							项目管理
+							<span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
+              			</a>
+              			<ul id="projectManagement" class="nav nav-list secondmenu collapse" style="height: 0px;">
+              				<li>
+              					<a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/projectManagement/project');">
+              						<i class="glyphicon glyphicon-cog"></i>&nbsp;
+              						项目管理
+              					</a>
+              				</li>
+              				<li>
+              					<a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/projectManagement/task');">
+              						<i class="glyphicon glyphicon-cog"></i>&nbsp;
+              						任务管理
+              					</a>
+              				</li>
+              			</ul>
+                    </li>
+                    <li>
               			<a href="#myProfile" class="nav-header collapsed" data-toggle="collapse">
               				<i class="glyphicon glyphicon-align-justify"></i>
 							我的档案
@@ -79,7 +113,7 @@ function gotoUrl(obj, action) {
               				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;我的项目</a></li>
               				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;我的任务</a></li>
               				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;修改密码</a></li>
-              				<li><a href="#"><i class="glyphicon glyphicon-log-out"></i>&nbsp;退出登陆</a></li>
+              				<li><a href="#"><i class="glyphicon glyphicon-log-out"></i>&nbsp;退出</a></li>
               			</ul>
                     </li>
                     <li>

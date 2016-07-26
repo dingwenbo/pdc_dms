@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 
@@ -20,8 +21,15 @@ public class LogController {
 	/** logger. */
     private static final Log LOGGER = LogFactory.getLog(LogController.class);
 	
-	@RequestMapping(value="timesheet")
+	@RequestMapping(value = "timesheet")
 	public String toTimesheet() {
 		return "log/timesheet";
+	}
+	
+	@RequestMapping(value = "getData")
+	@ResponseBody
+	public String getData() {
+		// 得到当前用户的pdc_id.
+		return "";
 	}
 }
