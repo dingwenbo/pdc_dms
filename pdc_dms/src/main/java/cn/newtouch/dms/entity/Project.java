@@ -8,14 +8,21 @@ import java.util.List;
  *
  */
 public class Project {
+	
 	/** id. */
     private Integer id;
 
     /** code. */
     private String code;
+    
+    /** fullName. */
+    private String fullName;
 
     /** label. */
     private String label;
+    
+    /** parent. */
+    private Project parent;
     
     /** members. */
     private List<Member> members;
@@ -59,10 +66,26 @@ public class Project {
 	public void setMembers(List<Member> members) {
 		this.members = members;
 	}
+	
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	
+	public Project getParent() {
+		return parent;
+	}
+
+	public void setParent(Project parent) {
+		this.parent = parent;
+	}
 
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", code=" + code + ", "
-				+ "label=" + label + ", members=" + members + "]";
+		return "Project [id=" + id + ", code=" + code + ", fullName=" + fullName + ", label=" + label + ", parent="
+				+ parent + "]";
 	}
 }

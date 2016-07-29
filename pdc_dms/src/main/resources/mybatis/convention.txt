@@ -1,0 +1,6 @@
+为mapper.xml指定唯一的namespace.
+namespace的值设置成DAO的包名+类名
+查询方法统一用select**
+插入方法统一用insert**
+更新方法统一用update**
+删除方法统一用delete**

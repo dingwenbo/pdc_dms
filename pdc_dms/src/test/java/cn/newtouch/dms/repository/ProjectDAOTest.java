@@ -1,5 +1,9 @@
 package cn.newtouch.dms.repository;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
@@ -41,5 +45,15 @@ public class ProjectDAOTest extends SpringTransactionalTestCase {
 		System.out.println(test.getCode());
 	}
 	
-	
+	@Test
+	public void testSelectAll() {
+		List<Project> tps = projectDao.selectAll();
+		assertEquals(7, tps.size());
+		
+		Project fp = tps.get(0);
+		assertEquals("GPRO_Pyramide", fp.getCode());
+		assertEquals("FJV2", fp.getParent().getCode());
+		assertEquals("GPRO and Pyramide Group", fp.getFullName());
+		assertEquals("GPRO_Pyramide Group label.", fp.getLabel());
+	}
 }

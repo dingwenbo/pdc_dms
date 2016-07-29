@@ -11,6 +11,9 @@ import cn.newtouch.dms.entity.Project;
  *
  */
 public interface ProjectDao {
+
+	List<Project> selectAll();
+	
 	List<Project> selectBy(Project project);
 	
 	Project selectById(Integer id);

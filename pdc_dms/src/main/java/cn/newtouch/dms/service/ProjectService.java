@@ -58,4 +58,10 @@ public interface ProjectService {
 	 * @return List&lt;Project&gt;
 	 */
 	List<Project> getProjectsByMemberPdcId(String pdcId);
+	
+	/**
+	 * 得到所有的项目
+	 * @return List&lt;Project&gt;
+	 */
+	List<Project> getProjects();
 }

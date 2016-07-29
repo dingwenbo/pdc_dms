@@ -72,5 +72,10 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Project> getProjects() {
+		return projectDao.selectAll();
+	}
 	
 }

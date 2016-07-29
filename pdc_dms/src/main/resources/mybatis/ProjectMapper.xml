@@ -5,49 +5,59 @@
   <resultMap id="BaseResultMap" type="Project" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="full_name" property="fullName" jdbcType="VARCHAR"/>
     <result column="label" property="label" jdbcType="VARCHAR" />
+    <association property="parent" 
+    	javaType="cn.newtouch.dms.entity.Project"
+    	select="cn.newtouch.dms.repository.projectDao.selectById" 
+    	column="id">
+    </association>
     <collection property="members" ofType="Member" javaType="ArrayList" column="id" select="selectMembers"></collection>
   </resultMap>
   <sql id="Base_Column_List">
-    id, code, label
+    id, code, full_name, label
   </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List"/>
+  	
+  </select>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select 
     <include refid="Base_Column_List" />
     from pdc_project
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteById" parameterType="java.lang.Integer" >
-    delete from pdc_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+  <select id="selectMembers" resultType="cn.newtouch.dms.entity.Member" parameterType="int">
+  	select pdc_member.* from pdc_project_member, pdc_member where pdc_project_member.project_id = #{id}
+  </select>
   <insert id="insert" parameterType="Project" useGeneratedKeys="true" keyProperty="id">
     insert into pdc_project (code, label
       )
     values (#{code,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="Project" >
+  <insert id="insertSelective" parameterType="Project">
     insert into pdc_project
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="code != null" >
+      <if test="code != null">
         code,
       </if>
-      <if test="label != null" >
+      <if test="label != null">
         label,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="code != null" >
+      <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
-      <if test="label != null" >
+      <if test="label != null">
         #{label,jdbcType=VARCHAR},
       </if>
     </trim>
@@ -69,10 +79,8 @@
     set code = #{code,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
-  </update>
-  
-  <select id="selectMembers" resultType="cn.newtouch.dms.entity.Member" parameterType="int">
-  	select pdc_member.* from pdc_project_member, pdc_member where pdc_project_member.project_id = #{id}
-  </select>
-
+  </update><delete id="deleteById" parameterType="java.lang.Integer">
+    delete from pdc_project
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
 </mapper>
