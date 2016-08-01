@@ -1,3 +1,9 @@
+delete from pdc_member where role_id != 1; /* 删除除管理员外的所有角色 */
+delete from pdc_project;
+delete from pdc_project_member;
+delete from pdc_task_status;
+delete from pdc_task;
+delete from pdc_log_detail;
 
 /*
 	普通测试用户的密码统一为:user

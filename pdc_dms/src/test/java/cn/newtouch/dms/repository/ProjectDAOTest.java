@@ -4,11 +4,14 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springside.modules.test.spring.SpringTransactionalTestCase;
@@ -21,7 +24,8 @@ import cn.newtouch.dms.entity.Project;
  * @author JiaLong.Wang
  *
  */
-@ContextConfiguration(locations = { "/applicationContext.xml" })
+@ContextConfiguration(locations = { "/spring/applicationContext.xml" })
+@FixMethodOrder(MethodSorters.DEFAULT)
 public class ProjectDAOTest extends SpringTransactionalTestCase {
 	
 	private static Log logger = LogFactory.getLog(ProjectDAOTest.class);
@@ -41,19 +45,40 @@ public class ProjectDAOTest extends SpringTransactionalTestCase {
 	
 	@Test
 	public void testSelectById() {
-		Project test = projectDao.selectById(1);
-		System.out.println(test.getCode());
+		logger.info("测试selectById()方法：");
+		Project tp1 = projectDao.selectById(1);
+		assertProject(tp1, "GPRO_Pyramide", "GPRO and Pyramide Group", "GPRO_Pyramide Group label.", "FJV2");
 	}
 	
 	@Test
 	public void testSelectAll() {
+		logger.info("测试selectAll()方法：");
 		List<Project> tps = projectDao.selectAll();
 		assertEquals(7, tps.size());
 		
 		Project fp = tps.get(0);
-		assertEquals("GPRO_Pyramide", fp.getCode());
-		assertEquals("FJV2", fp.getParent().getCode());
-		assertEquals("GPRO and Pyramide Group", fp.getFullName());
-		assertEquals("GPRO_Pyramide Group label.", fp.getLabel());
+		assertProject(fp, "GPRO_Pyramide", "GPRO and Pyramide Group", "GPRO_Pyramide Group label.", "FJV2");
+	}
+	
+	/**
+	 * 断言一个Project对象是否正确
+	 * @param toAssert
+	 * @param code
+	 * @param fullName
+	 * @param label
+	 * @param parentCode
+	 */
+	public void assertProject(Project toAssert, String code, String fullName, String label, String parentCode) {
+		assertNotNull(toAssert);
+		assertEquals(code, toAssert.getCode());
+		assertEquals(fullName, toAssert.getFullName());
+		assertEquals(label, toAssert.getLabel());
+		if (StringUtils.isNotEmpty(parentCode)) {
+			assertNotNull(toAssert.getParent());
+			assertEquals(parentCode, toAssert.getParent().getCode());
+		} else {
+			assertNull(toAssert.getParent());
+		}
+		
 	}
 }

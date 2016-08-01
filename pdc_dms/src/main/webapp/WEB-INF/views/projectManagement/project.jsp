@@ -6,9 +6,35 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>项目管理</title>
+<script type="text/javascript">
+	$(function() {
+		pageInit();
+	});
+	
+	function pageInit(){
+// 		var lastsel;
+// 		$('#tableProject').jqGrid({
+// 			url : "${ctx}/projectManagement/getProjectData",
+// 			width : 900,
+// 			height : 250,
+// 			dataType : "json",
+// 			colNames : getColNames(),
+// 		});
+	}
+</script>
+
 </head>
 <body>
 	项目管理页面
+	<div class="divProject">
+		<table id="tableProject"></table> 
+	    <div id="pagerProject"></div>
+	    <br>
+	    <button class="btn" id="add">Add</button>
+	    <button class="btn" id="edit">Edit</button>
+	    <button class="btn" id="delete">Delete</button>
+	    <button class="btn" id="save" disabled>Save</button>
+	    <button class="btn" id="cancel" disabled>Cancel</button>
+	</div>
 </body>
 </html>

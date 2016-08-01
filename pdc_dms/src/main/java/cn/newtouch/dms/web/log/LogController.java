@@ -26,9 +26,9 @@ public class LogController {
 		return "log/timesheet";
 	}
 	
-	@RequestMapping(value = "getData")
+	@RequestMapping(value = "getTimeSheetData")
 	@ResponseBody
-	public String getData() {
+	public String getTimeSheetData() {
 		// 得到当前用户的pdc_id.
 		return "";
 	}

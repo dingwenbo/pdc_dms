@@ -2,6 +2,7 @@ package cn.newtouch.dms.web.project;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "/projectManagement")
@@ -17,4 +18,9 @@ public class ProjectManagementController {
 		return "projectManagement/task";
 	}
 	
+	@RequestMapping(value = "/getProjectData")
+	@ResponseBody
+	public String getProjectData() {
+		return "";
+	}
 }

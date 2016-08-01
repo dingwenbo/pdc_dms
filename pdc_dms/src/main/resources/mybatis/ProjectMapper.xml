@@ -1,86 +1,93 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="cn.newtouch.dms.repository.ProjectDao" >
-  <resultMap id="BaseResultMap" type="Project" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="code" property="code" jdbcType="VARCHAR" />
-    <result column="full_name" property="fullName" jdbcType="VARCHAR"/>
-    <result column="label" property="label" jdbcType="VARCHAR" />
-    <association property="parent" 
-    	javaType="cn.newtouch.dms.entity.Project"
-    	select="cn.newtouch.dms.repository.projectDao.selectById" 
-    	column="id">
-    </association>
-    <collection property="members" ofType="Member" javaType="ArrayList" column="id" select="selectMembers"></collection>
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, code, full_name, label
-  </sql>
-  <select id="selectAll" resultMap="BaseResultMap">
-  	select
-  	<include refid="Base_Column_List"/>
-  	
-  </select>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select 
-    <include refid="Base_Column_List" />
-    from pdc_project
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectMembers" resultType="cn.newtouch.dms.entity.Member" parameterType="int">
-  	select pdc_member.* from pdc_project_member, pdc_member where pdc_project_member.project_id = #{id}
-  </select>
-  <insert id="insert" parameterType="Project" useGeneratedKeys="true" keyProperty="id">
-    insert into pdc_project (code, label
-      )
-    values (#{code,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="Project">
-    insert into pdc_project
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="code != null">
-        code,
-      </if>
-      <if test="label != null">
-        label,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="code != null">
-        #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="label != null">
-        #{label,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateSelective" parameterType="Project" >
-    update pdc_project
-    <set >
-      <if test="code != null" >
-        code = #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="label != null" >
-        label = #{label,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="update" parameterType="Project" >
-    update pdc_project
-    set code = #{code,jdbcType=VARCHAR},
-      label = #{label,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update><delete id="deleteById" parameterType="java.lang.Integer">
-    delete from pdc_project
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+<mapper namespace="cn.newtouch.dms.repository.ProjectDao">
+	<!-- Result Map的定义 -->
+	<resultMap id="BaseResultMap" type="cn.newtouch.dms.entity.Project">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="full_name" property="fullName" jdbcType="VARCHAR" />
+		<result column="label" property="label" jdbcType="VARCHAR" />
+		<association property="parent" column="parent"
+			javaType="cn.newtouch.dms.entity.Project" select="selectById">
+		</association>
+		<collection property="members" ofType="Member" javaType="ArrayList" column="id" select="selectMembers"></collection>
+	</resultMap>
+	
+	<!-- SQL列的定义 -->
+	<sql id="Base_Column_List">
+		id, code, full_name, label, parent
+	</sql>
+	
+	<!-- SQL语句的定义 -->
+	<select id="selectAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from pdc_project
+	</select>
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List"/>
+		from pdc_project
+		where id = #{id, jdbcType=INTEGER}
+	</select>
+	<select id="selectMembers" resultType="cn.newtouch.dms.entity.Member"
+		parameterType="int">
+		select pdc_member.* from pdc_project_member, pdc_member where
+		pdc_project_member.project_id = #{id}
+	</select>
+	<insert id="insert" parameterType="Project" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into pdc_project (code, label
+		)
+		values (#{code,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="Project">
+		insert into pdc_project
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="label != null">
+				label,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="label != null">
+				#{label,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateSelective" parameterType="Project">
+		update pdc_project
+		<set>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="label != null">
+				label = #{label,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="update" parameterType="Project">
+		update pdc_project
+		set code = #{code,jdbcType=VARCHAR},
+		label = #{label,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from pdc_project
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
 </mapper>

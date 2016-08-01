@@ -6,8 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>主页</title>
-
 <script>
 	$(function(){
 		pageInit();
@@ -15,7 +13,7 @@
 	function pageInit(){
 		var lastsel;
 		$("#timesheet").jqGrid({
-			url : "${ctx}/log/getData.action",
+			url : "${ctx}/log/getTimeSheetData.action",
 			width : 900,	//表格宽度
 			height : 250,	//表格高度
 			datatype : "json",	//服务器端返回的数据类型
