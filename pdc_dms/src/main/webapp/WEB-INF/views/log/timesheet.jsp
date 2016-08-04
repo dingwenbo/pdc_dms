@@ -16,8 +16,9 @@
 			url : "${ctx}/log/getTimeSheetData.action",
 			width : 900,	//表格宽度
 			height : 250,	//表格高度
+			mtype: "POST", //提交方式
 			datatype : "json",	//服务器端返回的数据类型
-			colNames : getColNames(),	//表title
+			colNames : getColNames(), //表title
 			//表数据模型
 			colModel : [ 
 						{name : 'id',index : 'id', width : 75}, 
@@ -32,9 +33,10 @@
 						{name : 'total', width : 150, align : "center"}
 			],
 			rowNum : 10,
+			rowList : [10, 15, 20], //用于改变显示行数的下拉列表框的元素数组。
 			pager : 'ptimesheet',
 			viewrecords : true,
-			caption : "Timesheet填写",
+			caption : "我的Timesheet",
 			footerrow : true,	//汇总列
 			gridComplete : sumColumn,
 			onSelectRow: function(id){
@@ -61,15 +63,6 @@
 						{startColumnName: 'sat', numberOfColumns: 1, titleText: 'Sat'}
 			]  
 		});
-		//添加假数据
-// 		var mydata = [ 
-// 					{id : "1",task : "Test 01", sun : "", mon : "",tue : "1",wed : "0.5",thu : "1",fri : "",sat : ""}, 
-// 					{id : "2",task : "Test 02", sun : "", mon : "1",tue : "",wed : "0.5",thu : "",fri : "0.5",sat : ""}, 
-// 					{id : "3",task : "Test 03", sun : "", mon : "",tue : "",wed : "",thu : "",fri : "",sat : ""}, 
-// 		];
-// 		for ( var i = 0; i <= mydata.length; i++){
-// 			$("#timesheet").jqGrid('addRowData', i + 1, mydata[i]);
-// 		}
 		
 		//添加按钮
 		$("#add").click(function(){
@@ -127,6 +120,11 @@
 		    $("#save,#cancel").attr("disabled", true);
 		    $("#add,#edit,#delete").attr("disabled", false);
 		  });
+		
+		//刷新按钮
+		$("refresh").click(function() {
+			var id = $('#timesheet').jqGrid
+		});
 	}
 	
 	function formatData(value, colname){
@@ -210,6 +208,7 @@
 	    <button class="btn" id="add">Add</button>
 	    <button class="btn" id="edit">Edit</button>
 	    <button class="btn" id="delete">Delete</button>
+	    <button class="btn" id="refresh">Refresh</button>
 	    <button class="btn" id="save" disabled>Save</button>
 	    <button class="btn" id="cancel" disabled>Cancel</button>
 	</div>

@@ -15,5 +15,6 @@
 		<pattern>/member/*</pattern>
 		<pattern>/projectManagement/*</pattern>
 		<pattern>/main/*</pattern>
+		<pattern>/log/*</pattern>
 	</decorator>
 </decorators>
