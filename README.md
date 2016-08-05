@@ -1,2 +1,2 @@
 # pdc_dms
-Digit Manage System of PDC
+Daily Management System of PDC
