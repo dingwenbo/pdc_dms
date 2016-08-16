@@ -17,6 +17,7 @@ drop table if exists pdc_role;
 drop table if exists pdc_task_status;
 drop table if exists pdc_task;
 drop table if exists pdc_project;
+drop table if exists pdc_weekly_report;
 
 /*
 	角色表
@@ -51,9 +52,10 @@ create table pdc_member (
 */
 create table pdc_project (
 	id int auto_increment,
-	code varchar(12) not null,
-	label varchar(50),
-	prior int,
+	code varchar(20) not null,
+	full_name varchar(50),
+	label varchar(200), 
+	parent int,
 	primary key(id)
 );
 
@@ -136,5 +138,5 @@ create table pdc_rights (
 create table pdc_profile_rights (
 	profile_id int, 
 	rights_id int,
-	primary key(profile_id, rights_id),
+	primary key(profile_id, rights_id)
 );

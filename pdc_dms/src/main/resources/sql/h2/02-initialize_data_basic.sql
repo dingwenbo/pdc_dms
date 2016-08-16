@@ -1,3 +1,7 @@
+delete from pdc_project;
+delete from pdc_member;
+delete from pdc_role;
+
 insert into pdc_role(id, code, label, prior) values(1, 'Admin', 'Administrator of PDC-DMS', 0);
 insert into pdc_role(id, code, label, prior) values(2, 'PM', 'Project manager', 1);
 insert into pdc_role(id, code, label, prior) values(3, 'TL', 'Team Leader', 2);
