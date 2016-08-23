@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Class project.
+ * <pre>项目的实体类。</pre>
+ * 
  * @author WenBo.Ding
  *
  */

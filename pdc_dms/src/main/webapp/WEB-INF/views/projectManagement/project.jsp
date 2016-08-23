@@ -21,13 +21,14 @@
 			datatype : "json",
 			colNames : ['No','Code','Full_Name','Label','父项目Code'],
 			colModel : [
-			            {name: 'id',index: 'id',width: 75,search: false},
+			            {name: 'id', index: 'id', width: 75, search: false, hidden:true},
 			            {name: 'code',index: 'code',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
 			            {name: 'fullName',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
 			            {name: 'label',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
 			            {name: 'parentCode',width: 350,align: 'left',editable: true, edittype:'select', editoptions:{value: getParentProject()}, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}}
 			],
 			rownumbers : true,
+			caption : "项目管理",
 			editurl : '${ctx}/projectManagement/editProjectData.action'
 		});
 		
@@ -38,7 +39,7 @@
 		
 		$("#add").click(function() {
 		    $("#tableProject").jqGrid('editGridRow', 'new', {
-		    	addCaption: 'Add new project',
+		    	addCaption: '添加一个新的项目',
 		    	top : 250,
 		    	left : 700,
 		    	width : 400,
@@ -52,7 +53,7 @@
 			var id=$('#tableProject').jqGrid('getGridParam', 'selrow');
 			if (id != null) {
 				$('#tableProject').jqGrid('editGridRow', id, {
-					editCaption: 'Edit project',
+					editCaption: '编辑项目',
 					top : 250,
 			    	left : 700,
 			    	width : 400,

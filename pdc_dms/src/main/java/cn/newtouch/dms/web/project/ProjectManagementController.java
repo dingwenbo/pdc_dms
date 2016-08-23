@@ -7,22 +7,32 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.newtouch.dms.entity.Project;
 import cn.newtouch.dms.json.JsonUtils;
-import cn.newtouch.dms.service.impl.ProjectServiceImpl;
-import cn.newtouch.dms.web.project.bean.ProjectManagementVO;
+import cn.newtouch.dms.service.ProjectService;
+import cn.newtouch.dms.web.project.bean.ProjectDetailVO;
 
+/**
+ * Project Management Controller
+ * 项目管理模块的控制器，其中包括项目管理和任务管理。
+ * 
+ * @author JiaLong.Wang
+ *
+ */
 @Controller
 @RequestMapping(value = "/projectManagement")
 public class ProjectManagementController {
 	
+	/** logger. */
 	private static Log logger = LogFactory.getLog(ProjectManagementController.class);
 	
-	private ProjectServiceImpl projectServiceImpl = new ProjectServiceImpl();
+	@Autowired
+	private ProjectService projectService;
 	
 	@RequestMapping(value = "/project")
 	public String viewProject() {
@@ -37,18 +47,17 @@ public class ProjectManagementController {
 	@RequestMapping(value = "/getProjectData")
 	@ResponseBody
 	public String getProjectData() {
-		//TODO test data
-		ProjectManagementVO projectManagementVo = new ProjectManagementVO();
-		projectManagementVo.setId(1);
-		projectManagementVo.setCode("Test 01");
-		projectManagementVo.setFullName("Test 01 full name");
-		projectManagementVo.setLabel("Test 01 label");
-		projectManagementVo.setParentCode("test parent project");
+		List<ProjectDetailVO> results = new ArrayList<>();
 		
-		List<ProjectManagementVO> lstProjectManagementVo = new ArrayList<ProjectManagementVO>();
-		lstProjectManagementVo.add(projectManagementVo);
-		logger.debug(lstProjectManagementVo);
-		return JsonUtils.writeObject(lstProjectManagementVo);
+		List<Project> projects = projectService.getProjects();
+		for (Project project : projects) {
+			ProjectDetailVO pdvo = new ProjectDetailVO();
+			pdvo.accept(project);
+			results.add(pdvo);
+		}
+		
+		logger.info("得到" + results.size() + "条项目详细记录。");
+		return JsonUtils.writeObject(results);
 	}
 	
 	@RequestMapping(value = "/editProjectData")
@@ -63,15 +72,15 @@ public class ProjectManagementController {
 		project.setLabel(request.getParameter("lable"));
 		project.setParent(null);
 		
-		if (oper !=null && oper.equals("add")) {
-			if (projectServiceImpl.existProject(code)) {
-				projectServiceImpl.insertOrUpdateProject(project);
-			} else {
-				logger.warn("项目已存在");
-			}
-		} else if (oper != null && oper.equals("edit")) {
-			projectServiceImpl.insertOrUpdateProject(project);
-		}
+//		if (oper !=null && oper.equals("add")) {
+//			if (projectServiceImpl.existProject(code)) {
+//				projectServiceImpl.insertOrUpdateProject(project);
+//			} else {
+//				logger.warn("项目已存在");
+//			}
+//		} else if (oper != null && oper.equals("edit")) {
+//			projectServiceImpl.insertOrUpdateProject(project);
+//		}
 
 		System.out.println(oper + "--------test oper");
 		return "";
@@ -81,7 +90,7 @@ public class ProjectManagementController {
 	@ResponseBody
 	public String deleteProjectData(HttpServletRequest request) {
 		int id = Integer.valueOf(request.getParameter("id"));
-		projectServiceImpl.deleteProjectById(id);
+		projectService.deleteProjectById(id);
 		System.out.println(id + "----------delete project");
 		return "project";
 	}
@@ -89,7 +98,6 @@ public class ProjectManagementController {
 	@RequestMapping(value = "/getParentProject")
 	@ResponseBody
 	public String getParentProject() {
-		
 		Project project1 = new Project();
 		project1.setId(1);
 		project1.setCode("Test 01");
@@ -101,7 +109,7 @@ public class ProjectManagementController {
 		List<Project> lstProject = new ArrayList<Project>();
 		lstProject.add(project1);
 		lstProject.add(project2);
-//		lstProject = projectServiceImpl.getProjects();
+		lstProject = projectService.getProjects();
 		
 		return JsonUtils.writeObject(lstProject);
 	}

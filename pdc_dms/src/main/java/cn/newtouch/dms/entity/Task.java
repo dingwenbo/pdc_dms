@@ -2,6 +2,13 @@ package cn.newtouch.dms.entity;
 
 import cn.newtouch.dms.constants.EnumTaskStatus;
 
+/**
+ * Class Task.
+ * 任务实体类
+ * 
+ * @author JiaLong.Wang
+ *
+ */
 public class Task {
     private Integer id;
 

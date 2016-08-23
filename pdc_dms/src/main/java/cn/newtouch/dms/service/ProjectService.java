@@ -3,6 +3,7 @@ package cn.newtouch.dms.service;
 import java.util.List;
 
 import cn.newtouch.dms.entity.Project;
+import cn.newtouch.dms.exception.ProjectServiceException;
 
 /**
  * 管理项目信息的Service。
@@ -11,6 +12,26 @@ import cn.newtouch.dms.entity.Project;
  *	
  */
 public interface ProjectService {
+
+	/**
+	 * 得到所有的项目
+	 * @return List&lt;Project&gt;
+	 */
+	List<Project> getProjects();
+	
+	/**
+	 * 项目过滤查询。
+	 * @param projectFilter Project
+	 * @return List&lt;Project&gt;
+	 */
+	List<Project> getProjectsBy(Project projectFilter);
+
+	/**
+	 * 得到与用户有关的项目集合
+	 * @param pdcId String
+	 * @return List&lt;Project&gt;
+	 */
+	List<Project> getProjectsByMemberPdcId(String pdcId);
 
 	/**
 	 * 根据内置id得到Project对象
@@ -30,14 +51,14 @@ public interface ProjectService {
 	 * 插入或更新一个Project对象
 	 * @param project Project
 	 */
-	void insertOrUpdateProject(Project project);
+	void insertOrUpdateProject(Project project) throws ProjectServiceException;
 	
 	/**
 	 * 删除一个Project对象
 	 * @param id Integer
 	 */
 	void deleteProjectById(Integer id);
-	
+
 	/**
 	 * 是否存在相应id的Project对象
 	 * @param id Integer
@@ -51,17 +72,4 @@ public interface ProjectService {
 	 * @return boolean
 	 */
 	boolean existProject(String projectCode);
-	
-	/**
-	 * 得到与用户有关的项目集合
-	 * @param pdcId String
-	 * @return List&lt;Project&gt;
-	 */
-	List<Project> getProjectsByMemberPdcId(String pdcId);
-	
-	/**
-	 * 得到所有的项目
-	 * @return List&lt;Project&gt;
-	 */
-	List<Project> getProjects();
 }

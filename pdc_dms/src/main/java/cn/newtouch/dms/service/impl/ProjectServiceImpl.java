@@ -4,12 +4,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.newtouch.dms.entity.Project;
+import cn.newtouch.dms.exception.ProjectServiceException;
 import cn.newtouch.dms.repository.ProjectDao;
 import cn.newtouch.dms.service.ProjectService;
 
@@ -23,7 +25,8 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectDao projectDao;
 	
 	public ProjectServiceImpl() {
-		logger.info("构造Project Service...");
+		logger.info("初始化Project Service...");
+		init();
 	}
 	
 	@PostConstruct
@@ -33,49 +36,63 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Project getProjectById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void insertOrUpdateProject(Project project) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteProjectById(Integer id) {
-		// TODO Auto-generated method stub
-		
+		return projectDao.selectById(id);
 	}
 
 	@Override
 	public Project getProjectByCode(String projectCode) {
-		// TODO Auto-generated method stub
-		return null;
+		return projectDao.selectByCode(projectCode);
+	}
+	
+	@Override
+	public void insertOrUpdateProject(Project project) throws ProjectServiceException {
+		if (project == null || StringUtils.isEmpty(project.getCode())) {
+			throw new ProjectServiceException("不能创建空项目");
+		}
+		
+		if (existProject(project.getCode())) {
+			projectDao.updateSelective(project);
+		} else {
+			projectDao.insertSelective(project);
+		}
+	}
+	
+	@Override
+	public void deleteProjectById(Integer id) {
+		projectDao.deleteById(id);
 	}
 
 	@Override
 	public boolean existProject(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		if (id == null) {
+			return false;
+		}
+		return getProjectById(id) != null;
 	}
 
 	@Override
 	public boolean existProject(String projectCode) {
-		// TODO Auto-generated method stub
-		return false;
+		//TODO 
+		if (StringUtils.isEmpty(projectCode)) {
+			return false;
+		}
+		
+		return getProjectByCode(projectCode) != null;
 	}
 
 	@Override
 	public List<Project> getProjectsByMemberPdcId(String pdcId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Project> getProjects() {
 		return projectDao.selectAll();
+	}
+
+	@Override
+	public List<Project> getProjectsBy(Project projectFilter) {
+		return projectDao.selectBy(projectFilter);
 	}
 	
 }

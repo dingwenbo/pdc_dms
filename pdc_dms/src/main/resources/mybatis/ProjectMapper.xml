@@ -25,12 +25,43 @@
 		<include refid="Base_Column_List" />
 		from pdc_project
 	</select>
+	<select id="selectBy" resultMap="BaseResultMap" parameterType="Project">
+		<bind name="codePattern" value="'%' + _parameter.code + '%'"/>
+		<bind name="labelPattern" value="'%' + _parameter.label + '%'"/>
+		<bind name="fullNamePattern" value="'%' + _parameter.fullName + '%'"/>
+		select 
+		<include refid="Base_Column_List"/>
+		from pdc_project
+		<trim prefix="where" prefixOverrides="AND">
+			<if test="code != null">
+				code LIKE #{codePattern}		
+			</if>
+			<if test="label != null">
+				label LIKE #{labelPattern}
+			</if>
+			<if test="fullName != null">
+				full_name LIKE #{fullNamePattern}
+			</if>
+		</trim>
+	</select>
+	<select id="selectByMemberPdcId" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List"/>
+		from pdc_project p, pdc_project_member pm
+		where pm.member_id = #{pdcId, jdbcType=VARCHAR} and pm.project_id = p.id
+	</select>
 	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List"/>
 		from pdc_project
 		where id = #{id, jdbcType=INTEGER}
 	</select>
+	<select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List"/>
+		from pdc_project
+		where code = #{code, jdbcType=VARCHAR}
+	</select>      
 	<select id="selectMembers" resultType="cn.newtouch.dms.entity.Member"
 		parameterType="int">
 		select pdc_member.* from pdc_project_member, pdc_member where
@@ -43,42 +74,51 @@
 		values (#{code,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="Project">
+	<insert id="insertSelective" parameterType="Project" useGeneratedKeys="true" keyProperty="id">
 		insert into pdc_project
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
 			<if test="code != null">
 				code,
 			</if>
 			<if test="label != null">
 				label,
 			</if>
+			<if test="fullName != null">
+				full_name,
+			</if>
+			<if test="parent != null">
+				parent,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=INTEGER},
-			</if>
 			<if test="code != null">
 				#{code,jdbcType=VARCHAR},
 			</if>
 			<if test="label != null">
 				#{label,jdbcType=VARCHAR},
 			</if>
+			<if test="fullName != null">
+				#{fullName, jdbcType=VARCHAR},
+			</if>
+			<if test="parent != null">
+				#{parent.id, jdbcType=INTEGER},
+			</if>
 		</trim>
 	</insert>
 	<update id="updateSelective" parameterType="Project">
 		update pdc_project
 		<set>
-			<if test="code != null">
-				code = #{code,jdbcType=VARCHAR},
-			</if>
 			<if test="label != null">
 				label = #{label,jdbcType=VARCHAR},
 			</if>
+			<if test="fullName != null">
+				full_name = #{fullName, jdbcType=VARCHAR},
+			</if>
+			<if test="parent != null">
+				parent = #{parent.id, jdbcType=INTEGER},
+			</if>
 		</set>
-		where id = #{id,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER} and code = #{code,jdbcType=VARCHAR}
 	</update>
 	<update id="update" parameterType="Project">
 		update pdc_project

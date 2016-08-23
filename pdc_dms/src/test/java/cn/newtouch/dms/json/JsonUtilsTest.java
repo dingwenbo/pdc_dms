@@ -103,8 +103,7 @@ public class JsonUtilsTest {
 		logger.info(list);
 	}
 	
-	
-	
+	@SuppressWarnings("unused")
 	private boolean compareJsonStr(String str1, String str2) {
 		//TODO : to compare json string.
 		String regex = "[\r\n]";

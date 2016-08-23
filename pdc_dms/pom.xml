@@ -63,18 +63,18 @@
 
 		<!-- PERSISTENCE begin -->
 		<!-- hibernate -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hibernate</groupId> -->
-<!-- 			<artifactId>hibernate-entitymanager</artifactId> -->
-<!-- 			<version>${hibernate.version}</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
 
 		<!-- spring data access -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.data</groupId> -->
-<!-- 			<artifactId>spring-data-jpa</artifactId> -->
-<!-- 			<version>${spring-data-jpa.version}</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring-data-jpa.version}</version>
+		</dependency>
 
 		<!-- spring aop -->
 		<dependency>
@@ -340,14 +340,13 @@
 			</exclusions>
 		</dependency>
 
-		<!-- h2  如果生产数据库不是H2，解开下面的注释
+		<!-- h2  如果生产数据库不是H2，解开下面的注释-->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
 		</dependency>
-		-->
-
+		
 		<!-- jetty -->
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>

@@ -1,6 +1,17 @@
 package cn.newtouch.dms.web.project.bean;
 
-public class ProjectManagementVO {
+import org.springframework.beans.BeanUtils;
+
+import cn.newtouch.dms.entity.Project;
+import cn.newtouch.dms.vo.Viewable;
+
+/**
+ * 项目详细的视图对象.
+ * 
+ * @author JiaLong.Wang
+ *
+ */
+public class ProjectDetailVO implements Viewable<Project> {
 	
 	private int id;
 	private String code;
@@ -9,7 +20,8 @@ public class ProjectManagementVO {
 	private String parentCode;
 	private String oper;
 	
-	public ProjectManagementVO(){}
+	public ProjectDetailVO() {
+	}
 
 	public int getId() {
 		return id;
@@ -57,5 +69,13 @@ public class ProjectManagementVO {
 
 	public void setOper(String oper) {
 		this.oper = oper;
+	}
+	
+	@Override
+	public void accept(Project project) {
+		BeanUtils.copyProperties(project, this);
+		if (project.getParent() != null) {
+			setParentCode(project.getParent().getCode());
+		}
 	}
 }
