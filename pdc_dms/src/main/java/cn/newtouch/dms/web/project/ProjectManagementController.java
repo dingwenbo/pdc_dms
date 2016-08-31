@@ -147,11 +147,11 @@ public class ProjectManagementController extends AbstractJqGridController {
 
     @Override
     public void init(HttpServletRequest request) {
-        setUrl("projectManagement/getProjectData.action");
+        setUrl("/projectManagement/getProjectData.action");
         setWidth(Integer.valueOf("900"));
         setHeight(Integer.valueOf("250"));
         setRownumbers(Boolean.TRUE);
         setCaption("项目管理");
-        setEditurl("projectManagement/editProjectData.action");
+        setEditurl("/projectManagement/editProjectData.action");
     }
 }

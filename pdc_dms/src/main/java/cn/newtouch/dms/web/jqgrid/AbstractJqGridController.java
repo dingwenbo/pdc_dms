@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,9 +16,12 @@ public abstract class AbstractJqGridController {
     
     private JqGrid jqGrid;
     
+    private String basePath;
+    
     @ResponseBody
     @RequestMapping("/jqGrid")
     public String jqGrid(HttpServletRequest request, HttpServletResponse response) {
+    	basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         jqGrid = new JqGrid();
         init(request);
         jqGrid.setColNames(getColNames());
@@ -39,7 +41,7 @@ public abstract class AbstractJqGridController {
     }
     
     public void setUrl(String url) {
-        this.getJqGrid().setUrl(url);
+        this.getJqGrid().setUrl(basePath + url);
     }
 
     public void setWidth(Integer width) {
@@ -95,6 +97,6 @@ public abstract class AbstractJqGridController {
     }
 
     public void setEditurl(String editurl) {
-        this.getJqGrid().setEditurl(editurl);
+        this.getJqGrid().setEditurl(basePath + editurl);
     }
 }
