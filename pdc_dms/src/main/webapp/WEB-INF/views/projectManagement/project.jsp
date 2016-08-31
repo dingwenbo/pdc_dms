@@ -11,27 +11,41 @@
 		$.ajaxSetup({ cache: false });
 		pageInit();
 	});
+
+    function updateJqGrid(jqGrid) {
+        var colModel = jqGrid.colModel;
+        var obj = {editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}};
+
+        $.extend(true, colModel[1], obj);
+        $.extend(true, colModel[2], obj);
+        $.extend(true, colModel[3], obj);
+        $.extend(true, colModel[4], $.extend(true, {editoptions:{value: getParentProject()}}, obj));
+        return jqGrid;
+    }
 	
 	function pageInit(){
 		var lastsel;
-		$('#tableProject').jqGrid({
-			url : "${ctx}/projectManagement/getProjectData.action",
-			width : 900,
-			height : 250,
-			mtype : "POST",
-			datatype : "json",
-			colNames : ['No','Code','Full_Name','Label','父项目Code'],
-			colModel : [
-			            {name: 'id', index: 'id', width: 75, search: false, hidden:true},
-			            {name: 'code',index: 'code',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
-			            {name: 'fullName',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
-			            {name: 'label',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
-			            {name: 'parentCode',width: 350,align: 'left',editable: true, edittype:'select', editoptions:{value: getParentProject()}, searchoptions:{sopt:['cn']}}
-			],
-			rownumbers : true,
-			caption : "项目管理",
-			editurl : '${ctx}/projectManagement/editProjectData.action'
-		});
+// 		$('#tableProject').jqGrid({
+// 			url : "${ctx}/projectManagement/getProjectData.action",
+// 			width : 900,
+// 			height : 250,
+// 			mtype : "POST",
+// 			datatype : "json",
+// 			colNames : ['No','Code','Full_Name','Label','父项目Code'],
+// 			colModel : [
+// 			            {name: 'id', index: 'id', width: 75, search: false, hidden:true},
+// 			            {name: 'code',index: 'code',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
+// 			            {name: 'fullName',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
+// 			            {name: 'label',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
+// 			            {name: 'parentCode',width: 350,align: 'left',editable: true, edittype:'select', editoptions:{value: getParentProject()}, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}}
+// 			],
+// 			rownumbers : true,
+// 			caption : "项目管理",
+// 			editurl : '${ctx}/projectManagement/editProjectData.action'
+// 		});
+        var id = "tableProject";
+        var url = "${ctx}/projectManagement/jqGrid.action";
+        initJqGrid(url, id, updateJqGrid);
 		
 		$("#tableProject").jqGrid('filterToolbar',{
 			searchOperators : true

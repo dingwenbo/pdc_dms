@@ -53,7 +53,7 @@ public class LoginController {
 	public String fail(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String userName, Model model) {
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, userName);
 		LOGGER.info("用户[" + userName + "] 尝试登陆系统失败!");
-		return "login";
+		return login();
 	}
 	
 	/**

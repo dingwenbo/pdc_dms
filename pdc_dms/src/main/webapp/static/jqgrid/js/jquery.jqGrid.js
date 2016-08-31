@@ -1326,6 +1326,7 @@ $.fn.jqGrid = function( pin ) {
 			colFilters : {},
 			colMenu : false
 		}, $.jgrid.defaults , pin );
+		
 		if (localData !== undefined) {
 			p.data = localData;
 			pin.data = localData;
