@@ -9,3 +9,4 @@
 <script src="${ctx}/static/jqueryui/js/jquery-ui.custom.min.js"></script>
 <script src="${ctx}/static/jqgrid/js/grid.locale-cn.js"></script>
 <script src="${ctx}/static/jqgrid/js/jquery.jqGrid.js"></script>
+<script src="${ctx}/static/js/jqGrid-ajax.js"></script>
