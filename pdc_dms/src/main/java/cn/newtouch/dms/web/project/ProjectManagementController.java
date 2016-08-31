@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.newtouch.dms.entity.Project;
+import cn.newtouch.dms.exception.ProjectServiceException;
 import cn.newtouch.dms.json.JsonUtils;
 import cn.newtouch.dms.service.ProjectService;
 import cn.newtouch.dms.web.project.bean.ProjectDetailVO;
@@ -65,25 +66,38 @@ public class ProjectManagementController {
 	public String editProjectData(HttpServletRequest request) {
 		String code = request.getParameter("code");
 		String oper = request.getParameter("oper");
+		String parentCode = request.getParameter("parentCode");
 		
 		Project project = new Project();
 		project.setCode(code);
+		project.setLabel(request.getParameter("label"));
 		project.setFullName(request.getParameter("fullName"));
-		project.setLabel(request.getParameter("lable"));
-		project.setParent(null);
-		
-//		if (oper !=null && oper.equals("add")) {
-//			if (projectServiceImpl.existProject(code)) {
-//				projectServiceImpl.insertOrUpdateProject(project);
-//			} else {
-//				logger.warn("项目已存在");
-//			}
-//		} else if (oper != null && oper.equals("edit")) {
-//			projectServiceImpl.insertOrUpdateProject(project);
-//		}
+		if (parentCode.equals("0")) {
+			project.setParent(null);
+		} else {
+			Project parentProject = new Project();
+			parentProject.setId(new Integer(parentCode));
+			project.setParent(parentProject);
+		}
 
-		System.out.println(oper + "--------test oper");
-		return "";
+		try {
+			if (oper !=null && oper.equals("add")) {
+				if (!projectService.existProject(code)) {
+					projectService.insertOrUpdateProject(project);
+					logger.info("新增1条项目详细记录："+code);
+				} else {
+					logger.warn("项目已存在");
+					return "error";
+				}
+			} else if (oper != null && oper.equals("edit")) {
+				project.setId(new Integer(request.getParameter("id")));
+				projectService.insertOrUpdateProject(project);
+				logger.info("修改1条项目详细记录："+code);
+			}
+		} catch (ProjectServiceException e) {
+			logger.error(e.getMessage());
+		}
+		return "success";
 	}
 	
 	@RequestMapping(value = "/deleteProjectData")
@@ -91,26 +105,14 @@ public class ProjectManagementController {
 	public String deleteProjectData(HttpServletRequest request) {
 		int id = Integer.valueOf(request.getParameter("id"));
 		projectService.deleteProjectById(id);
-		System.out.println(id + "----------delete project");
 		return "project";
 	}
 	
 	@RequestMapping(value = "/getParentProject")
 	@ResponseBody
 	public String getParentProject() {
-		Project project1 = new Project();
-		project1.setId(1);
-		project1.setCode("Test 01");
-		
-		Project project2 = new Project();
-		project2.setId(2);
-		project2.setCode("Test 02");
-		
 		List<Project> lstProject = new ArrayList<Project>();
-		lstProject.add(project1);
-		lstProject.add(project2);
 		lstProject = projectService.getProjects();
-		
 		return JsonUtils.writeObject(lstProject);
 	}
 }
