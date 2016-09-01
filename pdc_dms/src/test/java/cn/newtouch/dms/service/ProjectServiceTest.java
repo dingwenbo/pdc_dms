@@ -117,14 +117,18 @@ public class ProjectServiceTest extends SpringTransactionalTestCase{
 		project.setParent(parent);
 		projectService.insertOrUpdateProject(project);
 		project = projectService.getProjectByCode(TEST_CODE);
+		assertNull(project.getParent());
 		
+		//更新project使其父项目是null.
+		project.setParent(null);
+		projectService.insertOrUpdateProject(project);
+		project = projectService.getProjectByCode(TEST_CODE);
 		assertNull(project.getParent());
 	}
 	
 	@Test
 	public void testDeleteProject() {
 		logger.info("测试方法：cn.newtouch.dms.service.ProjectService.deleteProjectById(Integer)");
-		final Integer deleteId = 1;
 		final Integer deleteNonExistenceElementId = 1000;
 		
 		projectService.deleteProjectById(1);

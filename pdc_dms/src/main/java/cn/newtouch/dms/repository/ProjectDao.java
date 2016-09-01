@@ -32,9 +32,7 @@ public interface ProjectDao {
 //    int insert(Project record);
 
     int insertSelective(Project record);
-    
-    int updateSelective(Project record);
 
-//    int update(Project record);
+    int update(Project record);
     
 }
