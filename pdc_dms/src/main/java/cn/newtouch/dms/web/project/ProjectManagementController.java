@@ -16,6 +16,7 @@ import cn.newtouch.dms.entity.Project;
 import cn.newtouch.dms.exception.ProjectServiceException;
 import cn.newtouch.dms.json.JsonUtils;
 import cn.newtouch.dms.service.ProjectService;
+import cn.newtouch.dms.vo.MessageInfo;
 import cn.newtouch.dms.vo.jqgrid.Model;
 import cn.newtouch.dms.web.jqgrid.AbstractJqGridController;
 import cn.newtouch.dms.web.project.bean.ProjectDetailVO;
@@ -89,12 +90,12 @@ public class ProjectManagementController extends AbstractJqGridController {
 					logger.info("新增1条项目详细记录："+code);
 				} else {
 					logger.warn("项目已存在");
-					return "error";
+					return JsonUtils.writeObject(new MessageInfo("error", "项目已存在"));
 				}
 			} else if (oper != null && oper.equals("edit")) {
 				project.setId(new Integer(request.getParameter("id")));
 				projectService.insertOrUpdateProject(project);
-				logger.info("修改1条项目详细记录："+code);
+				logger.info("修改1条项目详细记录："+ code);
 			}
 		} catch (ProjectServiceException e) {
 			logger.error(e.getMessage());
@@ -107,7 +108,8 @@ public class ProjectManagementController extends AbstractJqGridController {
 	public String deleteProjectData(HttpServletRequest request) {
 		int id = Integer.valueOf(request.getParameter("id"));
 		projectService.deleteProjectById(id);
-		return "project";
+		logger.info("删除1条项目详细记录");
+		return "success";
 	}
 	
 	@RequestMapping(value = "/getParentProject")
@@ -138,7 +140,7 @@ public class ProjectManagementController extends AbstractJqGridController {
         colModel.add(model);
         model = new Model("fullName", null, Integer.valueOf("350"), "left");
         colModel.add(model);
-        model = new Model("label", null, Integer.valueOf("350"), "left");
+        model = new Model("label", null, Integer.valueOf("400"), "left");
         colModel.add(model);
         model = new Model("parentCode", null, Integer.valueOf("350"), "left", "select");
         colModel.add(model);
@@ -153,5 +155,10 @@ public class ProjectManagementController extends AbstractJqGridController {
         setRownumbers(Boolean.TRUE);
         setCaption("项目管理");
         setEditurl("/projectManagement/editProjectData.action");
+        setPager("pagerProject");
+        setViewrecords(true);
+        setRowNum(10);
+        setLoadonce(true);
+        setSortable(true);
     }
 }
