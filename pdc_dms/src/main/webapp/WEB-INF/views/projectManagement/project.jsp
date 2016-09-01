@@ -19,67 +19,42 @@
         $.extend(true, colModel[1], obj);
         $.extend(true, colModel[2], obj);
         $.extend(true, colModel[3], obj);
-        $.extend(true, colModel[4], $.extend(true, {editoptions:{value: getParentProject()}}, obj));
+        $.extend(true, colModel[4], $.extend(true, {editoptions:{value: getParentProject()}}, {search:true,searchoptions:{sopt:['cn']}}));
         return jqGrid;
     }
 	
 	function pageInit(){
-		var lastsel;
-// 		$('#tableProject').jqGrid({
-// 			url : "${ctx}/projectManagement/getProjectData.action",
-// 			width : 900,
-// 			height : 250,
-// 			mtype : "POST",
-// 			datatype : "json",
-// 			colNames : ['No','Code','Full_Name','Label','父项目Code'],
-// 			colModel : [
-// 			            {name: 'id', index: 'id', width: 75, search: false, hidden:true},
-// 			            {name: 'code',index: 'code',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
-// 			            {name: 'fullName',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
-// 			            {name: 'label',width: 350,align: 'left',editable: true, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}},
-// 			            {name: 'parentCode',width: 350,align: 'left',editable: true, edittype:'select', editoptions:{value: getParentProject()}, editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}}
-// 			],
-// 			rownumbers : true,
-// 			caption : "项目管理",
-// 			editurl : '${ctx}/projectManagement/editProjectData.action'
-// 		});
         var id = "tableProject";
         var url = "${ctx}/projectManagement/jqGrid.action";
         initJqGrid(url, id, updateJqGrid);
-		
-		$("#tableProject").jqGrid('filterToolbar',{
+        
+        $('#tableProject').jqGrid('filterToolbar',{
 			searchOperators : true
 		});
 		
-		$("#add").click(function() {
+		$('#add').click(function() {
 		    $("#tableProject").jqGrid('editGridRow', 'new', {
 		    	addCaption: '添加一个新的项目',
 		    	top : 250,
 		    	left : 700,
-		    	width : 400,
+		    	width : 500,
 		      	dataheight : 180,
-		      	reloadAfterSubmit : true,
 		      	addedrow : 'last',
 		      	closeAfterAdd : true,
+		      	closeOnEscape : true,
 		      	beforeInitData : function() {
 		      		getParentProject();
 		      	},
-		      	afterComplete : function(xhr){
-		      		if (xhr.responseText == 'error') {
-		      			$("#dialog").dialog({
-// 		      				width: 300,
-// 		      				height: 50,
-// 		      				resizable: false
-		      				 bgiframe: true,
-		      			    resizable: false,
-		      			    height:140,
-		      			    modal: true,
-		      			    overlay: {
-		      			        backgroundColor: '#000',
-		      			        opacity: 0.8
-		      			    },
-		      			});
+		      	afterComplete : function(data){
+		      		var messageInfo = eval("("+data.responseText+")");
+		      		$('#dialog').text(messageInfo.messageInfo);
+		      		if (messageInfo.code == 'error') {
+		      			displayDialog();
 		      		}
+		      	},
+		      	afterSubmit:function() {
+		      	 	$("#tableProject").jqGrid('setGridParam',{datatype:'json',page:1}).trigger('reloadGrid');
+		      	 	return [true,"",""];
 		      	}
 		    });
 		  });
@@ -94,10 +69,18 @@
 			    	width : 400,
 			      	dataheight : 180,
 					closeAfterEdit : true,
-					closeOnEscape : true
+					closeOnEscape : true,
+					beforeInitData : function() {
+			      		getParentProject();
+			      	},
+			      	afterSubmit:function() {
+			      	 	$("#tableProject").jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+			      	 	return [true,"",""];
+			      	}
 				});
 			} else {
-				alert('请选择需要修改的数据');
+				$('#dialog').text("请选择需要修改的数据");
+				displayDialog();
 			} 
 		});
 		
@@ -109,11 +92,20 @@
 			    	left : 700,
 					caption : '删除项目',
 					msg : '确定要删除此项目吗?',
-					url : '${ctx}/projectManagement/deleteProjectData.action'
+					url : '${ctx}/projectManagement/deleteProjectData.action',
+					afterSubmit:function() {
+			      	 	$("#tableProject").jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+			      	 	return [true,"",""];
+			      	}
 				});
 			} else {
-				alert('请选择需要删除的数据');
+				$('#dialog').text("请选择需要删除的数据");
+				displayDialog();
 			}
+		});
+		
+		$('#filter').click(function(){
+			$('#tableProject')[0].triggerToolbar(); 
 		});
 	}
 	
@@ -125,7 +117,7 @@
 			success:function(data){ 
 				str = "";
 				if (data != null) { 
-				  var jsonobj = eval(data);
+				  var jsonobj = eval("("+data+")");
 				  var length = jsonobj.length;
 				  if (length > 0) {
 					  str = "0:无;";
@@ -145,19 +137,31 @@
 		$('#tableProject').jqGrid('setColProp', 'parentCode', { editoptions: { value: str} });
 	}
 	
-	function onClickFilterTable(){
-		
+	function displayDialog(){
+		$("#dialog").dialog({
+			title: "错误信息",
+			closeText : "",
+				bgiframe: true,
+			    resizable: false,
+			    width: 240,
+			    height:100,
+			    modal:true,
+			    overlay: {
+			        backgroundColor: '#000',
+			        opacity: 0.5
+			    }
+			});
 	}
 </script>
 <style type="text/css">
 	html, body {  
 		margin: 0;
 		padding: 0;
-		font-size: 20px;
 	}
 
 	.divProject{
 		padding : 20px 5px 30px 50px;
+		font-size: 20px;
 	}
 	
 	.btn{
@@ -179,7 +183,6 @@
 		    <button class="btn" id="delete">Delete</button>
 		    <button class="btn" id="filter">Filter</button>
 	</div>
-	<div id="dialog">
-	</div>
+	<div id="dialog" style="text-align:center;"></div>
 </body>
 </html>
