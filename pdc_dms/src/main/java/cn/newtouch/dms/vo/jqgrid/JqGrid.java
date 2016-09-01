@@ -52,6 +52,12 @@ public class JqGrid {
     /** The editurl. */
     private String editurl;
     
+    /** The loadonce. */
+    private Boolean loadonce;
+    
+    /** The sortable. */
+    private Boolean sortable;
+    
     /**
      * Instantiates a new jq grid.
      */
@@ -348,6 +354,36 @@ public class JqGrid {
     public void setEditurl(String editurl) {
         this.editurl = editurl;
     }
-    
-    
+
+	/**
+	 * Gets the loadonce
+	 * 
+	 * @return the loadonce
+	 */
+	public Boolean getLoadonce() {
+		return loadonce;
+	}
+
+	/**
+	 * Sets the loadonce
+	 * 
+	 * @param loadonce the loadonce to set
+	 */
+	public void setLoadonce(Boolean loadonce) {
+		this.loadonce = loadonce;
+	}
+
+	/**
+	 * @return the sortable
+	 */
+	public Boolean getSortable() {
+		return sortable;
+	}
+
+	/**
+	 * @param sortable the sortable to set
+	 */
+	public void setSortable(Boolean sortable) {
+		this.sortable = sortable;
+	}
 }
