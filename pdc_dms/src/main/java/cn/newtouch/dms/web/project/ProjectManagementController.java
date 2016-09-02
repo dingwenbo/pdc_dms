@@ -95,7 +95,7 @@ public class ProjectManagementController extends AbstractJqGridController {
 			} else if (oper != null && oper.equals("edit")) {
 				project.setId(new Integer(request.getParameter("id")));
 				projectService.insertOrUpdateProject(project);
-				logger.info("修改1条项目详细记录："+code);
+				logger.info("修改1条项目详细记录："+ code);
 			}
 		} catch (ProjectServiceException e) {
 			logger.error(e.getMessage());
