@@ -28,12 +28,12 @@
 		
     function updateJqGrid(jqGrid) {
         var colModel = jqGrid.colModel;
-        var obj = {editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}};
+//         var obj = {editrules:{required:true},editoptions:{size:20},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}};
 
-        $.extend(true, colModel[1], {editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}});
-        $.extend(true, colModel[2], obj);
-        $.extend(true, colModel[3], obj);
-        $.extend(true, colModel[4], $.extend(true, {editoptions:{value: getParentProject()}}, {search:true,searchoptions:{sopt:['cn']}}));
+        $.extend(true, colModel[1], {editrules:{required:true},editoptions:{size:20},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}});
+        $.extend(true, colModel[2], {editrules:{required:true},editoptions:{size:30},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}});
+        $.extend(true, colModel[3], {editrules:{required:true},editoptions:{size:40},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}});
+        $.extend(true, colModel[4], {editoptions:{value: getParentProject()}}, {search:true,searchoptions:{sopt:['cn']}});
         return jqGrid;
     }
 	
@@ -52,7 +52,7 @@
 		    	top : 250,
 		    	left : 700,
 		    	width : 500,
-		      	dataheight : 180,
+		      	dataheight : 170,
 		      	addedrow : 'last',
 		      	closeAfterAdd : true,
 		      	closeOnEscape : true,
@@ -82,8 +82,9 @@
 					editCaption: '编辑项目',
 					top : 250,
 			    	left : 700,
-			    	width : 400,
-			      	dataheight : 180,
+			    	width : 500,
+			      	dataheight : 170,
+			      	viewPagerButtons : false,
 					closeAfterEdit : true,
 					closeOnEscape : true,
 					url : '${ctx}/projectManagement/editProjectData.action',
