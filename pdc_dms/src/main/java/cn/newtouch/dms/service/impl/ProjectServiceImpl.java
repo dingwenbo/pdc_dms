@@ -51,7 +51,7 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 		
 		if (existProject(project.getCode())) {
-			projectDao.updateSelective(project);
+			projectDao.update(project);
 		} else {
 			projectDao.insertSelective(project);
 		}

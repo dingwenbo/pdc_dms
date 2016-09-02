@@ -12,11 +12,17 @@
 <script type="text/javascript">
 $(function() {
 	// 进入首页，加载首页的信息
-	$("#main").load('${ctx}' + '/main/showHomePage');
+    gotoUrl(null, '/main/showHomePage');
 });
 
 function gotoUrl(obj, action) {
-	$("#main").load('${ctx}' + action);
+	$("#main").load('${ctx}' + action, checkSessionTimeout);
+    
+}
+function checkSessionTimeout() {
+    if ($(".form-login").size() > 0) {
+        window.top.location.href = "${ctx}/login";
+    }  
 }
 </script>
 </head>
