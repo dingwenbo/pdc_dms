@@ -1,14 +1,18 @@
 package cn.newtouch.dms.web.project;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -64,39 +68,53 @@ public class ProjectManagementController extends AbstractJqGridController {
 		return JsonUtils.writeObject(results);
 	}
 	
+	@RequestMapping(value = "/addProjectData")
+	@ResponseBody
+	public String addProjectData(@ModelAttribute ProjectDetailVO projectDetail) {
+		try {
+			String code = projectDetail.getCode();
+			if (!projectService.existProject(code)) {
+				Project project = new Project();
+				project.setCode(code);
+				project.setFullName(projectDetail.getFullName());
+				project.setLabel(projectDetail.getLabel());
+				String projectCode = projectDetail.getParentCode();
+				if (projectCode.equals("0")) {
+					project.setParent(null);
+				} else {
+					Project parentProject = projectService.getProjectById(Integer.parseInt(projectDetail.getParentCode()));
+					project.setParent(parentProject);
+				}
+				projectService.insertOrUpdateProject(project);
+				logger.info("新增1条项目详细记录："+code);
+			} else {
+				logger.warn("项目已存在");
+				return JsonUtils.writeObject(new MessageInfo("error", "项目已存在"));
+			}
+		} catch (ProjectServiceException e) {
+			logger.error(e.getMessage());
+		}
+		return "success";
+	}
+	
 	@RequestMapping(value = "/editProjectData")
 	@ResponseBody
-	public String editProjectData(HttpServletRequest request) {
-		String code = request.getParameter("code");
-		String oper = request.getParameter("oper");
-		String parentCode = request.getParameter("parentCode");
-		
-		Project project = new Project();
-		project.setCode(code);
-		project.setLabel(request.getParameter("label"));
-		project.setFullName(request.getParameter("fullName"));
-		if (parentCode.equals("0")) {
-			project.setParent(null);
-		} else {
-			Project parentProject = new Project();
-			parentProject.setId(new Integer(parentCode));
-			project.setParent(parentProject);
-		}
-
+	public String editProjectData(@ModelAttribute ProjectDetailVO projectDetail) {
 		try {
-			if (oper !=null && oper.equals("add")) {
-				if (!projectService.existProject(code)) {
-					projectService.insertOrUpdateProject(project);
-					logger.info("新增1条项目详细记录："+code);
-				} else {
-					logger.warn("项目已存在");
-					return JsonUtils.writeObject(new MessageInfo("error", "项目已存在"));
-				}
-			} else if (oper != null && oper.equals("edit")) {
-				project.setId(new Integer(request.getParameter("id")));
-				projectService.insertOrUpdateProject(project);
-				logger.info("修改1条项目详细记录："+ code);
+			Project project = new Project();
+			project.setId(projectDetail.getIdValue());
+			project.setCode(projectDetail.getCode());
+			project.setFullName(projectDetail.getFullName());
+			project.setLabel(projectDetail.getLabel());
+			String projectCode = projectDetail.getParentCode();
+			if (projectCode.equals("0")) {
+				project.setParent(null);
+			} else {
+				Project parentProject = projectService.getProjectById(Integer.parseInt(projectDetail.getParentCode()));
+				project.setParent(parentProject);
 			}
+			projectService.insertOrUpdateProject(project);
+			logger.info("修改1条项目详细记录："+projectDetail.getCode());
 		} catch (ProjectServiceException e) {
 			logger.error(e.getMessage());
 		}
@@ -105,18 +123,20 @@ public class ProjectManagementController extends AbstractJqGridController {
 	
 	@RequestMapping(value = "/deleteProjectData")
 	@ResponseBody
-	public String deleteProjectData(HttpServletRequest request) {
-		int id = Integer.valueOf(request.getParameter("id"));
-		projectService.deleteProjectById(id);
+	public String deleteProjectData(@ModelAttribute ProjectDetailVO projectDetail) {
+		projectService.deleteProjectById(projectDetail.getIdValue());
 		logger.info("删除1条项目详细记录");
 		return "success";
 	}
 	
 	@RequestMapping(value = "/getParentProject")
 	@ResponseBody
-	public String getParentProject() {
-		List<Project> lstProject = new ArrayList<Project>();
-		lstProject = projectService.getProjects();
+	public String getParentProject(@ModelAttribute ProjectDetailVO projectDetail) {
+		List<Project> lstProject = projectService.getProjects();
+		if (projectDetail.getId() != null && !projectDetail.getId().equals("0")) {
+			Project project = projectService.getProjectById(projectDetail.getIdValue());
+			lstProject.remove(project);
+		}
 		return JsonUtils.writeObject(lstProject);
 	}
 
@@ -154,7 +174,6 @@ public class ProjectManagementController extends AbstractJqGridController {
         setHeight(Integer.valueOf("250"));
         setRownumbers(Boolean.TRUE);
         setCaption("项目管理");
-        setEditurl("/projectManagement/editProjectData.action");
         setPager("pagerProject");
         setViewrecords(true);
         setRowNum(10);

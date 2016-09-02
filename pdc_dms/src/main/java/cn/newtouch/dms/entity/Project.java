@@ -2,6 +2,9 @@ package cn.newtouch.dms.entity;
 
 import java.util.List;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * Class project.
  * <pre>项目的实体类。  </pre>
@@ -84,10 +87,38 @@ public class Project {
 	public void setParent(Project parent) {
 		this.parent = parent;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		} else if (!(obj instanceof Project)) {
+			return false;
+		}
+		
+		Project p = (Project) obj;
+		
+		return new EqualsBuilder()
+				.append(id, p.getId())
+				.append(code, p.getCode())
+				.build();
+	}
+	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+				.append(id)
+				.append(code)
+				.toHashCode();
+	}
 
 	@Override
 	public String toString() {
+		String parentCode = null;
+		if (parent != null) {
+			parentCode = parent.getCode();
+		}
 		return "Project [id=" + id + ", code=" + code + ", fullName=" + fullName + ", label=" + label + ", parent="
-				+ parent + "]";
+				+ parentCode + "]";
 	}
 }

@@ -16,7 +16,7 @@
         var colModel = jqGrid.colModel;
         var obj = {editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}};
 
-        $.extend(true, colModel[1], obj);
+        $.extend(true, colModel[1], {editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}});
         $.extend(true, colModel[2], obj);
         $.extend(true, colModel[3], obj);
         $.extend(true, colModel[4], $.extend(true, {editoptions:{value: getParentProject()}}, {search:true,searchoptions:{sopt:['cn']}}));
@@ -42,7 +42,9 @@
 		      	addedrow : 'last',
 		      	closeAfterAdd : true,
 		      	closeOnEscape : true,
+		      	url : '${ctx}/projectManagement/addProjectData.action',
 		      	beforeInitData : function() {
+		      		$('#tableProject').jqGrid('setColProp', 'code', {editoptions:{readonly: false}});
 		      		getParentProject();
 		      	},
 		      	afterComplete : function(data){
@@ -70,11 +72,13 @@
 			      	dataheight : 180,
 					closeAfterEdit : true,
 					closeOnEscape : true,
+					url : '${ctx}/projectManagement/editProjectData.action',
 					beforeInitData : function() {
+						$('#tableProject').jqGrid('setColProp', 'code', {editoptions:{readonly: true}});
 			      		getParentProject();
 			      	},
 			      	afterSubmit:function() {
-			      	 	$("#tableProject").jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+			      	 	$("#tableProject").jqGrid('setGridParam',{datatype:'json',page:1}).trigger('reloadGrid');
 			      	 	return [true,"",""];
 			      	}
 				});
@@ -94,7 +98,7 @@
 					msg : '确定要删除此项目吗?',
 					url : '${ctx}/projectManagement/deleteProjectData.action',
 					afterSubmit:function() {
-			      	 	$("#tableProject").jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+			      	 	$("#tableProject").jqGrid('setGridParam',{datatype:'json',page:1}).trigger('reloadGrid');
 			      	 	return [true,"",""];
 			      	}
 				});
@@ -110,9 +114,11 @@
 	}
 	
 	function getParentProject() {
+		var id=$('#tableProject').jqGrid('getGridParam', 'selrow');
 		$.ajax({
 			type:"POST",
-			async:false, 
+			async:false,
+			data: $('#tableProject').jqGrid('getRowData', id),
 			url:"${ctx}/projectManagement/getParentProject.action",
 			success:function(data){ 
 				str = "";

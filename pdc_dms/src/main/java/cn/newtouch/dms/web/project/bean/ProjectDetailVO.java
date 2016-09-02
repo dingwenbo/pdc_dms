@@ -1,5 +1,6 @@
 package cn.newtouch.dms.web.project.bean;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 import cn.newtouch.dms.entity.Project;
@@ -13,7 +14,7 @@ import cn.newtouch.dms.vo.Viewable;
  */
 public class ProjectDetailVO implements Viewable<Project> {
 	
-	private int id;
+	private String id;
 	private String code;
 	private String fullName;
 	private String label;
@@ -23,11 +24,24 @@ public class ProjectDetailVO implements Viewable<Project> {
 	public ProjectDetailVO() {
 	}
 
-	public int getId() {
+	public Integer getIdValue() {
+		if (StringUtils.isNumeric(id)) {
+			return Integer.parseInt(id);
+		}
+		return null;
+	}
+	
+	/**
+	 * @return the id
+	 */
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -74,6 +88,7 @@ public class ProjectDetailVO implements Viewable<Project> {
 	@Override
 	public void accept(Project project) {
 		BeanUtils.copyProperties(project, this);
+		this.setId(String.valueOf(project.getId()));
 		if (project.getParent() != null) {
 			setParentCode(project.getParent().getCode());
 		}
