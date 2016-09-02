@@ -99,4 +99,12 @@ public abstract class AbstractJqGridController {
     public void setEditurl(String editurl) {
         this.getJqGrid().setEditurl(basePath + editurl);
     }
+    
+    public void setLoadonce(Boolean loadonce) {
+    	this.getJqGrid().setLoadonce(loadonce);
+    }
+    
+    public void setSortable(Boolean sortable) {
+    	this.getJqGrid().setSortable(sortable);
+    }
 }
