@@ -57,12 +57,6 @@ function checkSessionTimeout() {
               						<i class="glyphicon glyphicon-pencil"></i>&nbsp;Timesheet填写
               					</a>
               				</li>
-              				<!-- SE级别以上 -->
-              				<li>
-              					<a href="#">
-              						<i class="glyphicon glyphicon-pencil"></i>&nbsp;我的任务
-              					</a>
-              				</li>
               				<!-- TL级别以上并且拥有特定的权限 -->
               				<li>
               					<a href="#">
@@ -119,7 +113,7 @@ function checkSessionTimeout() {
               				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;我的项目</a></li>
               				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;我的任务</a></li>
               				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;修改密码</a></li>
-              				<li><a href="#"><i class="glyphicon glyphicon-log-out"></i>&nbsp;退出</a></li>
+              				<li><a href="#"><i class="glyphicon glyphicon-log-out"></i>&nbsp;安全退出</a></li>
               			</ul>
                     </li>
                     <li>
