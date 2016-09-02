@@ -12,11 +12,25 @@
 		pageInit();
 	});
 
+	function myelem (value, options) {
+	  var span = document.createElement("span");
+	  span.innerHTML = value;
+	  return span;
+	}
+	
+	function myvalue(elem, operation, value) {
+	    if(operation === 'get') {
+	       return $(elem).html();
+	    } else if(operation === 'set') {
+	       $('span',elem).innerHTML = value;
+	    }
+	}
+		
     function updateJqGrid(jqGrid) {
         var colModel = jqGrid.colModel;
-        var obj = {editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}};
+        var obj = {editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}};
 
-        $.extend(true, colModel[1], {editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*</span>'},searchoptions:{sopt:['cn']}});
+        $.extend(true, colModel[1], {editrules:{required:true},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}});
         $.extend(true, colModel[2], obj);
         $.extend(true, colModel[3], obj);
         $.extend(true, colModel[4], $.extend(true, {editoptions:{value: getParentProject()}}, {search:true,searchoptions:{sopt:['cn']}}));
@@ -44,7 +58,7 @@
 		      	closeOnEscape : true,
 		      	url : '${ctx}/projectManagement/addProjectData.action',
 		      	beforeInitData : function() {
-		      		$('#tableProject').jqGrid('setColProp', 'code', {editoptions:{readonly: false}});
+		      		$('#tableProject').jqGrid('setColProp', 'code', {edittype:"text", formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'}});
 		      		getParentProject();
 		      	},
 		      	afterComplete : function(data){
@@ -74,7 +88,7 @@
 					closeOnEscape : true,
 					url : '${ctx}/projectManagement/editProjectData.action',
 					beforeInitData : function() {
-						$('#tableProject').jqGrid('setColProp', 'code', {editoptions:{readonly: true}});
+						$('#tableProject').jqGrid('setColProp', 'code', {editrules:{required:false},edittype:"custom", editoptions:{custom_element:myelem,custom_value:myvalue}, formoptions:{elmprefix:'<span></span>'}});
 			      		getParentProject();
 			      	},
 			      	afterSubmit:function() {
