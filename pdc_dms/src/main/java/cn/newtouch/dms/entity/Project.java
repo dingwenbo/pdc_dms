@@ -87,7 +87,11 @@ public class Project {
 
 	@Override
 	public String toString() {
+		String parentCode = null;
+		if (parent != null) {
+			parentCode = parent.getCode();
+		}
 		return "Project [id=" + id + ", code=" + code + ", fullName=" + fullName + ", label=" + label + ", parent="
-				+ parent + "]";
+				+ parentCode + "]";
 	}
 }
