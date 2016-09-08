@@ -19,8 +19,8 @@ import cn.newtouch.dms.json.JsonUtils;
 import cn.newtouch.dms.service.ProjectService;
 import cn.newtouch.dms.vo.MessageInfo;
 import cn.newtouch.dms.vo.jqgrid.Model;
+import cn.newtouch.dms.vo.project.ProjectDetailVO;
 import cn.newtouch.dms.web.jqgrid.AbstractJqGridController;
-import cn.newtouch.dms.web.project.bean.ProjectDetailVO;
 
 /**
  * Project Management Controller
@@ -151,15 +151,15 @@ public class ProjectManagementController extends AbstractJqGridController {
     @Override
     public List<Model> getColModel() {
         List<Model> colModel = new ArrayList<>();
-        Model model = new Model("id", "id", Integer.valueOf("75"), null, null, Boolean.TRUE, null);
+        Model model = new Model("id", "id", 75, null, null, Boolean.TRUE, null);
         colModel.add(model);
-        model = new Model("code", "code", Integer.valueOf("350"), "left");
+        model = new Model("code", "code", 350, "left");
         colModel.add(model);
-        model = new Model("fullName", null, Integer.valueOf("350"), "left");
+        model = new Model("fullName", null, 350, "left");
         colModel.add(model);
-        model = new Model("label", null, Integer.valueOf("400"), "left");
+        model = new Model("label", null, 400, "left");
         colModel.add(model);
-        model = new Model("parentCode", null, Integer.valueOf("350"), "left", "select");
+        model = new Model("parentCode", null, 350, "left", "select");
         colModel.add(model);
         return colModel;
     }
