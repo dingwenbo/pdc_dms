@@ -35,4 +35,5 @@ public interface ProjectDao {
 
     int update(Project record);
     
+    List<Project> selectProjectByParentId(Integer id);
 }

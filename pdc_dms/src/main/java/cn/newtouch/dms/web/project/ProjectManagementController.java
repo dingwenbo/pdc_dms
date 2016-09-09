@@ -1,6 +1,7 @@
 package cn.newtouch.dms.web.project;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -130,13 +131,37 @@ public class ProjectManagementController extends AbstractJqGridController {
 	@ResponseBody
 	public String getParentProject(@ModelAttribute ProjectDetailVO projectDetail) {
 		List<Project> lstProject = projectService.getProjects();
-		if (projectDetail.getId() != null && !projectDetail.getId().equals("0")) {
-			Project project = projectService.getProjectById(projectDetail.getIdValue());
-			lstProject.remove(project);
+		if (projectDetail.getId() != null) {
+			List<String> lstChild = new ArrayList<>();
+			injectChild(projectDetail.getIdValue(), lstChild);
+			Iterator<Project> itePro = lstProject.iterator();
+			while(itePro.hasNext()) {
+				Project project = itePro.next();
+				if (lstChild.contains(String.valueOf(project.getId().intValue()))) {
+					itePro.remove();
+				}
+			}
 		}
 		return JsonUtils.writeObject(lstProject);
 	}
 
+	/**
+	 * 得到子项目
+	 * @param parentId
+	 * @param lstChild
+	 */
+	public void injectChild(int parentId, List<String> lstChild) {
+		lstChild.add(String.valueOf(parentId));
+		List<Project> subLst = projectService.getProjectByParentId(parentId);
+		
+		for (Project project : subLst) {
+			if (lstChild.contains(String.valueOf(project.getId().intValue()))) {
+				continue;
+			}
+			injectChild(project.getId(), lstChild);
+		}
+	}
+	
     @Override
     public List<String> getColNames() {
         List<String> colNames = new ArrayList<>();

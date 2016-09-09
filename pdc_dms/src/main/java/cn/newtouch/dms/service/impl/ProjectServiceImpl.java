@@ -1,5 +1,6 @@
 package cn.newtouch.dms.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -93,6 +94,15 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<Project> getProjectsBy(Project projectFilter) {
 		return projectDao.selectBy(projectFilter);
+	}
+
+	@Override
+	public List<Project> getProjectByParentId(Integer projectCode) {
+		if(projectCode == null) {
+			return Collections.emptyList();
+		}
+		
+		return projectDao.selectProjectByParentId(projectCode);
 	}
 	
 }
