@@ -27,6 +27,8 @@ public class Member {
 
     private boolean backup;
 
+    private String phone;
+
     private Date registerDate;
 
     private String plainPassword;
@@ -103,6 +105,14 @@ public class Member {
     
     public void setBackup(boolean backup) {
 		this.backup = backup;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
 	}
 
     // 设定JSON序列化时的日期格式

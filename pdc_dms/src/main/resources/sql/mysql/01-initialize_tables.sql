@@ -42,6 +42,7 @@ create table pdc_member (
 	role_id int,
 	supervisor_id int,
 	backup char(1) default '0',
+	phone varchar(15),
 	register_date date,
 	primary key(id)
 );

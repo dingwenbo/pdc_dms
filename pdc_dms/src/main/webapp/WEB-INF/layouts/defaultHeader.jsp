@@ -19,6 +19,7 @@
 						<li><a href="${ctx}/admin/member">Admin Members</a></li>
 						<li class="divider"></li>
 					</shiro:hasRole>
+                    <li><a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/member/memberInfo');">我的档案</a></li>
 					<li><a href="${ctx}/profile">Edit Profile</a></li>
 					<li><a href="${ctx}/logout">Logout</a></li>
 				</ul>
