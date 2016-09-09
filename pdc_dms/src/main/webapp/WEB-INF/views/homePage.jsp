@@ -30,7 +30,7 @@
 			weekNumbers: true,
 			
 			dayClick: function(date, jsEvent, view){
-				$("#main").load('${ctx}' + "/log/timesheet");
+				gotoUrl(null, '/log/timesheet');
 			}
 		});
 		

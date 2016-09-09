@@ -113,7 +113,7 @@ function checkSessionTimeout() {
               				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;我的项目</a></li>
               				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;我的任务</a></li>
               				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;修改密码</a></li>
-              				<li><a href="#"><i class="glyphicon glyphicon-log-out"></i>&nbsp;安全退出</a></li>
+              				<li><a href="javascript:void(0);" onclick="javascript:gotoUrl(this, '/logout');"><i class="glyphicon glyphicon-log-out"></i>&nbsp;安全退出</a></li>
               			</ul>
                     </li>
                     <li>

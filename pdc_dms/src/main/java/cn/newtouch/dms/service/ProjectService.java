@@ -72,4 +72,11 @@ public interface ProjectService {
 	 * @return boolean
 	 */
 	boolean existProject(String projectCode);
+	
+	/**
+	 * 
+	 * @param projectCode
+	 * @return
+	 */
+	List<Project> getProjectByParentId(Integer projectCode);
 }

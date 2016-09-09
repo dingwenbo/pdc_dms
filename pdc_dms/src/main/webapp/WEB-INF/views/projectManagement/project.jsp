@@ -33,7 +33,7 @@
         $.extend(true, colModel[1], {editrules:{required:true},editoptions:{size:20},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}});
         $.extend(true, colModel[2], {editrules:{required:true},editoptions:{size:30},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}});
         $.extend(true, colModel[3], {editrules:{required:true},editoptions:{size:40},formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'},searchoptions:{sopt:['cn']}});
-        $.extend(true, colModel[4], {editoptions:{value: getParentProject()}}, {search:true,searchoptions:{sopt:['cn']}});
+        $.extend(true, colModel[4], {search:true,searchoptions:{sopt:['cn']}});
         return jqGrid;
     }
 	
@@ -59,7 +59,7 @@
 		      	url : '${ctx}/projectManagement/addProjectData.action',
 		      	beforeInitData : function() {
 		      		$('#tableProject').jqGrid('setColProp', 'code', {edittype:"text", formoptions:{elmprefix:'<span style=\'color:red\'>*&nbsp;&nbsp;</span>'}});
-		      		getParentProject();
+		      		getParentProject(null);
 		      	},
 		      	afterComplete : function(data){
 		      		var messageInfo = eval("("+data.responseText+")");
@@ -90,7 +90,8 @@
 					url : '${ctx}/projectManagement/editProjectData.action',
 					beforeInitData : function() {
 						$('#tableProject').jqGrid('setColProp', 'code', {editrules:{required:false},edittype:"custom", editoptions:{custom_element:myelem,custom_value:myvalue}, formoptions:{elmprefix:'<span></span>'}});
-			      		getParentProject();
+						var id=$('#tableProject').jqGrid('getGridParam', 'selrow');
+						getParentProject(id);
 			      	},
 			      	afterSubmit:function() {
 			      	 	$("#tableProject").jqGrid('setGridParam',{datatype:'json',page:1}).trigger('reloadGrid');
@@ -128,16 +129,15 @@
 		});
 	}
 	
-	function getParentProject() {
-		var id=$('#tableProject').jqGrid('getGridParam', 'selrow');
+	function getParentProject(id) {
 		$.ajax({
 			type:"POST",
 			async:false,
 			data: $('#tableProject').jqGrid('getRowData', id),
-			url:"${ctx}/projectManagement/getParentProject.action",
+			url: "${ctx}/projectManagement/getParentProject.action",
 			success:function(data){ 
 				str = "";
-				if (data != null) { 
+				if (data != null && data != "") { 
 				  var jsonobj = eval("("+data+")");
 				  var length = jsonobj.length;
 				  if (length > 0) {
