@@ -1,6 +1,7 @@
 package cn.newtouch.dms.web.project;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +20,8 @@ import cn.newtouch.dms.json.JsonUtils;
 import cn.newtouch.dms.service.ProjectService;
 import cn.newtouch.dms.vo.MessageInfo;
 import cn.newtouch.dms.vo.jqgrid.Model;
+import cn.newtouch.dms.vo.project.ProjectDetailVO;
 import cn.newtouch.dms.web.jqgrid.AbstractJqGridController;
-import cn.newtouch.dms.web.project.bean.ProjectDetailVO;
 
 /**
  * Project Management Controller
@@ -130,13 +131,37 @@ public class ProjectManagementController extends AbstractJqGridController {
 	@ResponseBody
 	public String getParentProject(@ModelAttribute ProjectDetailVO projectDetail) {
 		List<Project> lstProject = projectService.getProjects();
-		if (projectDetail.getId() != null && !projectDetail.getId().equals("0")) {
-			Project project = projectService.getProjectById(projectDetail.getIdValue());
-			lstProject.remove(project);
+		if (projectDetail.getId() != null) {
+			List<String> lstChild = new ArrayList<>();
+			injectChild(projectDetail.getIdValue(), lstChild);
+			Iterator<Project> itePro = lstProject.iterator();
+			while(itePro.hasNext()) {
+				Project project = itePro.next();
+				if (lstChild.contains(String.valueOf(project.getId().intValue()))) {
+					itePro.remove();
+				}
+			}
 		}
 		return JsonUtils.writeObject(lstProject);
 	}
 
+	/**
+	 * 得到子项目
+	 * @param parentId
+	 * @param lstChild
+	 */
+	public void injectChild(int parentId, List<String> lstChild) {
+		lstChild.add(String.valueOf(parentId));
+		List<Project> subLst = projectService.getProjectByParentId(parentId);
+		
+		for (Project project : subLst) {
+			if (lstChild.contains(String.valueOf(project.getId().intValue()))) {
+				continue;
+			}
+			injectChild(project.getId(), lstChild);
+		}
+	}
+	
     @Override
     public List<String> getColNames() {
         List<String> colNames = new ArrayList<>();
@@ -151,15 +176,15 @@ public class ProjectManagementController extends AbstractJqGridController {
     @Override
     public List<Model> getColModel() {
         List<Model> colModel = new ArrayList<>();
-        Model model = new Model("id", "id", Integer.valueOf("75"), null, null, Boolean.TRUE, null);
+        Model model = new Model("id", "id", 75, null, null, Boolean.TRUE, null);
         colModel.add(model);
-        model = new Model("code", "code", Integer.valueOf("350"), "left");
+        model = new Model("code", "code", 350, "left");
         colModel.add(model);
-        model = new Model("fullName", null, Integer.valueOf("350"), "left");
+        model = new Model("fullName", null, 350, "left");
         colModel.add(model);
-        model = new Model("label", null, Integer.valueOf("400"), "left");
+        model = new Model("label", null, 400, "left");
         colModel.add(model);
-        model = new Model("parentCode", null, Integer.valueOf("350"), "left", "select");
+        model = new Model("parentCode", null, 350, "left", "select");
         colModel.add(model);
         return colModel;
     }

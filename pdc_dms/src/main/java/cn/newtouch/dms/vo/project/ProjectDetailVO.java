@@ -1,7 +1,6 @@
-package cn.newtouch.dms.web.project.bean;
+package cn.newtouch.dms.vo.project;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 
 import cn.newtouch.dms.entity.Project;
 import cn.newtouch.dms.vo.Viewable;
@@ -87,8 +86,10 @@ public class ProjectDetailVO implements Viewable<Project> {
 	
 	@Override
 	public void accept(Project project) {
-		BeanUtils.copyProperties(project, this);
-		this.setId(String.valueOf(project.getId()));
+		setId(String.valueOf(project.getId()));
+		setCode(project.getCode());
+		setFullName(project.getFullName());
+		setLabel(project.getLabel());
 		if (project.getParent() != null) {
 			setParentCode(project.getParent().getCode());
 		}
