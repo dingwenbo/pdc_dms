@@ -7,9 +7,25 @@
 <head>
 <title>我的档案</title>
 <link href="${ctx}/static/styles/menu.css" rel="stylesheet">
-<link href="${ctx}/static/styles/dms.css" rel="stylesheet">
 
 <script type="text/javascript">
+    $(document).ready(function(){
+        $("#phone").blur(function(){
+            if(!validatePhone()){
+                $("#phoneErr").removeClass("hidden");
+            }else{
+                $("#phoneErr").addClass("hidden");
+            }
+        });
+        $("#email").blur(function(){
+            if(!validateEmail()){
+                $("#emailErr").removeClass("hidden");
+            }else{
+                $("#emailErr").addClass("hidden");
+            }
+        });
+    });
+
     function updateMember() {
         if (validateMemberForm()) {
             $("#memberForm").submit();
@@ -17,30 +33,36 @@
     }
 
     function validateMemberForm() {
-        var flag = true;
-        var checkNum = /^-?\d+$/;
+        if(!validatePhone()){
+            dmsAlert("电话号码输入有误！");
+            return false;
+        }
+        if(!validateEmail()){
+            dmsAlert("Email 输入有误！");
+            return false;
+        }
+        return true;
+    }
+
+    function validatePhone(){
         var phoneTrim = /\s+/g;
         var phoneReg = /^1[3|4|5|7|8]\d{9}$/;
-        var supervisorId = $("#supervisorId").val();
         var phone = $("#phone").val().replace(phoneTrim, '');
-
-        /* validate supervisorId */
-        if (null != supervisorId && "" != supervisorId) {
-            if (!checkNum.test(supervisorId) || supervisorId<-32768 || supervisorId>32767) {
-                flag = false;
-                alert("supervisorId 不是整数或超出范围！");
-            }
+        
+        if (null != phone && "" != phone && !phoneReg.test(phone)) {
+            return false;
         }
+        return true;
+    }
 
-        /* validate phone */
-        if (null != phone && "" != phone) {
-            if (!phoneReg.test(phone)) {
-                flag = false;
-                alert("电话号码输入有误！");
-            }
+    function validateEmail(){
+        var emailReg = /\w+[@]{1}\w+[.]\w+/;
+        var email = $("#email").val();
+        
+        if (null != email && "" != email && !emailReg.test(email)) {
+            return false;
         }
-
-        return flag;
+        return true;
     }
 </script>
 </head>
@@ -69,46 +91,25 @@
             <label class="col-md-4"><c:out value="${memberVo.roleCode}"></c:out></label>
         </div>
         <div class="row text-left col-md-12 margin_top_1_persent">
-            <span class="col-md-2 text-right">Supervisor Id: </span>
-            <label class="col-md-4">
-                <input class="form-control input-sm" name="supervisorId" id="supervisorId" type="text" value="<c:out value='${memberVo.supervisorId}'></c:out>" />
-            </label>
-        </div>
-        <div class="row text-left col-md-12 margin_top_1_persent">
-            <span class="col-md-2 text-right">Backup: </span>
-            <label class="col-md-4">
-                <select name="backup" class="form-control input-sm">
-                    <option value="true" 
-                        <c:if test="${memberVo.backup == true}">
-                            selected="selected" 
-                        </c:if>
-                     class="">true</option>
-                    <option value="false" 
-                        <c:if test="${memberVo.backup == false}">
-                            selected="selected" 
-                        </c:if>
-                     class="">false</option>
-                </select>
-            </label>
-        </div>
-        <div class="row text-left col-md-12 margin_top_1_persent">
             <span class="col-md-2 text-right">Phone: </span>
             <label class="col-md-4">
                 <input class="form-control input-sm" name="phone" id="phone" type="text" value="${memberVo.phone}" />
             </label>
+            <span class="col-md-4 dms_warning_info hidden" id="phoneErr">* 电话号码输入有误</span>
         </div>
         <div class="row text-left col-md-12 margin_top_1_persent">
             <span class="col-md-2 text-right">Email: </span>
             <label class="col-md-4">
                 <input class="form-control input-sm" name="email" id="email" type="text" value="${memberVo.email}" />
             </label>
+            <span class="col-md-4 dms_warning_info hidden" id="emailErr">* Email 输入有误</span>
         </div>
         <div class="row text-left col-md-12 margin_top_1_persent">
             <span class="col-md-2 text-right">Register Date: </span>
             <label class="col-md-4"><c:out value="${memberVo.registerDate}"></c:out></label>
         </div>
         <div class="row text-center col-md-6 margin_top_1_persent">
-            <button class="btn btn-default" type="button" onclick="javascript: updateMember();">提交</button>
+            <button class="btn btn-dms-default" type="button" onclick="javascript: updateMember();">提交</button>
         </div>
         <div class="row col-md-12 margin_top_1_persent"></div>
     </form>

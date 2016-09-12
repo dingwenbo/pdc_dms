@@ -10,3 +10,6 @@
 <script src="${ctx}/static/jqgrid/js/grid.locale-cn.js"></script>
 <script src="${ctx}/static/jqgrid/js/jquery.jqGrid.js"></script>
 <script src="${ctx}/static/js/jqGrid-ajax.js"></script>
+
+<script src="${ctx}/static/jquery/bootbox.min.js"></script>
+<script src="${ctx}/static/js/dms.js"></script>

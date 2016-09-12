@@ -6,3 +6,5 @@
 
 <link rel="stylesheet" href="${ctx}/static/jqueryui/css/jquery-ui.min.css"/>
 <link rel="stylesheet" href="${ctx}/static/jqgrid/css/ui.jqgrid.css"/>
+
+<link rel="stylesheet" href="${ctx}/static/styles/dms.css">

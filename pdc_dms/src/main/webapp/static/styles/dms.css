@@ -1,3 +1,15 @@
 div .margin_top_1_persent{
     margin-top: 1%;
 }
+.btn-dms-default{ 
+    color:#fff;
+    background-color: #6F7782; 
+}  
+.btn-dms-default:hover, .btn-dms-default:focus{
+    color:#fff;
+    background-color: #444953; 
+    text-decoration: none;
+}
+.dms_warning_info{
+    color: #ff0000;
+}

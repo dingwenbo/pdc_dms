@@ -91,8 +91,6 @@ public class MemberController {
 
         Member member = memberService.selectMemberById(id);
         member.setGender(memberUpdate.getGender());
-        member.setSupervisorId(memberUpdate.getSupervisorId());
-        member.setBackup(memberUpdate.isBackup());
         member.setPhone(StringUtil.trimAllSpace(memberUpdate.getPhone()));
         member.setEmail(memberUpdate.getEmail());
 

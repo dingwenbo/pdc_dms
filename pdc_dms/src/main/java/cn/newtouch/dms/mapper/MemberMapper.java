@@ -28,7 +28,6 @@ public interface MemberMapper {
     @Mapping(source = "member.registerDate", target = "registerDate")
     @Mapping(source = "role.code", target = "roleCode")
     @Mapping(source = "member.id", target = "id")
-    @Mapping(source = "member.backup", target = "backup", defaultValue = "false")
     @Mapping(source = "member.gender", target = "gender", defaultValue = "未知")
     @Mapping(target = "phone", expression = "java( cn.newtouch.dms.util.StringUtil.formatStr( member.getPhone() ) )")
     MemberVo memberAndRoleToMemberVo(Member member, Role role);
