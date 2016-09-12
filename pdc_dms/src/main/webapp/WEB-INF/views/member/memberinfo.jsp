@@ -98,6 +98,12 @@
             </label>
         </div>
         <div class="row text-left col-md-12 margin_top_1_persent">
+            <span class="col-md-2 text-right">Email: </span>
+            <label class="col-md-4">
+                <input class="form-control input-sm" name="email" id="email" type="text" value="${memberVo.email}" />
+            </label>
+        </div>
+        <div class="row text-left col-md-12 margin_top_1_persent">
             <span class="col-md-2 text-right">Register Date: </span>
             <label class="col-md-4"><c:out value="${memberVo.registerDate}"></c:out></label>
         </div>

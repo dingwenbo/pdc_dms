@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Member {
-	
+
     private Integer id;
 
     private String pdcId;
 
     private String password;
-    
+
     private String salt;
 
     private String name;
@@ -29,10 +29,12 @@ public class Member {
 
     private String phone;
 
+    private String email;
+
     private Date registerDate;
 
     private String plainPassword;
-    
+
     public Integer getId() {
         return id;
     }
@@ -40,7 +42,7 @@ public class Member {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     @NotBlank
     public String getPdcId() {
         return pdcId;
@@ -100,11 +102,11 @@ public class Member {
     }
 
     public boolean isBackup() {
-		return backup;
-	}
-    
+        return backup;
+    }
+
     public void setBackup(boolean backup) {
-		this.backup = backup;
+        this.backup = backup;
     }
 
     public String getPhone() {
@@ -113,10 +115,10 @@ public class Member {
 
     public void setPhone(String phone) {
         this.phone = phone;
-	}
+    }
 
     // 设定JSON序列化时的日期格式
- 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     public Date getRegisterDate() {
         return registerDate;
     }
@@ -124,21 +126,32 @@ public class Member {
     public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
     }
-    
+
     /**
      * 系统传进的密码，不记录到数据库中。
+     * 
      * @return String 未加密的密码
      */
     @JsonIgnore
-	public String getPlainPassword() {
-		return plainPassword;
-	}
+    public String getPlainPassword() {
+        return plainPassword;
+    }
 
     /**
      * Setter方法。
+     * 
      * @param plainPassword String
      */
-	public void setPlainPassword(String plainPassword) {
-		this.plainPassword = plainPassword;
-	}
+    public void setPlainPassword(String plainPassword) {
+        this.plainPassword = plainPassword;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

@@ -12,10 +12,11 @@
     <result column="supervisor_id" property="supervisorId" jdbcType="INTEGER" />
     <result column="backup" property="backup" jdbcType="CHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="register_date" property="registerDate" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, pdc_id, password, salt, name, gender, role_id, supervisor_id, backup, phone, register_date
+    id, pdc_id, password, salt, name, gender, role_id, supervisor_id, backup, phone, email, register_date
   </sql>
   
   <select id="selectByPdcId" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -51,6 +52,7 @@
       	backup, 
       </if>
       phone,
+      email,
       register_date
       )
     values (#{pdcId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
@@ -64,6 +66,7 @@
       #{backup,jdbcType=CHAR},
       </if>
       #{phone,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR},
        #{registerDate,jdbcType=DATE}
       )
   </insert>
@@ -100,6 +103,9 @@
       <if test="phone != null" >
         phone,
       </if>
+      <if test="email != null" >
+        email,
+      </if>
       <if test="registerDate != null" >
         register_date,
       </if>
@@ -134,6 +140,9 @@
       </if>
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
       </if>
       <if test="registerDate != null" >
         #{registerDate,jdbcType=DATE},
@@ -170,6 +179,9 @@
       <if test="phone != null" >
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
       <if test="registerDate != null" >
         register_date = #{registerDate,jdbcType=DATE},
       </if>
@@ -187,6 +199,7 @@
       supervisor_id = #{supervisorId,jdbcType=INTEGER},
       backup = #{backup,jdbcType=CHAR},
       phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
       register_date = #{registerDate,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>

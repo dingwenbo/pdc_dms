@@ -35,6 +35,9 @@ public class MemberVo {
     /** The phone. */
     private String phone;
 
+    /** The email. */
+    private String email;
+
     /** The register date. */
     private String registerDate;
 
@@ -276,6 +279,24 @@ public class MemberVo {
      */
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    /**
+     * Gets the email.
+     *
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Sets the email.
+     *
+     * @param email the new email
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

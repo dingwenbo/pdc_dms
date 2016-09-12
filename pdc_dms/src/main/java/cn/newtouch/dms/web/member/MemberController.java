@@ -38,19 +38,19 @@ import cn.newtouch.dms.vo.MemberVo;
 @RequestMapping(value = "/member")
 public class MemberController {
 
-	@Autowired
-	private MemberService memberService;
+    @Autowired
+    private MemberService memberService;
 
     @Autowired
     private RoleService roleService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model) {
-		List<Member> members = memberService.selectAll();
-		model.addAttribute("members", members);
+    @RequestMapping(method = RequestMethod.GET)
+    public String list(Model model) {
+        List<Member> members = memberService.selectAll();
+        model.addAttribute("members", members);
 
-		return "member/adminMemberList";
-	}
+        return "member/adminMemberList";
+    }
 
     // @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     // public String updateForm(@PathVariable("id") Integer id, Model model) {
@@ -65,13 +65,13 @@ public class MemberController {
     // return "redirect:/admin/member";
     // }
 
-	@RequestMapping(value = "delete/{id}")
-	public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
-		Member member = memberService.selectMemberById(id);
-		memberService.deleteMember(id);
-		redirectAttributes.addFlashAttribute("message", "删除用户" + member.getPdcId() + "成功");
-		return "redirect:/admin/member";
-	}
+    @RequestMapping(value = "delete/{id}")
+    public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        Member member = memberService.selectMemberById(id);
+        memberService.deleteMember(id);
+        redirectAttributes.addFlashAttribute("message", "删除用户" + member.getPdcId() + "成功");
+        return "redirect:/admin/member";
+    }
 
     @RequestMapping(value = "memberInfo", method = RequestMethod.GET)
     public ModelAndView showMemberInfo() {
@@ -94,20 +94,21 @@ public class MemberController {
         member.setSupervisorId(memberUpdate.getSupervisorId());
         member.setBackup(memberUpdate.isBackup());
         member.setPhone(StringUtil.trimAllSpace(memberUpdate.getPhone()));
+        member.setEmail(memberUpdate.getEmail());
 
         memberService.updateMember(member);
 
         return "redirect:/login/success";
     }
 
-	/**
-	 * 所有RequestMapping方法调用前的Model准备方法, 实现Struts2 Preparable二次部分绑定的效果,先根据form的id从数据库查出Member对象,再把Form提交的内容绑定到该对象上。
-	 * 因为仅update()方法的form中有id属性，因此仅在update时实际执行.
-	 */
-	@ModelAttribute
-	public void selectMemberById(@RequestParam(value = "id", defaultValue = "-1") Integer id, Model model) {
-		if (id != -1) {
-			model.addAttribute("member", memberService.selectMemberById(id));
-		}
-	}
+    /**
+     * 所有RequestMapping方法调用前的Model准备方法, 实现Struts2 Preparable二次部分绑定的效果,先根据form的id从数据库查出Member对象,再把Form提交的内容绑定到该对象上。
+     * 因为仅update()方法的form中有id属性，因此仅在update时实际执行.
+     */
+    @ModelAttribute
+    public void selectMemberById(@RequestParam(value = "id", defaultValue = "-1") Integer id, Model model) {
+        if (id != -1) {
+            model.addAttribute("member", memberService.selectMemberById(id));
+        }
+    }
 }
