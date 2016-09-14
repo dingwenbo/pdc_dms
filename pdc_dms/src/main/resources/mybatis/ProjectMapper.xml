@@ -11,12 +11,15 @@
 		<association property="parent" column="parent"
 			javaType="cn.newtouch.dms.entity.Project" select="selectById">
 		</association>
+		<association property="manager" column="manager_name"
+			javaType="cn.newtouch.dms.entity.Member" select="cn.newtouch.dms.repository.MemberDao.selectById">
+		</association>
 		<collection property="members" ofType="Member" javaType="ArrayList" column="id" select="selectMembers"></collection>
 	</resultMap>
 	
 	<!-- SQL列的定义 -->
 	<sql id="Base_Column_List">
-		id, code, full_name, label, parent
+		id, code, full_name, label, parent, manager_name
 	</sql>
 	
 	<!-- SQL语句的定义 -->
@@ -96,6 +99,9 @@
 			<if test="parent != null">
 				parent,
 			</if>
+			<if test="managerName != null">
+				managerName,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="code != null">
@@ -109,6 +115,9 @@
 			</if>
 			<if test="parent != null">
 				#{parent.id, jdbcType=INTEGER},
+			</if>
+			<if test="parent != null">
+				#{manager.id, jdbcType=INTEGER},
 			</if>
 		</trim>
 	</insert>
@@ -138,6 +147,14 @@
 				</when> 
 				<otherwise>
 					parent = NULL,
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="manager != null">
+					manager = #{manager.id, jdbcType=INTEGER},
+				</when> 
+				<otherwise>
+					manager = NULL,
 				</otherwise>
 			</choose>
 		</set>

@@ -170,6 +170,7 @@ public class ProjectManagementController extends AbstractJqGridController {
         colNames.add("Full_Name");
         colNames.add("Label");
         colNames.add("父项目Code");
+        colNames.add("Manager");
         return colNames;
     }
 
@@ -185,6 +186,8 @@ public class ProjectManagementController extends AbstractJqGridController {
         model = new Model("label", null, 400, "left");
         colModel.add(model);
         model = new Model("parentCode", null, 350, "left", "select");
+        colModel.add(model);
+        model = new Model("managerName", null, 350, "center");
         colModel.add(model);
         return colModel;
     }

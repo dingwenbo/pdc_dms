@@ -1,0 +1,25 @@
+div .margin_top_1_persent{
+    margin-top: 1%;
+}
+.btn-default-cancel{
+    color: #333;
+    border-color: #adadad !important;
+    background-color: #fff !important;
+}
+.btn-default-cancel:hover, .btn-default-cancel:focus{
+    color: #333;
+    border-color: #adadad !important;
+    background-color: #ccc !important;
+}
+.btn-dms-default{ 
+    color:#fff;
+    background-color: #6F7782 !important; 
+}
+.btn-dms-default:hover, .btn-dms-default:focus{
+    color:#fff;
+    background-color: #444953 !important; 
+    text-decoration: none;
+}
+.dms_warning_info{
+    color: #ff0000;
+}
