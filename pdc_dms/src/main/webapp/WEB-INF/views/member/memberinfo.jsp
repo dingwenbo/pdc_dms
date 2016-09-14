@@ -24,6 +24,9 @@
                 $("#emailErr").addClass("hidden");
             }
         });
+
+        // init form
+        initFormData("memberForm");
     });
 
     function updateMember() {
@@ -64,6 +67,16 @@
         }
         return true;
     }
+
+    function checkChanged(){
+        if (checkFormChanged("memberForm")) {
+            $("#updateMemberBtn").removeAttr('disabled');
+            $("#updateMemberBtn").addClass('btn-dms-default');
+        } else {
+            $("#updateMemberBtn").attr('disabled',true);
+            $("#updateMemberBtn").removeClass('btn-dms-default');
+        }
+    }
 </script>
 </head>
 
@@ -80,11 +93,11 @@
         </div>
         <div class="row text-left col-md-12 margin_top_1_persent">
             <span class="col-md-2 text-right">Gender: </span>
-            <label class="col-md-4">
-                <input type="radio" class="checkbox-inline" name="gender" value="男" <c:choose> <c:when test="${memberVo.gender=='男'}"> checked </c:when> </c:choose> /> 男 
-                <input type="radio" class="checkbox-inline" name="gender" value="女" <c:choose> <c:when test="${memberVo.gender=='女'}"> checked </c:when> </c:choose> /> 女
-                <input type="radio" class="checkbox-inline" name="gender" value="未知" <c:choose> <c:when test="${memberVo.gender=='未知'}"> checked </c:when> </c:choose> /> 保密
-            </label>
+            <div class="col-md-4">
+                <input type="radio" class="checkbox-inline" name="gender" onchange="javascript: checkChanged();" value="男" <c:choose> <c:when test="${memberVo.gender=='男'}"> checked </c:when> </c:choose> /> 男 
+                <input type="radio" class="checkbox-inline" name="gender" onchange="javascript: checkChanged();" value="女" <c:choose> <c:when test="${memberVo.gender=='女'}"> checked </c:when> </c:choose> /> 女
+                <input type="radio" class="checkbox-inline" name="gender" onchange="javascript: checkChanged();" value="未知" <c:choose> <c:when test="${memberVo.gender=='未知'}"> checked </c:when> </c:choose> /> 保密
+            </div>
         </div>
         <div class="row text-left col-md-12 margin_top_1_persent">
             <span class="col-md-2 text-right">Role Code: </span>
@@ -93,14 +106,14 @@
         <div class="row text-left col-md-12 margin_top_1_persent">
             <span class="col-md-2 text-right">Phone: </span>
             <label class="col-md-4">
-                <input class="form-control input-sm" name="phone" id="phone" type="text" value="${memberVo.phone}" />
+                <input class="form-control input-sm" name="phone" id="phone" type="text" value="${memberVo.phone}" onblur="javascript: checkChanged();" />
             </label>
             <span class="col-md-4 dms_warning_info hidden" id="phoneErr">* 电话号码输入有误</span>
         </div>
         <div class="row text-left col-md-12 margin_top_1_persent">
             <span class="col-md-2 text-right">Email: </span>
             <label class="col-md-4">
-                <input class="form-control input-sm" name="email" id="email" type="text" value="${memberVo.email}" />
+                <input class="form-control input-sm" name="email" id="email" type="text" value="${memberVo.email}" onblur="javascript: checkChanged();" />
             </label>
             <span class="col-md-4 dms_warning_info hidden" id="emailErr">* Email 输入有误</span>
         </div>
@@ -108,8 +121,11 @@
             <span class="col-md-2 text-right">Register Date: </span>
             <label class="col-md-4"><c:out value="${memberVo.registerDate}"></c:out></label>
         </div>
-        <div class="row text-center col-md-6 margin_top_1_persent">
-            <button class="btn btn-dms-default" type="button" onclick="javascript: updateMember();">提交</button>
+        <div class="row text-center col-md-12 margin_top_1_persent">
+            <label class="col-md-2"></label>
+            <div class="col-md-4 text-left">
+                <button class="btn" disabled="disabled" type="button" id="updateMemberBtn" onclick="javascript: updateMember();">提交</button>
+            </div>
         </div>
         <div class="row col-md-12 margin_top_1_persent"></div>
     </form>
