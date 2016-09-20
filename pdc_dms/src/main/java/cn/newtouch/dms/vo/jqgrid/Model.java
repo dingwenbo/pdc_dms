@@ -26,6 +26,9 @@ public class Model {
     
     /** The edittype. */
     private String edittype;
+    
+    /** The stype. */
+    private String stype;
     /**
      * Instantiates a new model.
      */
@@ -42,7 +45,7 @@ public class Model {
      * @param align the align
      */
     public Model(String name, String index, Integer width, String align) {
-        this(name, index, width, align, Boolean.TRUE, Boolean.FALSE, null);
+        this(name, index, width, align, Boolean.TRUE, Boolean.FALSE, null, null);
     }
     
     /**
@@ -55,7 +58,21 @@ public class Model {
      * @param edittype the edittype
      */
     public Model(String name, String index, Integer width, String align,  String edittype) {
-        this(name, index, width, align, Boolean.TRUE, Boolean.FALSE, edittype);
+        this(name, index, width, align, Boolean.TRUE, Boolean.FALSE, edittype, null);
+    }
+
+    /**
+     * Instantiates a new model.
+     * 
+     * @param name the name
+     * @param index the index
+     * @param width the width
+     * @param align the align
+     * @param edittype the edittype
+     * @param stype the stype
+     */
+    public Model(String name, String index, Integer width, String align,  String edittype, String stype) {
+    	this(name, index, width, align, Boolean.TRUE, Boolean.FALSE, edittype, stype);
     }
     
     /**
@@ -67,8 +84,10 @@ public class Model {
      * @param align the align
      * @param editable the editable
      * @param hidden the hidden
+     * @param edittype the edittype
+     * @param stype the stype
      */
-    public Model(String name, String index, Integer width, String align, Boolean editable, Boolean hidden, String edittype) {
+    public Model(String name, String index, Integer width, String align, Boolean editable, Boolean hidden, String edittype, String stype) {
         this.name = name;
         this.index = index;
         this.width = width;
@@ -76,6 +95,7 @@ public class Model {
         this.editable = editable;
         this.hidden = hidden;
         this.edittype = edittype;
+        this.stype = stype;
     }
     /**
      * Gets the name.
@@ -202,4 +222,22 @@ public class Model {
     public void setEdittype(String edittype) {
         this.edittype = edittype;
     }
+
+	/**
+	 * Gets the stype
+	 * 
+	 * @return the stype
+	 */
+	public String getStype() {
+		return stype;
+	}
+
+	/**
+	 * Sets the stype
+	 * 
+	 * @param stype the new stype
+	 */
+	public void setStype(String stype) {
+		this.stype = stype;
+	}
 }

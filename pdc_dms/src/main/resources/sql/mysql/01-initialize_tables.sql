@@ -57,7 +57,7 @@ create table pdc_project (
 	full_name varchar(50),
 	label varchar(200), 
 	parent int,
-	manager_name int,
+	manager int,
 	primary key(id)
 );
 

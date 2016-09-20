@@ -19,6 +19,7 @@ public class ProjectDetailVO implements Viewable<Project> {
 	private String label;
 	private String parentCode;
 	private String oper;
+	private String managerCode;
 	
 	public ProjectDetailVO() {
 	}
@@ -83,7 +84,15 @@ public class ProjectDetailVO implements Viewable<Project> {
 	public void setOper(String oper) {
 		this.oper = oper;
 	}
-	
+
+	public String getManagerCode() {
+		return managerCode;
+	}
+
+	public void setManagerCode(String managerCode) {
+		this.managerCode = managerCode;
+	}
+
 	@Override
 	public void accept(Project project) {
 		setId(String.valueOf(project.getId()));
@@ -92,6 +101,9 @@ public class ProjectDetailVO implements Viewable<Project> {
 		setLabel(project.getLabel());
 		if (project.getParent() != null) {
 			setParentCode(project.getParent().getCode());
+		}
+		if (project.getManager() != null) {
+			setManagerCode(project.getManager().getName());
 		}
 	}
 }

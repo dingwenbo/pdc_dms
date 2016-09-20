@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.newtouch.dms.entity.Member;
 import cn.newtouch.dms.entity.Project;
 import cn.newtouch.dms.exception.ProjectServiceException;
 import cn.newtouch.dms.json.JsonUtils;
+import cn.newtouch.dms.service.MemberService;
 import cn.newtouch.dms.service.ProjectService;
 import cn.newtouch.dms.vo.MessageInfo;
 import cn.newtouch.dms.vo.jqgrid.Model;
@@ -39,6 +41,9 @@ public class ProjectManagementController extends AbstractJqGridController {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping(value = "/project")
 	public String viewProject() {
@@ -77,11 +82,19 @@ public class ProjectManagementController extends AbstractJqGridController {
 				project.setFullName(projectDetail.getFullName());
 				project.setLabel(projectDetail.getLabel());
 				String projectCode = projectDetail.getParentCode();
+				String managerCode = projectDetail.getManagerCode();
 				if (projectCode.equals("0")) {
 					project.setParent(null);
 				} else {
-					Project parentProject = projectService.getProjectById(Integer.parseInt(projectDetail.getParentCode()));
+					Project parentProject = projectService.getProjectById(Integer.parseInt(projectCode));
 					project.setParent(parentProject);
+				}
+				
+				if (managerCode.equals("0")) {
+					project.setManager(null);
+				} else {
+					Member manager = memberService.selectMemberById(Integer.parseInt(managerCode));
+					project.setManager(manager);
 				}
 				projectService.insertOrUpdateProject(project);
 				logger.info("新增1条项目详细记录："+code);
@@ -105,11 +118,19 @@ public class ProjectManagementController extends AbstractJqGridController {
 			project.setFullName(projectDetail.getFullName());
 			project.setLabel(projectDetail.getLabel());
 			String projectCode = projectDetail.getParentCode();
+			String managerCode = projectDetail.getManagerCode();
 			if (projectCode.equals("0")) {
 				project.setParent(null);
 			} else {
 				Project parentProject = projectService.getProjectById(Integer.parseInt(projectDetail.getParentCode()));
 				project.setParent(parentProject);
+			}
+			
+			if (managerCode.equals("0")) {
+				project.setManager(null);
+			} else {
+				Member manager = memberService.selectMemberById(Integer.parseInt(managerCode));
+				project.setManager(manager);
 			}
 			projectService.insertOrUpdateProject(project);
 			logger.info("修改1条项目详细记录："+projectDetail.getCode());
@@ -125,6 +146,13 @@ public class ProjectManagementController extends AbstractJqGridController {
 		projectService.deleteProjectById(projectDetail.getIdValue());
 		logger.info("删除1条项目详细记录");
 		return "success";
+	}
+	
+	@RequestMapping(value = "/getMemberCode")
+	@ResponseBody
+	public String getMemberCode() {
+		List<Member> lstMember = memberService.selectAll();
+		return JsonUtils.writeObject(lstMember);
 	}
 	
 	@RequestMapping(value = "/getParentProject")
@@ -170,14 +198,14 @@ public class ProjectManagementController extends AbstractJqGridController {
         colNames.add("Full_Name");
         colNames.add("Label");
         colNames.add("父项目Code");
-        colNames.add("Manager");
+        colNames.add("PM");
         return colNames;
     }
 
     @Override
     public List<Model> getColModel() {
         List<Model> colModel = new ArrayList<>();
-        Model model = new Model("id", "id", 75, null, null, Boolean.TRUE, null);
+        Model model = new Model("id", "id", 75, null, null, Boolean.TRUE, null, null);
         colModel.add(model);
         model = new Model("code", "code", 350, "left");
         colModel.add(model);
@@ -187,7 +215,7 @@ public class ProjectManagementController extends AbstractJqGridController {
         colModel.add(model);
         model = new Model("parentCode", null, 350, "left", "select");
         colModel.add(model);
-        model = new Model("managerName", null, 350, "center");
+        model = new Model("managerCode", null, 350, "center", "select");
         colModel.add(model);
         return colModel;
     }

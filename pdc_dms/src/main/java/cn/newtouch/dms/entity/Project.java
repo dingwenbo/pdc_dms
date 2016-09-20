@@ -29,6 +29,9 @@ public class Project {
     /** parent. */
     private Project parent;
     
+    /** manager. */
+    private Member manager;
+    
     /** members. */
     private List<Member> members;
     
@@ -87,7 +90,15 @@ public class Project {
 	public void setParent(Project parent) {
 		this.parent = parent;
 	}
-	
+
+	public Member getManager() {
+		return manager;
+	}
+
+	public void setManager(Member manager) {
+		this.manager = manager;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -115,10 +126,14 @@ public class Project {
 	@Override
 	public String toString() {
 		String parentCode = null;
+		String managerName = null;
 		if (parent != null) {
 			parentCode = parent.getCode();
 		}
+		if (manager != null) {
+			managerName = manager.getName();
+		}
 		return "Project [id=" + id + ", code=" + code + ", fullName=" + fullName + ", label=" + label + ", parent="
-				+ parentCode + "]";
+				+ parentCode + ", manager=" + managerName + "]";
 	}
 }

@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springside.modules.test.spring.SpringTransactionalTestCase;
 
+import cn.newtouch.dms.data.UserData;
+import cn.newtouch.dms.entity.Member;
 import cn.newtouch.dms.entity.Project;
 
 /**
@@ -32,6 +34,9 @@ public class ProjectServiceTest extends SpringTransactionalTestCase{
 	/** projectService. */
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@Before
 	public void setUp() {
@@ -64,7 +69,7 @@ public class ProjectServiceTest extends SpringTransactionalTestCase{
 		nullProject = projectService.getProjectById(1000);
 		assertNull(nullProject);
 		Project project = projectService.getProjectById(1);
-		assertProject(project, "GPRO_Pyramide", "GPRO_Pyramide Group label.", "GPRO and Pyramide Group", 7);
+		assertProject(project, "GPRO_Pyramide", "GPRO_Pyramide Group label.", "GPRO and Pyramide Group", 7, null);
 		
 		// Test for getProjectByCode(String).
 		logger.info("测试方法：cn.newtouch.dms.service.ProjectService.getProjectByCode(String)");
@@ -73,12 +78,14 @@ public class ProjectServiceTest extends SpringTransactionalTestCase{
 		nullProject = projectService.getProjectByCode(null);
 		assertNull(nullProject);
 		project = projectService.getProjectByCode("FJV2");
-		assertProject(project, "FJV2", "FJV2 Label", "PDC FJV2 Team", null);
+		assertProject(project, "FJV2", "FJV2 Label", "PDC FJV2 Team", null, null);
 	}
 	
 	@Test
 	public void testInsertOrUpdateProject() throws Exception {
 		logger.info("测试方法：cn.newtouch.dms.service.ProjectService.insertOrUpdateProject(Project)");
+		
+		Member member = UserData.randomNewUser();
 		
 		final String PARENT_CODE = "Parent Test1";
 		final String PARENT_LABEL = "Parent project label";
@@ -94,23 +101,26 @@ public class ProjectServiceTest extends SpringTransactionalTestCase{
 		Project project = new Project(TEST_CODE, TEST_LABEL);
 		project.setFullName(TEST_FULL_NAME);
 		project.setParent(parent);
+		project.setManager(member);
 		
 		projectService.insertOrUpdateProject(project);
 		
 		project = projectService.getProjectByCode(TEST_CODE);
 		// pProject 不存在于数据库中，所有project不会有parent project的信息。
-		assertProject(project, TEST_CODE, TEST_LABEL, TEST_FULL_NAME, null);
+		assertProject(project, TEST_CODE, TEST_LABEL, TEST_FULL_NAME, null, null);
 		
+		memberService.insertMember(member);
 		projectService.insertOrUpdateProject(parent);
 		parent = projectService.getProjectByCode(PARENT_CODE);
 		
 		project.setLabel("Modif Label1");
 		project.setFullName("Modif full name");
 		project.setParent(parent);
+		project.setManager(member);
 		projectService.insertOrUpdateProject(project);
 		
 		project = projectService.getProjectByCode(TEST_CODE);
-		assertProject(project, TEST_CODE, "Modif Label1", "Modif full name", parent.getId());
+		assertProject(project, TEST_CODE, "Modif Label1", "Modif full name", parent.getId(), member.getId());
 		
 		//更新project使其父项目是一个不存在的id.
 		parent.setId(1000);
@@ -165,7 +175,7 @@ public class ProjectServiceTest extends SpringTransactionalTestCase{
 		
 	}
 	
-	private void assertProject(Project project, String pCode, String pLabel, String pFullName, Integer pParentId) {
+	private void assertProject(Project project, String pCode, String pLabel, String pFullName, Integer pParentId, Integer managerId) {
 		assertEquals(pCode, project.getCode());
 		assertEquals(pLabel, project.getLabel());
 		assertEquals(pFullName, project.getFullName());
@@ -173,6 +183,12 @@ public class ProjectServiceTest extends SpringTransactionalTestCase{
 			assertNull(pParentId);
 		} else {
 			assertEquals(pParentId, project.getParent().getId());
+		}
+		
+		if (project.getManager() == null) {
+			assertNull(managerId);
+		} else {
+			assertEquals(managerId, project.getManager().getId());
 		}
 	}
 }
