@@ -110,9 +110,7 @@ function checkSessionTimeout() {
               			</a>
               			<ul id="myProfile" class="nav nav-list secondmenu collapse" style="height: 0px;">
               				<li><a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/member/memberInfo');"><i class="glyphicon glyphicon-cog"></i>&nbsp;我的档案</a></li>
-              				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;我的项目</a></li>
-              				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;我的任务</a></li>
-              				<li><a href="#"><i class="glyphicon glyphicon-cog"></i>&nbsp;修改密码</a></li>
+              				<li><a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/member/modifyPassword');"><i class="glyphicon glyphicon-cog"></i>&nbsp;修改密码</a></li>
               				<li><a href="javascript:void(0);" onclick="javascript:gotoUrl(this, '/logout');"><i class="glyphicon glyphicon-log-out"></i>&nbsp;安全退出</a></li>
               			</ul>
                     </li>

@@ -7,8 +7,11 @@ package cn.newtouch.dms.web.member;
 
 import java.util.List;
 
-import javax.validation.Valid;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,17 +20,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.newtouch.dms.entity.Member;
 import cn.newtouch.dms.entity.Role;
+import cn.newtouch.dms.json.JsonUtils;
 import cn.newtouch.dms.mapper.MemberMapper;
 import cn.newtouch.dms.service.MemberService;
 import cn.newtouch.dms.service.RoleService;
 import cn.newtouch.dms.shiro.ShiroUser;
 import cn.newtouch.dms.util.StringUtil;
 import cn.newtouch.dms.vo.MemberVo;
+import cn.newtouch.dms.web.login.LoginController;
 
 /**
  * 管理员管理用户的Controller.
@@ -37,6 +43,8 @@ import cn.newtouch.dms.vo.MemberVo;
 @Controller
 @RequestMapping(value = "/member")
 public class MemberController {
+
+    private static final Log LOGGER = LogFactory.getLog(LoginController.class);
 
     @Autowired
     private MemberService memberService;
@@ -51,19 +59,6 @@ public class MemberController {
 
         return "member/adminMemberList";
     }
-
-    // @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    // public String updateForm(@PathVariable("id") Integer id, Model model) {
-    // model.addAttribute("member", memberService.selectMemberById(id));
-    // return "member/adminMemberForm";
-    // }
-
-    // @RequestMapping(value = "update", method = RequestMethod.POST)
-    // public String update(@Valid @ModelAttribute("member") Member member, RedirectAttributes redirectAttributes) {
-    // memberService.updateMember(member);
-    // redirectAttributes.addFlashAttribute("message", "更新用户" + member.getPdcId() + "成功");
-    // return "redirect:/admin/member";
-    // }
 
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
@@ -86,6 +81,7 @@ public class MemberController {
     }
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.POST)
+    @ResponseBody
     public String updateMember(@PathVariable("id") Integer id, MemberVo memberVo) {
         Member memberUpdate = MemberMapper.INSTANCE.memberVoToMember(memberVo);
 
@@ -95,8 +91,39 @@ public class MemberController {
         member.setEmail(memberUpdate.getEmail());
 
         memberService.updateMember(member);
+        LOGGER.info("更新用户" + member.getPdcId() + "成功");
+        return JsonUtils.writeObject(String.valueOf(Boolean.TRUE));
+    }
 
-        return "redirect:/login/success";
+    @RequestMapping(value = "modifyPassword", method = RequestMethod.GET)
+    public String modifyPassword() {
+        return "member/modifypassword";
+    }
+
+    @RequestMapping(value = "modifyPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public String modifyPassword(@RequestParam String confirmPassword) {
+        ShiroUser userInfo = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+        Member member = memberService.selectMemberById(userInfo.getId());
+        member.setPlainPassword(confirmPassword);
+
+        memberService.updateMember(member);
+        LOGGER.info("用户" + member.getPdcId() + "更新密码成功");
+        return JsonUtils.writeObject(String.valueOf(Boolean.TRUE));
+    }
+
+    @RequestMapping(value = "validatePassword", method = RequestMethod.POST)
+    @ResponseBody
+    public String validatePassword(@RequestParam String password) {
+        String message = String.valueOf(Boolean.TRUE);
+        ShiroUser userInfo = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+        UsernamePasswordToken token = new UsernamePasswordToken(userInfo.getPdcId(), password);
+        try {
+            SecurityUtils.getSubject().login(token);
+        } catch (AuthenticationException e) {
+            message = String.valueOf(Boolean.FALSE);
+        }
+        return JsonUtils.writeObject(message);
     }
 
     /**
@@ -109,4 +136,5 @@ public class MemberController {
             model.addAttribute("member", memberService.selectMemberById(id));
         }
     }
+
 }
