@@ -1,6 +1,8 @@
 package cn.newtouch.dms.repository;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -18,13 +20,14 @@ import org.springside.modules.test.spring.SpringTransactionalTestCase;
 
 import cn.newtouch.dms.entity.Project;
 
+
 /**
  * ProjectDAO Junit test. 
  * 
  * @author JiaLong.Wang
  *
  */
-@ContextConfiguration(locations = { "/spring/applicationContext.xml" })
+@ContextConfiguration(locations = { "classpath:spring/applicationContext.xml" })
 @FixMethodOrder(MethodSorters.DEFAULT)
 public class ProjectDAOTest extends SpringTransactionalTestCase {
 	
@@ -47,7 +50,7 @@ public class ProjectDAOTest extends SpringTransactionalTestCase {
 	public void testSelectById() {
 		logger.info("测试selectById()方法：");
 		Project tp1 = projectDao.selectById(1);
-		assertProject(tp1, "GPRO_Pyramide", "GPRO and Pyramide Group", "GPRO_Pyramide Group label.", "FJV2");
+		assertProject(tp1, "GPRO_Pyramide", "GPRO and Pyramide Group", "GPRO_Pyramide Group label.", "FJV2", "测试PM1");
 	}
 	
 	@Test
@@ -57,7 +60,7 @@ public class ProjectDAOTest extends SpringTransactionalTestCase {
 		assertEquals(7, tps.size());
 		
 		Project fp = tps.get(0);
-		assertProject(fp, "GPRO_Pyramide", "GPRO and Pyramide Group", "GPRO_Pyramide Group label.", "FJV2");
+		assertProject(fp, "GPRO_Pyramide", "GPRO and Pyramide Group", "GPRO_Pyramide Group label.", "FJV2", "测试PM1");
 	}
 	
 	/**
@@ -68,7 +71,7 @@ public class ProjectDAOTest extends SpringTransactionalTestCase {
 	 * @param label
 	 * @param parentCode
 	 */
-	public void assertProject(Project toAssert, String code, String fullName, String label, String parentCode) {
+	public void assertProject(Project toAssert, String code, String fullName, String label, String parentCode, String managerCode) {
 		assertNotNull(toAssert);
 		assertEquals(code, toAssert.getCode());
 		assertEquals(fullName, toAssert.getFullName());
@@ -78,6 +81,13 @@ public class ProjectDAOTest extends SpringTransactionalTestCase {
 			assertEquals(parentCode, toAssert.getParent().getCode());
 		} else {
 			assertNull(toAssert.getParent());
+		}
+		
+		if (StringUtils.isNotEmpty(managerCode)) {
+			assertNotNull(toAssert.getManager());
+			assertEquals(managerCode, toAssert.getManager().getName());
+		} else {
+			assertNull(toAssert.getManager());
 		}
 		
 	}
