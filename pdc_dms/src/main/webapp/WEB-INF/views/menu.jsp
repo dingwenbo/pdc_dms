@@ -27,7 +27,7 @@ function checkSessionTimeout() {
 </script>
 </head>
 <body>
-    <div class="navbar navbar-duomi navbar-static-top" role="navigation">
+    <div class="navbar navbar-duomi navbar-static-top" role="navigation" style="z-index : 1;">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" id="logo">
@@ -127,7 +127,7 @@ function checkSessionTimeout() {
             <div id="main" class="" style="width:90%; float:left;">
             </div>
     </div>
-	<div class="navbar navbar-duomi navbar-static-top" role="navigation">
+	<div class="navbar navbar-duomi navbar-static-top" role="navigation" style="z-index : 1;">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" id="logo">
