@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,7 @@ import cn.newtouch.dms.json.JsonUtils;
 import cn.newtouch.dms.service.MemberService;
 import cn.newtouch.dms.service.ProjectService;
 import cn.newtouch.dms.vo.MessageInfo;
-import cn.newtouch.dms.vo.jqgrid.Model;
 import cn.newtouch.dms.vo.project.ProjectDetailVO;
-import cn.newtouch.dms.web.jqgrid.AbstractJqGridController;
 
 /**
  * Project Management Controller
@@ -34,7 +30,7 @@ import cn.newtouch.dms.web.jqgrid.AbstractJqGridController;
  */
 @Controller
 @RequestMapping(value = "/projectManagement")
-public class ProjectManagementController extends AbstractJqGridController {
+public class ProjectManagementController {
 	
 	/** logger. */
 	private static Log logger = LogFactory.getLog(ProjectManagementController.class);
@@ -189,48 +185,4 @@ public class ProjectManagementController extends AbstractJqGridController {
 			injectChild(project.getId(), lstChild);
 		}
 	}
-	
-    @Override
-    public List<String> getColNames() {
-        List<String> colNames = new ArrayList<>();
-        colNames.add("No");
-        colNames.add("Code");
-        colNames.add("Full_Name");
-        colNames.add("Label");
-        colNames.add("父项目Code");
-        colNames.add("PM");
-        return colNames;
-    }
-
-    @Override
-    public List<Model> getColModel() {
-        List<Model> colModel = new ArrayList<>();
-        Model model = new Model("id", "id", 75, null, null, Boolean.TRUE, null, null);
-        colModel.add(model);
-        model = new Model("code", "code", 350, "left");
-        colModel.add(model);
-        model = new Model("fullName", null, 350, "left");
-        colModel.add(model);
-        model = new Model("label", null, 400, "left");
-        colModel.add(model);
-        model = new Model("parentCode", null, 350, "left", "select");
-        colModel.add(model);
-        model = new Model("managerCode", null, 350, "center", "select");
-        colModel.add(model);
-        return colModel;
-    }
-
-    @Override
-    public void init(HttpServletRequest request) {
-        setUrl("/projectManagement/getProjectData.action");
-        setWidth(Integer.valueOf("900"));
-        setHeight(Integer.valueOf("250"));
-        setRownumbers(Boolean.TRUE);
-        setCaption("项目管理");
-        setPager("pagerProject");
-        setViewrecords(true);
-        setRowNum(10);
-        setLoadonce(true);
-        setSortable(true);
-    }
 }

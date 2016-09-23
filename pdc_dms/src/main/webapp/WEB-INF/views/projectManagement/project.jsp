@@ -41,9 +41,23 @@
     }
 
 	function pageInit(){
+        //TODO
         var id = "tableProject";
-        var url = "${ctx}/projectManagement/jqGrid.action";
-        initJqGrid(url, id, updateJqGrid);
+//         var url = "${ctx}/projectManagement/jqGrid.action";
+//         initJqGrid(url, id, updateJqGrid);
+        var jqGridTable = new JqGrid_Table(id);
+
+        $.extend(true, jqGridTable.jqGridModel, {url : "${ctx}/projectManagement/getProjectData.action", width : 900, height : 250, caption : "项目管理", pager : "pagerProject"});
+        $.extend(true, jqGridTable.newColModel(), {name : "id", index : "id", hidden : true});
+        $.extend(true, jqGridTable.newColModel(), {name : "code", index : "code"});
+        $.extend(true, jqGridTable.newColModel(), {name : "fullName"});
+        $.extend(true, jqGridTable.newColModel(), {name : "label", width : 400});
+        $.extend(true, jqGridTable.newColModel(), {name : "parentCode", edittype : "select"});
+        $.extend(true, jqGridTable.newColModel(), {name : "managerCode", align : "center", edittype : "select"});
+
+        jqGridTable.handleJqGridTable(updateJqGrid);
+        jqGridTable.updateColNames(["No", "Code", "Full_Name", "Label", "父项目Code", "PM"]);
+        jqGridTable.jqGrid();
 
         $('#tableProject').jqGrid('filterToolbar',{
 			searchOperators : true
