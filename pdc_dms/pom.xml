@@ -44,14 +44,14 @@
 	    
 		<!-- 项目属性 -->
 		<!-- h2 数据库 -->
-		<jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
-		<jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
-		<jdbc.driver.version>${h2.version}</jdbc.driver.version>
+<!-- 		<jdbc.driver.groupId>com.h2database</jdbc.driver.groupId> -->
+<!-- 		<jdbc.driver.artifactId>h2</jdbc.driver.artifactId> -->
+<!-- 		<jdbc.driver.version>${h2.version}</jdbc.driver.version> -->
 		
 		<!-- MySQL 数据库 -->
-<!-- 		<jdbc.driver.groupId>mysql</jdbc.driver.groupId> -->
-<!-- 		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId> -->
-<!-- 		<jdbc.driver.version>5.1.22</jdbc.driver.version> -->
+		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
+		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
+		<jdbc.driver.version>5.1.22</jdbc.driver.version>
 		
 	</properties>
 
@@ -692,11 +692,11 @@
 									onerror="continue" encoding="${project.build.sourceEncoding}">
 									<classpath refid="maven.test.classpath" />
 									<!-- Mysql 数据库初始化 -->
-<!-- 									<transaction src="src/main/resources/sql/mysql/01-initialize_tables.sql" /> -->
-<!-- 									<transaction src="src/main/resources/sql/mysql/02-initialize_data_basic.sql" /> -->
+									<transaction src="src/main/resources/sql/mysql/01-initialize_tables.sql" />
+									<transaction src="src/main/resources/sql/mysql/02-initialize_data_basic.sql" />
 									<!-- h2 数据库初始化 -->
-									<transaction src="src/main/resources/sql/h2/01-initialize_tables.sql" />
-									<transaction src="src/main/resources/sql/h2/02-initialize_data_basic.sql" />
+<!-- 									<transaction src="src/main/resources/sql/h2/01-initialize_tables.sql" /> -->
+<!-- 									<transaction src="src/main/resources/sql/h2/02-initialize_data_basic.sql" /> -->
 								</sql>
 							</target>
 						</configuration>
@@ -704,5 +704,75 @@
 				</plugins>
 			</build>
 		</profile>
+        
+        <!-- 插入测试数据 -->
+        <profile>
+            <id>insert-test-data</id>
+            <build>
+                <plugins>
+                    <!-- 加载配置文件 -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <version>1.0.0</version>
+                        <executions>
+                            <execution>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>src/main/resources/application.properties</file>
+                                    </files>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sql-maven-plugin</artifactId>
+                        <version>1.5</version>
+                        <!-- 所依赖数据库 -->
+                        <dependencies>
+                            <dependency>
+                                <groupId>${jdbc.driver.groupId}</groupId>
+                                <artifactId>${jdbc.driver.artifactId}</artifactId>
+                                <version>${jdbc.driver.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <!-- 数据库连接配置 -->
+                        <configuration>
+                            <driver>${jdbc.driver}</driver>
+                            <url>${jdbc.url}</url>
+                            <username>${jdbc.username}</username>
+                            <password>${jdbc.password}</password>
+                        </configuration>
+                        <!-- 执行语句 -->
+                        <executions>
+                            <execution>
+                                <id>insert-data</id>
+                                <phase>process-test-resources</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <orderFile>ascending</orderFile>
+                                    <fileset>
+                                        <basedir>${basedir}</basedir>
+                                        <includes>
+                                            <!-- Mysql 测试数据导入 -->
+<!--                                             <include>src/test/resources/data/mysql/00-import_data_test.sql</include> -->
+                                            <!-- h2 测试数据导入 -->
+                                            <include>src/test/resources/data/h2/00-import_data_test.sql</include>
+                                        </includes>
+                                    </fileset>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 	</profiles>
 </project>

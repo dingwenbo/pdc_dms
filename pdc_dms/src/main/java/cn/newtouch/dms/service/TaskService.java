@@ -3,6 +3,7 @@ package cn.newtouch.dms.service;
 import java.util.List;
 
 import cn.newtouch.dms.entity.Task;
+import cn.newtouch.dms.entity.TaskStatus;
 
 /**
  * 管理任务的Service.
@@ -25,4 +26,6 @@ public interface TaskService {
 	Task getTaskById(Integer id);
 	
 	Task getTaskByCode(String codeTask);
+	
+	List<TaskStatus> getAllTaskStatus();
 }

@@ -1,5 +1,7 @@
 package cn.newtouch.dms.entity;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class TaskStatus {
 	
     private Integer id;
@@ -19,6 +21,6 @@ public class TaskStatus {
     }
 
     public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+    	this.code =	StringUtils.trim(code);
     }
 }

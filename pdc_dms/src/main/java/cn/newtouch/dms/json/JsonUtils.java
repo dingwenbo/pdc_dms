@@ -12,6 +12,12 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+/**
+ * 项目使用的Json工具类
+ * 
+ * @author JiaLong.Wang
+ *
+ */
 public class JsonUtils {
 	
 	/** logger. */

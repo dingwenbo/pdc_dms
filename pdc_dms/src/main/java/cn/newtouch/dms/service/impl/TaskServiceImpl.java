@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import cn.newtouch.dms.entity.Task;
+import cn.newtouch.dms.entity.TaskStatus;
 import cn.newtouch.dms.service.TaskService;
 
 @Service("taskService")
@@ -64,6 +65,12 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public Task getTaskByCode(String codeTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TaskStatus> getAllTaskStatus() {
 		// TODO Auto-generated method stub
 		return null;
 	}
