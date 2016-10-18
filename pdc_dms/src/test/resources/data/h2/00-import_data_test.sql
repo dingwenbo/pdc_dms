@@ -16,7 +16,7 @@ insert into pdc_member(id, pdc_id, password, salt, name, role_id, register_date)
 insert into pdc_member(id, pdc_id, password, salt, name, role_id, supervisor_id, register_date)
 	values(9003, 'T000003', '2488aa0c31c624687bd9928e0a5d29e7d1ed520b', '6d65d24122c30500', '测试TL1', 3, 9002, '2016-01-01');
 insert into pdc_member(id, pdc_id, password, salt, name, role_id, supervisor_id, register_date)
-	values(9004, 'T000004', '2488aa0c31c624687bd9928e0a5d29e7d1ed520b', '6d65d24122c30500', '测试SE1', 4, 9003, now());
+	values(9004, 'T000004', '2488aa0c31c624687bd9928e0a5d29e7d1ed520b', '6d65d24122c30500', '测试SE1', 4, 9003, '2016-01-01');
 insert into pdc_member(id, pdc_id, password, salt, name, role_id, supervisor_id, register_date)
 	values(9005, 'T000005', '2488aa0c31c624687bd9928e0a5d29e7d1ed520b', '6d65d24122c30500', '测试SE2', 4, 9003, '2016-01-01');
 insert into pdc_member(id, pdc_id, password, salt, name, role_id, supervisor_id, register_date)

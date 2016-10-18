@@ -18,6 +18,12 @@ import cn.newtouch.dms.repository.MemberDao;
 import cn.newtouch.dms.service.MemberService;
 import cn.newtouch.dms.shiro.ShiroUser;
 
+/**
+ * 成员管理，个人档案管理的Service层。
+ * 
+ * @author JiaLong.Wang
+ *
+ */
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
 
@@ -76,7 +82,6 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	private boolean isSupervisor(Integer id) {
 		Member member = memberDao.selectById(id);
-		
 		return member != null && member.getRoleId() == 1;
 	}
 	
