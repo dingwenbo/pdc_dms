@@ -53,7 +53,7 @@
         $.extend(true, jqGridTable.newColModel(), {name : "fullName"});
         $.extend(true, jqGridTable.newColModel(), {name : "label", width : 400});
         $.extend(true, jqGridTable.newColModel(), {name : "parentCode", edittype : "select"});
-        $.extend(true, jqGridTable.newColModel(), {name : "managerCode", align : "center", edittype : "select"});
+        $.extend(true, jqGridTable.newColModel(), {name : "managerName", align : "center", edittype : "select"});
 
         jqGridTable.handleJqGridTable(updateJqGrid);
         jqGridTable.updateColNames(["No", "Code", "Full_Name", "Label", "父项目Code", "PM"]);
@@ -199,7 +199,7 @@
 				}
 			}
 		});
-		$('#tableProject').jqGrid('setColProp', 'managerCode', {editoptions: {value: str}});
+		$('#tableProject').jqGrid('setColProp', 'managerName', {editoptions: {value: str}});
 	}
 </script>
 <style type="text/css">

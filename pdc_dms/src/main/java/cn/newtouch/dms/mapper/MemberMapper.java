@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 import cn.newtouch.dms.entity.Member;
 import cn.newtouch.dms.entity.Role;
-import cn.newtouch.dms.vo.MemberVo;
+import cn.newtouch.dms.vo.member.MemberVO;
 
 /**
  * The Interface MemberMapper.
@@ -28,9 +28,9 @@ public interface MemberMapper {
     @Mapping(source = "member.registerDate", target = "registerDate")
     @Mapping(source = "role.code", target = "roleCode")
     @Mapping(source = "member.id", target = "id")
-    @Mapping(source = "member.gender", target = "gender", defaultValue = "男")
+    @Mapping(source = "member.gender", target = "gender", defaultValue = "未知")
     @Mapping(target = "phone", expression = "java( cn.newtouch.dms.util.StringUtil.formatStr( member.getPhone() ) )")
-    MemberVo memberAndRoleToMemberVo(Member member, Role role);
+    MemberVO memberAndRoleToMemberVo(Member member, Role role);
 
     /**
      * Member vo to member.
@@ -39,5 +39,5 @@ public interface MemberMapper {
      * @return the member
      */
     @InheritInverseConfiguration
-    Member memberVoToMember(MemberVo memberVo);
+    Member memberVOToMember(MemberVO memberVo);
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cn.newtouch.dms.entity.Member;
 import cn.newtouch.dms.service.MemberService;
 import cn.newtouch.dms.shiro.ShiroUser;
+import cn.newtouch.dms.shiro.ShiroUtils;
 
 /**
  * 用户修改自己资料的Controller.
@@ -61,7 +62,7 @@ public class ProfileController {
 	 * 取出Shiro中的当前用户Id.
 	 */
 	private Integer getCurrentUserId() {
-		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+		ShiroUser user = ShiroUtils.getCurrentUser();
 		return user.id;
 	}
 
@@ -69,7 +70,7 @@ public class ProfileController {
 	 * 更新Shiro中当前用户的用户名.
 	 */
 	private void updateCurrentUserName(String userName) {
-		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+		ShiroUser user = ShiroUtils.getCurrentUser();
 		user.name = userName;
 	}
 }

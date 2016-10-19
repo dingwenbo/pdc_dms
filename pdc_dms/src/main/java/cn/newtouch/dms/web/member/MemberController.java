@@ -31,8 +31,9 @@ import cn.newtouch.dms.mapper.MemberMapper;
 import cn.newtouch.dms.service.MemberService;
 import cn.newtouch.dms.service.RoleService;
 import cn.newtouch.dms.shiro.ShiroUser;
+import cn.newtouch.dms.shiro.ShiroUtils;
 import cn.newtouch.dms.util.StringUtil;
-import cn.newtouch.dms.vo.MemberVo;
+import cn.newtouch.dms.vo.member.MemberVO;
 import cn.newtouch.dms.web.login.LoginController;
 
 /**
@@ -72,18 +73,18 @@ public class MemberController {
     public ModelAndView showMemberInfo() {
         ModelAndView mv = new ModelAndView("member/memberinfo");
 
-        ShiroUser userInfo = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+        ShiroUser userInfo = ShiroUtils.getCurrentUser();
         Member member = memberService.selectMemberById(userInfo.getId());
         Role role = roleService.getRoleById(member.getRoleId());
 
-        MemberVo memberVo = MemberMapper.INSTANCE.memberAndRoleToMemberVo(member, role);
+        MemberVO memberVo = MemberMapper.INSTANCE.memberAndRoleToMemberVo(member, role);
         return mv.addObject("memberVo", memberVo);
     }
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String updateMember(@PathVariable("id") Integer id, MemberVo memberVo) {
-        Member memberUpdate = MemberMapper.INSTANCE.memberVoToMember(memberVo);
+    public String updateMember(@PathVariable("id") Integer id, MemberVO memberVo) {
+        Member memberUpdate = MemberMapper.INSTANCE.memberVOToMember(memberVo);
 
         Member member = memberService.selectMemberById(id);
         member.setGender(memberUpdate.getGender());
@@ -103,7 +104,7 @@ public class MemberController {
     @RequestMapping(value = "modifyPassword", method = RequestMethod.POST)
     @ResponseBody
     public String modifyPassword(@RequestParam String confirmPassword) {
-        ShiroUser userInfo = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+        ShiroUser userInfo = ShiroUtils.getCurrentUser();
         Member member = memberService.selectMemberById(userInfo.getId());
         member.setPlainPassword(confirmPassword);
 
@@ -116,7 +117,7 @@ public class MemberController {
     @ResponseBody
     public String validatePassword(@RequestParam String password) {
         String message = String.valueOf(Boolean.TRUE);
-        ShiroUser userInfo = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+        ShiroUser userInfo = ShiroUtils.getCurrentUser();
         UsernamePasswordToken token = new UsernamePasswordToken(userInfo.getPdcId(), password);
         try {
             SecurityUtils.getSubject().login(token);

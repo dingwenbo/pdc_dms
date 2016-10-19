@@ -71,7 +71,7 @@ public class ProjectDAOTest extends SpringTransactionalTestCase {
 	 * @param label
 	 * @param parentCode
 	 */
-	public void assertProject(Project toAssert, String code, String fullName, String label, String parentCode, String managerCode) {
+	public void assertProject(Project toAssert, String code, String fullName, String label, String parentCode, String managerName) {
 		assertNotNull(toAssert);
 		assertEquals(code, toAssert.getCode());
 		assertEquals(fullName, toAssert.getFullName());
@@ -83,9 +83,9 @@ public class ProjectDAOTest extends SpringTransactionalTestCase {
 			assertNull(toAssert.getParent());
 		}
 		
-		if (StringUtils.isNotEmpty(managerCode)) {
+		if (StringUtils.isNotEmpty(managerName)) {
 			assertNotNull(toAssert.getManager());
-			assertEquals(managerCode, toAssert.getManager().getName());
+			assertEquals(managerName, toAssert.getManager().getName());
 		} else {
 			assertNull(toAssert.getManager());
 		}

@@ -17,6 +17,7 @@ import cn.newtouch.dms.exception.service.DmsServiceException;
 import cn.newtouch.dms.repository.MemberDao;
 import cn.newtouch.dms.service.MemberService;
 import cn.newtouch.dms.shiro.ShiroUser;
+import cn.newtouch.dms.shiro.ShiroUtils;
 
 /**
  * 成员管理，个人档案管理的Service层。
@@ -89,7 +90,7 @@ public class MemberServiceImpl implements MemberService {
 	 * 取出Shiro中的当前用户LoginName.
 	 */
 	private String getCurrentUserName() {
-		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+		ShiroUser user = ShiroUtils.getCurrentUser();
 		return user.pdcId;
 	}
 

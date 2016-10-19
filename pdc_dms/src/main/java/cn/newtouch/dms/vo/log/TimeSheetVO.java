@@ -1,4 +1,4 @@
-package cn.newtouch.dms.web.log.bean;
+package cn.newtouch.dms.vo.log;
 
 public class TimeSheetVO {
 	

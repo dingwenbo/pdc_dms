@@ -1,9 +1,9 @@
-package cn.newtouch.dms.vo;
+package cn.newtouch.dms.vo.member;
 
 /**
  * The Class MemberVo.
  */
-public class MemberVo {
+public class MemberVO {
 
     /** The id. */
     private Integer id;

@@ -2,16 +2,13 @@ package cn.newtouch.dms.vo.project;
 
 import org.apache.commons.lang3.StringUtils;
 
-import cn.newtouch.dms.entity.Project;
-import cn.newtouch.dms.vo.Viewable;
-
 /**
  * 项目详细的视图对象.
  * 
  * @author JiaLong.Wang
  *
  */
-public class ProjectDetailVO implements Viewable<Project> {
+public class ProjectDetailVO {
 	
 	private String id;
 	private String code;
@@ -19,7 +16,9 @@ public class ProjectDetailVO implements Viewable<Project> {
 	private String label;
 	private String parentCode;
 	private String oper;
-	private String managerCode;
+	
+	private String managerId;
+	private String managerName;
 	
 	public ProjectDetailVO() {
 	}
@@ -85,25 +84,20 @@ public class ProjectDetailVO implements Viewable<Project> {
 		this.oper = oper;
 	}
 
-	public String getManagerCode() {
-		return managerCode;
+	public String getManagerId() {
+		return managerId;
 	}
 
-	public void setManagerCode(String managerCode) {
-		this.managerCode = managerCode;
+	public void setManagerId(String managerId) {
+		this.managerId = managerId;
 	}
 
-	@Override
-	public void accept(Project project) {
-		setId(String.valueOf(project.getId()));
-		setCode(project.getCode());
-		setFullName(project.getFullName());
-		setLabel(project.getLabel());
-		if (project.getParent() != null) {
-			setParentCode(project.getParent().getCode());
-		}
-		if (project.getManager() != null) {
-			setManagerCode(project.getManager().getName());
-		}
+	public String getManagerName() {
+		return managerName;
 	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
 }

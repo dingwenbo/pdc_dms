@@ -16,6 +16,7 @@ import cn.newtouch.dms.entity.Member;
 import cn.newtouch.dms.entity.Project;
 import cn.newtouch.dms.exception.ProjectServiceException;
 import cn.newtouch.dms.json.JsonUtils;
+import cn.newtouch.dms.mapper.ProjectDetailMapper;
 import cn.newtouch.dms.service.MemberService;
 import cn.newtouch.dms.service.ProjectService;
 import cn.newtouch.dms.vo.MessageInfo;
@@ -58,8 +59,7 @@ public class ProjectManagementController {
 		
 		List<Project> projects = projectService.getProjects();
 		for (Project project : projects) {
-			ProjectDetailVO pdvo = new ProjectDetailVO();
-			pdvo.accept(project);
+			ProjectDetailVO pdvo = ProjectDetailMapper.INSTANCE.projectToProjectDetailVO(project);
 			results.add(pdvo);
 		}
 		
@@ -78,7 +78,7 @@ public class ProjectManagementController {
 				project.setFullName(projectDetail.getFullName());
 				project.setLabel(projectDetail.getLabel());
 				String projectCode = projectDetail.getParentCode();
-				String managerCode = projectDetail.getManagerCode();
+				String managerName = projectDetail.getManagerName();
 				if (projectCode.equals("0")) {
 					project.setParent(null);
 				} else {
@@ -86,10 +86,10 @@ public class ProjectManagementController {
 					project.setParent(parentProject);
 				}
 				
-				if (managerCode.equals("0")) {
+				if (managerName.equals("0")) {
 					project.setManager(null);
 				} else {
-					Member manager = memberService.selectMemberById(Integer.parseInt(managerCode));
+					Member manager = memberService.selectMemberById(Integer.parseInt(managerName));
 					project.setManager(manager);
 				}
 				projectService.insertOrUpdateProject(project);
@@ -114,7 +114,7 @@ public class ProjectManagementController {
 			project.setFullName(projectDetail.getFullName());
 			project.setLabel(projectDetail.getLabel());
 			String projectCode = projectDetail.getParentCode();
-			String managerCode = projectDetail.getManagerCode();
+			String managerName = projectDetail.getManagerName();
 			if (projectCode.equals("0")) {
 				project.setParent(null);
 			} else {
@@ -122,10 +122,10 @@ public class ProjectManagementController {
 				project.setParent(parentProject);
 			}
 			
-			if (managerCode.equals("0")) {
+			if (managerName.equals("0")) {
 				project.setManager(null);
 			} else {
-				Member manager = memberService.selectMemberById(Integer.parseInt(managerCode));
+				Member manager = memberService.selectMemberById(Integer.parseInt(managerName));
 				project.setManager(manager);
 			}
 			projectService.insertOrUpdateProject(project);

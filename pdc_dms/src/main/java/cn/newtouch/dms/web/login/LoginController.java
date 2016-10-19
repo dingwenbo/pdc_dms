@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.newtouch.dms.shiro.ShiroUser;
+import cn.newtouch.dms.shiro.ShiroUtils;
 
 /**
  * LoginController负责打开登录页面(GET请求)和登录出错页面(POST请求)， 真正登录的POST请求由Filter完成,
@@ -76,8 +77,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/success")
     public String success() {
-        Subject currentUser = SecurityUtils.getSubject();
-        ShiroUser userInfo = (ShiroUser) currentUser.getPrincipal();
+        ShiroUser userInfo = ShiroUtils.getCurrentUser();
         LOGGER.info("用户 " + userInfo.getPdcId() + "[" + userInfo.getName() + "]  登陆系统...");
         return "menu";
     }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.newtouch.dms.json.JsonUtils;
-import cn.newtouch.dms.web.log.bean.TimeSheetVO;
+import cn.newtouch.dms.vo.log.TimeSheetVO;
 
 /**
  * 

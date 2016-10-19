@@ -36,13 +36,13 @@ insert into pdc_member(id, pdc_id, password, salt, name, role_id, supervisor_id,
 	values(9011, 'T000011', '2488aa0c31c624687bd9928e0a5d29e7d1ed520b', '6d65d24122c30500', '测试TL2', 3, 9010, '2016-01-01');
 
 /* FJV2 项目的数据*/
-insert into pdc_project(id, code, full_name, label, parent) values(1, 'GPRO_Pyramide', 'GPRO and Pyramide Group', 'GPRO_Pyramide Group label.', 7); 
-insert into pdc_project(id, code, full_name, label, parent) values(2, 'Pyramide', 'Pyramide Full-name', 'Second Test project', 1);
-insert into pdc_project(id, code, full_name, label, parent) values(3, 'Pissaro', 'Pissaro Full-name', 'Third Test project', 1);
-insert into pdc_project(id, code, full_name, label, parent) values(4, 'Translation', 'Translation Full-name', 'Third Test project', 1);
-insert into pdc_project(id, code, full_name, label, parent) values(5, 'Sextant', 'Sextant Full-name', 'Third Test project', 7);
-insert into pdc_project(id, code, full_name, label, parent) values(6, 'STXBRUT', 'Sextant BRUT', 'Third Test project', 5);
-insert into pdc_project(id, code, full_name, label, parent) values(7, 'FJV2', 'PDC FJV2 Team', 'FJV2 Label', null);
+insert into pdc_project(id, code, full_name, label, parent, manager) values(1, 'GPRO_Pyramide', 'GPRO and Pyramide Group', 'GPRO_Pyramide Group label.', 7, 9002); 
+insert into pdc_project(id, code, full_name, label, parent, manager) values(2, 'Pyramide', 'Pyramide Full-name', 'Second Test project', 1, 9002);
+insert into pdc_project(id, code, full_name, label, parent, manager) values(3, 'Pissaro', 'Pissaro Full-name', 'Third Test project', 1, 9002);
+insert into pdc_project(id, code, full_name, label, parent, manager) values(4, 'Translation', 'Translation Full-name', 'Third Test project', 1, 9002);
+insert into pdc_project(id, code, full_name, label, parent, manager) values(5, 'Sextant', 'Sextant Full-name', 'Third Test project', 7, 9002);
+insert into pdc_project(id, code, full_name, label, parent, manager) values(6, 'STXBRUT', 'Sextant BRUT', 'Third Test project', 5, 9002);
+insert into pdc_project(id, code, full_name, label, parent, manager) values(7, 'FJV2', 'PDC FJV2 Team', 'FJV2 Label', null, 9002);
 
 /*PM1 -> GPRO_Pyramide*/
 insert into pdc_project_member(project_id, member_id) values(1, 9002);
