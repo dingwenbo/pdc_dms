@@ -15,13 +15,12 @@
 				</a>
 			
 				<ul class="dropdown-menu" style="z-index:1001;">
-					<shiro:hasRole name="Admin">
-						<li><a href="${ctx}/admin/member">Admin Members</a></li>
-						<li class="divider"></li>
-					</shiro:hasRole>
+<%-- 					<shiro:hasRole name="Admin"> --%>
+<%-- 						<li><a href="${ctx}/admin/member">Admin Members</a></li> --%>
+<!-- 						<li class="divider"></li> -->
+<%-- 					</shiro:hasRole> --%>
                     <li><a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/member/memberInfo');">我的档案</a></li>
-					<li><a href="${ctx}/profile">Edit Profile</a></li>
-					<li><a href="${ctx}/logout">Logout</a></li>
+					<li><a href="${ctx}/logout">退出</a></li>
 				</ul>
 			</div>
 		</shiro:user>

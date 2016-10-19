@@ -14,7 +14,7 @@
 	<decorator name="main" page="main.jsp">
 		<pattern>/member/*</pattern>
 		<pattern>/projectManagement/*</pattern>
-		<pattern>/main/*</pattern>
+		<pattern>/menu/*</pattern>
 		<pattern>/log/*</pattern>
 	</decorator>
 </decorators>

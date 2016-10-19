@@ -12,7 +12,7 @@
 <script type="text/javascript">
 $(function() {
 	// 进入首页，加载首页的信息
-    gotoUrl(null, '/main/showHomePage');
+    gotoUrl(null, '/menu/showHomePage');
 });
 
 function gotoUrl(obj, action) {
@@ -40,7 +40,7 @@ function checkSessionTimeout() {
             <div class=""  style="width:10%;float:left; height:100%;">
                 <ul id="main-nav" class="main-nav nav nav-tabs nav-stacked" style="">
                     <li>
-                        <a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/main/showHomePage');">
+                        <a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/menu/showHomePage');">
                             <i class="glyphicon glyphicon-th-large"></i>
                                                        首页 		
                         </a>
@@ -115,7 +115,7 @@ function checkSessionTimeout() {
               			</ul>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/main/showAbout');">
+                        <a href="javascript:void(0);" onclick="javascript:gotoUrl(this,'/menu/showAbout');">
                             <i class="glyphicon glyphicon-fire"></i>
                             关于系统
                             <span class="badge pull-right"></span>
